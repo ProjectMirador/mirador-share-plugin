@@ -3,7 +3,7 @@ module.exports = {
   npm: {
     esModules: true,
     umd: {
-      global: 'MiradorDownload',
+      global: 'MiradorShare',
       externals: {
         react: 'React',
       },

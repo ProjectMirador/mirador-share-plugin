@@ -1,23 +1,23 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import miradorDownloadPlugin from '../src';
+import miradorSharePlugin from '../src';
 
 function createWrapper(props) {
   return shallow(
-    <miradorDownloadPlugin.component
+    <miradorSharePlugin.component
       {...props}
     />,
   );
 }
 
-describe('miradorDownloadPlugin', () => {
+describe('miradorSharePlugin', () => {
   it('has the correct target', () => {
-    expect(miradorDownloadPlugin.target).toBe('WindowTopMenu');
+    expect(miradorSharePlugin.target).toBe('WindowTopMenu');
   });
   describe('renders a component', () => {
     it('renders a thing', () => {
       const wrapper = createWrapper();
-      expect(wrapper.find('h2').text()).toEqual('Download');
+      expect(wrapper.find('h2').text()).toEqual('Share');
     });
   });
 });

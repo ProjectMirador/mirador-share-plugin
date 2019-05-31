@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-class MiradorDownload extends Component {
+class MiradorShare extends Component {
   render() {
     return (
       <div>
-        <h2>Download</h2>
+        <h2>Share</h2>
       </div>
     );
   }
@@ -13,5 +13,5 @@ class MiradorDownload extends Component {
 export default {
   target: 'WindowTopMenu',
   mode: 'add',
-  component: MiradorDownload,
+  component: MiradorShare,
 };

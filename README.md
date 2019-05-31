@@ -1,10 +1,10 @@
-# mirador-download-plugin
+# mirador-share-plugin
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-Describe mirador-download-plugin here.
+Describe mirador-share-plugin here.
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
