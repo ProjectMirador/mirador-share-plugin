@@ -1,78 +1,73 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
+import PropTypes from 'prop-types';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
-import Typography from '@material-ui/core/Typography';
 import ShareIcon from '@material-ui/icons/ShareSharp';
+import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+
+const shareDialogReducer = (state = {}, action) => {
+  if (action.type === 'OPEN_WINDOW_DIALOG') {
+    return {
+      ...state,
+      [action.windowId]: {
+        openDialog: action.dialogType,
+      },
+    };
+  }
+
+  if (action.type === 'CLOSE_WINDOW_DIALOG') {
+    return {
+      ...state,
+      [action.windowId]: {
+        openDialog: null,
+      },
+    };
+  }
+  return state;
+};
+
+const mapDispatchToProps = (dispatch, { windowId }) => ({
+  openShareDialog: () => dispatch({ type: 'OPEN_WINDOW_DIALOG', windowId, dialogType: 'share' }),
+});
+
+const mapStateToProps = (state, { windowId }) => ({
+  dragAndDropInfoLink: state.config.miradorSharePlugin
+    && state.config.miradorSharePlugin.dragAndDropInfoLink,
+  manifestId: getManifestoInstance(state, { windowId }).id,
+});
 
 class MiradorShare extends Component {
-  constructor(props) {
-    super(props);
+  openDialogAndClose() {
+    const { openShareDialog, handleClose } = this.props;
 
-    this.state = {
-      modalDisplayed: false,
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handleDialogClose = this.handleDialogClose.bind(this);
-  }
-
-  handleClick() {
-    const { modalDisplayed } = this.state;
-    this.setState({ modalDisplayed: !modalDisplayed });
-  }
-
-  handleDialogClose() {
-    this.setState({ modalDisplayed: false });
+    openShareDialog();
+    handleClose();
   }
 
   render() {
-    const { modalDisplayed } = this.state;
     return (
-      <div>
-        <MenuItem onClick={this.handleClick}>
-          <ShareIcon />
-          <ListItemText inset primaryTypographyProps={{ variant: 'body1' }}>
-            Share
-          </ListItemText>
-        </MenuItem>
-        <Dialog
-          disableEnforceFocus
-          onClose={this.handleDialogClose}
-          open={modalDisplayed}
-          scroll="paper"
-        >
-          <DialogTitle disableTypography>
-            <Typography variant="h2">
-              Share
-            </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <Typography variant="h3">Share link</Typography>
-            <Divider />
-            <Typography variant="h3">Alternate viewer</Typography>
-            <Divider />
-            <Typography variant="h3">Embed</Typography>
-            <Divider />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleDialogClose} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <MenuItem onClick={() => this.openDialogAndClose()}>
+        <ShareIcon />
+        <ListItemText inset primaryTypographyProps={{ variant: 'body1' }}>
+          Share
+        </ListItemText>
+      </MenuItem>
     );
   }
 }
+
+MiradorShare.propTypes = {
+  openShareDialog: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default {
   target: 'WindowTopMenu',
   mode: 'add',
   component: MiradorShare,
+  mapDispatchToProps,
+  mapStateToProps,
+  reducers: {
+    windowDialogs: shareDialogReducer,
+  },
 };

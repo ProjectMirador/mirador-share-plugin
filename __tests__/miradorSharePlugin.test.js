@@ -5,6 +5,9 @@ import miradorSharePlugin from '../src';
 function createWrapper(props) {
   return shallow(
     <miradorSharePlugin.component
+      handleClose={() => {}}
+      openShareDialog={() => {}}
+
       {...props}
     />,
   );
@@ -22,41 +25,13 @@ describe('miradorSharePlugin', () => {
   });
 
   describe('MenuItem', () => {
-    it('udpates the modalDisplayed state which clicked', () => {
-      const wrapper = createWrapper();
-      expect(wrapper.state().modalDisplayed).toBe(false);
+    it('calls the openShareDialog and handleClose props when clicked', () => {
+      const handleClose = jest.fn();
+      const openShareDialog = jest.fn();
+      const wrapper = createWrapper({ handleClose, openShareDialog });
       wrapper.find('WithStyles(MenuItem)').simulate('click');
-      expect(wrapper.state().modalDisplayed).toBe(true);
-    });
-  });
-
-  describe('Dialog', () => {
-    it('renders a dialog that is open/closed based on the component state', () => {
-      const wrapper = createWrapper();
-      expect(wrapper.state().modalDisplayed).toBe(false);
-      expect(wrapper.find('WithStyles(Dialog)').props().open).toBe(false);
-      wrapper.setState({ modalDisplayed: true });
-      expect(wrapper.find('WithStyles(Dialog)').props().open).toBe(true);
-    });
-
-    it('renders the section headings in an h3', () => {
-      const wrapper = createWrapper();
-      expect(wrapper.find('WithStyles(Typography)[variant="h3"]').get(0).props.children).toEqual('Share link');
-      expect(wrapper.find('WithStyles(Typography)[variant="h3"]').get(1).props.children).toEqual('Alternate viewer');
-      expect(wrapper.find('WithStyles(Typography)[variant="h3"]').get(2).props.children).toEqual('Embed');
-    });
-
-    it('has a close button that updates the modalDisplay state to false', () => {
-      const wrapper = createWrapper();
-      wrapper.setState({ modalDisplayed: true });
-      expect(wrapper.state().modalDisplayed).toBe(true);
-      wrapper.find('WithStyles(Button)').simulate('click');
-      expect(wrapper.state().modalDisplayed).toBe(false);
-    });
-
-    it('has dividers', () => {
-      const wrapper = createWrapper();
-      expect(wrapper.find('WithStyles(Divider)').length).toEqual(3);
+      expect(handleClose).toHaveBeenCalled();
+      expect(openShareDialog).toHaveBeenCalled();
     });
   });
 });
