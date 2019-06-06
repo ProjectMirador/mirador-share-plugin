@@ -6,6 +6,7 @@ function createWrapper(props) {
   return shallow(
     <miradorShareDialog.component
       closeShareDialog={() => {}}
+      displayShareLink
       manifestId="http://example.com/abc/iiif/manifest"
       open
 
@@ -33,13 +34,43 @@ describe('Dialog', () => {
   it('has a close button that calls closeShareDialog on click', () => {
     const closeShareDialog = jest.fn();
     wrapper = createWrapper({ closeShareDialog });
-    wrapper.find('WithStyles(Button)').simulate('click');
+    wrapper.find('WithStyles(DialogActions) WithStyles(Button)').simulate('click');
     expect(closeShareDialog).toHaveBeenCalled();
   });
 
   it('has dividers', () => {
     wrapper = createWrapper();
     expect(wrapper.find('WithStyles(Divider)').length).toEqual(2);
+  });
+
+  describe('Share link section', () => {
+    it('renders the section w/ a TextField and a Copy Button', () => {
+      wrapper = createWrapper();
+
+      expect(wrapper.find('TextField').length).toBe(1);
+      expect(wrapper.find('CopyToClipboard WithStyles(Button)').props().children).toEqual('Copy');
+    });
+
+    it('renders the TextField & CopyToClipboard components w/ the shareLinkText state value', () => {
+      wrapper = createWrapper();
+
+      wrapper.setState({ shareLinkText: 'http://example.com/iiif/manifest' });
+      expect(wrapper.find('TextField').props().defaultValue).toEqual('http://example.com/iiif/manifest');
+      expect(wrapper.find('CopyToClipboard').props().text).toEqual('http://example.com/iiif/manifest');
+    });
+
+    it("sets the component's shareLinkText on TextField change", () => {
+      wrapper = createWrapper();
+      wrapper.find('TextField').props().onChange({ target: { value: 'http://example.com/iiif/manifest.json' } });
+      expect(wrapper.state().shareLinkText).toEqual('http://example.com/iiif/manifest.json');
+    });
+
+    it('does not render the section if the displayShareLink prop is falsey', () => {
+      wrapper = createWrapper({ displayShareLink: false });
+
+      expect(wrapper.find('TextField').length).toBe(0);
+      expect(wrapper.find('CopyToClipboard').length).toBe(0);
+    });
   });
 
   describe('Alternate viewer section', () => {

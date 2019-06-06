@@ -27,6 +27,7 @@
     "mirador": "^3.0.0-alpha.9",
     "prop-types": "^15.7.2",
     "react": "16.x",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "16.x"
   },
   "devDependencies": {
@@ -50,6 +51,7 @@
     "nwb": "0.23.x",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6"
   },
   "author": "",
