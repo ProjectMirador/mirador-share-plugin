@@ -7,6 +7,16 @@ const config = {
   windows: [{
     loadedManifest: 'https://purl.stanford.edu/sn904cj3429/iiif/manifest',
   }],
+  miradorSharePlugin: {
+    dragAndDropInfoLink: 'https://iiif.io',
+    shareLink: {
+      enabled: true,
+      manifestIdReplacePattern: [
+        /\/iiif\/manifest/,
+        '',
+      ],
+    },
+  },
 };
 
 mirador.viewer(config, [
