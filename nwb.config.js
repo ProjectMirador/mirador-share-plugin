@@ -6,6 +6,7 @@ module.exports = {
       global: 'MiradorShare',
       externals: {
         react: 'React',
+        'react-dom': 'ReactDOM',
       },
     },
   },
