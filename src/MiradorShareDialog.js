@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+import MiradorShareEmbed from './MiradorShareEmbed';
 import IiiifIcon from './IiifIcon';
 
 const mapDispatchToProps = (dispatch, { windowId }) => ({
@@ -20,8 +21,12 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
 const mapStateToProps = (state, { windowId }) => {
   const miradorSharePluginConfig = state.config.miradorSharePlugin || {};
   return {
+    displayEmbedOption: miradorSharePluginConfig.embedOption
+      && miradorSharePluginConfig.embedOption.enabled,
     displayShareLink: miradorSharePluginConfig.shareLink
       && miradorSharePluginConfig.shareLink.enabled,
+    embedUrlReplacePattern: miradorSharePluginConfig.embedOption
+      && miradorSharePluginConfig.embedOption.embedUrlReplacePattern,
     manifestIdReplacePattern: miradorSharePluginConfig.shareLink
       && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
     dragAndDropInfoLink: miradorSharePluginConfig.dragAndDropInfoLink,
@@ -96,7 +101,14 @@ export class MiradorShareDialog extends Component {
    * Returns the rendered component
   */
   render() {
-    const { closeShareDialog, displayShareLink, open } = this.props;
+    const {
+      closeShareDialog,
+      displayEmbedOption,
+      displayShareLink,
+      embedUrlReplacePattern,
+      manifestId,
+      open,
+    } = this.props;
     const { shareLinkText } = this.state;
 
     return (
@@ -129,8 +141,16 @@ export class MiradorShareDialog extends Component {
               <Divider />
             </React.Fragment>
           )}
-          <Typography variant="h3">Embed</Typography>
-          <Divider />
+          {displayEmbedOption && (
+            <React.Fragment>
+              <Typography variant="h3">Embed</Typography>
+              <MiradorShareEmbed
+                embedUrlReplacePattern={embedUrlReplacePattern}
+                manifestId={manifestId}
+              />
+              <Divider />
+            </React.Fragment>
+          )}
           <Typography variant="h3">Alternate viewer</Typography>
           <Typography variant="body1">
             <Link href={this.dragAndDropUrl()}>
@@ -152,8 +172,15 @@ export class MiradorShareDialog extends Component {
 
 MiradorShareDialog.propTypes = {
   closeShareDialog: PropTypes.func.isRequired,
+  displayEmbedOption: PropTypes.bool,
   displayShareLink: PropTypes.bool,
   dragAndDropInfoLink: PropTypes.string,
+  embedUrlReplacePattern: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.instanceOf(RegExp),
+    ]),
+  ),
   manifestIdReplacePattern: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,
@@ -165,8 +192,10 @@ MiradorShareDialog.propTypes = {
 };
 
 MiradorShareDialog.defaultProps = {
+  displayEmbedOption: false,
   displayShareLink: false,
   dragAndDropInfoLink: null,
+  embedUrlReplacePattern: [],
   manifestId: '',
   manifestIdReplacePattern: [],
   open: false,
