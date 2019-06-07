@@ -9,6 +9,13 @@ const config = {
   }],
   miradorSharePlugin: {
     dragAndDropInfoLink: 'https://iiif.io',
+    embedOption: {
+      enabled: true,
+      embedUrlReplacePattern: [
+        /.*\.edu\/(\w+)\/iiif\/manifest/,
+        'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
+      ],
+    },
     shareLink: {
       enabled: true,
       manifestIdReplacePattern: [

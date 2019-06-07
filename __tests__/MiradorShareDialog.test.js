@@ -6,6 +6,7 @@ function createWrapper(props) {
   return shallow(
     <miradorShareDialog.component
       closeShareDialog={() => {}}
+      displayEmbedOption
       displayShareLink
       manifestId="http://example.com/abc/iiif/manifest"
       open
@@ -70,6 +71,16 @@ describe('Dialog', () => {
 
       expect(wrapper.find('TextField').length).toBe(0);
       expect(wrapper.find('CopyToClipboard').length).toBe(0);
+    });
+  });
+
+  describe('embed section', () => {
+    it('is rendered when the displayEmbedOption is true', () => {
+      wrapper = createWrapper({ displayEmbedOption: false });
+      expect(wrapper.find('WithStyles(MiradorShareEmbed)').length).toBe(0);
+
+      wrapper = createWrapper({ displayEmbedOption: true });
+      expect(wrapper.find('WithStyles(MiradorShareEmbed)').length).toBe(1);
     });
   });
 
