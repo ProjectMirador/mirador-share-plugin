@@ -160,14 +160,16 @@ MiradorShareDialog.propTypes = {
       PropTypes.instanceOf(RegExp),
     ]),
   ),
-  manifestId: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
+  manifestId: PropTypes.string,
+  open: PropTypes.bool,
 };
 
 MiradorShareDialog.defaultProps = {
   displayShareLink: false,
   dragAndDropInfoLink: null,
+  manifestId: '',
   manifestIdReplacePattern: [],
+  open: false,
 };
 
 export default {
