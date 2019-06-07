@@ -73,7 +73,7 @@ export class MiradorShareDialog extends Component {
       <React.Fragment>
         {' '}
         [
-        <Link href={dragAndDropInfoLink} disableTypography>What is IIIF?</Link>
+        <Link href={dragAndDropInfoLink}>What is IIIF?</Link>
         ]
       </React.Fragment>
     );
@@ -133,7 +133,7 @@ export class MiradorShareDialog extends Component {
           <Divider />
           <Typography variant="h3">Alternate viewer</Typography>
           <Typography variant="body1">
-            <Link href={this.dragAndDropUrl()} disableTypography>
+            <Link href={this.dragAndDropUrl()}>
               <IiiifIcon style={{ marginRight: '10px' }} />
             </Link>
             Drag & drop this icon to any IIIF viewer.
