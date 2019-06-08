@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -102,6 +103,7 @@ export class MiradorShareDialog extends Component {
   */
   render() {
     const {
+      classes,
       closeShareDialog,
       displayEmbedOption,
       displayShareLink,
@@ -127,12 +129,12 @@ export class MiradorShareDialog extends Component {
               <Typography variant="h3">Share link</Typography>
               <TextField
                 defaultValue={shareLinkText}
+                className={classes.shareLinkTextField}
                 margin="dense"
                 fullWidth
-                style={{ paddingRight: 0, width: '80%' }}
                 variant="filled"
                 onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
-                inputProps={{ 'aria-label': 'Share link URL', style: { paddingTop: '12px' } }}
+                inputProps={{ 'aria-label': 'Share link URL', className: classes.shareLinkInput }}
               />
               {' '}
               <CopyToClipboard text={shareLinkText}>
@@ -153,8 +155,8 @@ export class MiradorShareDialog extends Component {
           )}
           <Typography variant="h3">Alternate viewer</Typography>
           <Typography variant="body1">
-            <Link href={this.dragAndDropUrl()}>
-              <IiiifIcon style={{ marginRight: '10px' }} />
+            <Link href={this.dragAndDropUrl()} className={classes.iiifLink}>
+              <IiiifIcon className={classes.iiifIcon} />
             </Link>
             Drag & drop this icon to any IIIF viewer.
             {this.whatIsThisLink()}
@@ -171,6 +173,12 @@ export class MiradorShareDialog extends Component {
 }
 
 MiradorShareDialog.propTypes = {
+  classes: PropTypes.shape({
+    iiifIcon: PropTypes.string,
+    iiifLink: PropTypes.string,
+    shareLinkInput: PropTypes.string,
+    shareLinkTextField: PropTypes.string,
+  }).isRequired,
   closeShareDialog: PropTypes.func.isRequired,
   displayEmbedOption: PropTypes.bool,
   displayShareLink: PropTypes.bool,
@@ -201,10 +209,26 @@ MiradorShareDialog.defaultProps = {
   open: false,
 };
 
+const styles = () => ({
+  iiifLink: {
+    marginRight: '10px',
+  },
+  iiifIcon: {
+    verticalAlign: 'text-bottom',
+  },
+  shareLinkInput: {
+    paddingTop: '12px',
+  },
+  shareLinkTextField: {
+    paddingRight: 0,
+    width: '80%',
+  },
+});
+
 export default {
   target: 'Window',
   mode: 'add',
-  component: MiradorShareDialog,
+  component: withStyles(styles)(MiradorShareDialog),
   mapDispatchToProps,
   mapStateToProps,
 };
