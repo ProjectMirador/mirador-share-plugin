@@ -112,7 +112,7 @@ class MiradorShareEmbed extends Component {
     return (
       <React.Fragment>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Select viewer size</FormLabel>
+          <FormLabel component="legend" className={classes.legend}>Select viewer size</FormLabel>
           <RadioGroup
             aria-label="Select viewer size"
             className={classes.radioGroup}
@@ -123,7 +123,7 @@ class MiradorShareEmbed extends Component {
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">then copy &amp; paste code</FormLabel>
+          <FormLabel component="legend" className={classes.legend}>then copy &amp; paste code</FormLabel>
           <TextField
             multiline
             rows={4}
@@ -143,6 +143,7 @@ MiradorShareEmbed.propTypes = {
   classes: PropTypes.shape({
     formControl: PropTypes.string,
     formControlLabel: PropTypes.string,
+    legend: PropTypes.string,
     radioGroup: PropTypes.string,
     selectedFormControlLabel: PropTypes.string,
   }),
@@ -171,6 +172,10 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
     },
+  },
+  legend: {
+    paddingBottom: theme.spacing.unit,
+    paddingTop: theme.spacing.unit,
   },
   radioGroup: {
     display: 'inline',
