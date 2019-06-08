@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -56,7 +57,14 @@ class MiradorShareEmbed extends Component {
     const { classes } = this.props;
     const { selectedSize } = this.state;
     const sizes = MiradorShareEmbed.sizes();
-    const icon = (width, height) => <EmbedSizeIcon width={width} height={height} />;
+    const iconColor = createMuiTheme().palette.grey[500];
+    const icon = (width, height) => (
+      <EmbedSizeIcon
+        fillColor={iconColor}
+        width={width}
+        height={height}
+      />
+    );
 
     return Object.keys(sizes).map((sizeKey) => {
       const size = sizes[sizeKey];
