@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -56,7 +57,14 @@ class MiradorShareEmbed extends Component {
     const { classes } = this.props;
     const { selectedSize } = this.state;
     const sizes = MiradorShareEmbed.sizes();
-    const icon = (width, height) => <EmbedSizeIcon width={width} height={height} />;
+    const iconColor = createMuiTheme().palette.grey[500];
+    const icon = (width, height) => (
+      <EmbedSizeIcon
+        fillColor={iconColor}
+        width={width}
+        height={height}
+      />
+    );
 
     return Object.keys(sizes).map((sizeKey) => {
       const size = sizes[sizeKey];
@@ -104,7 +112,7 @@ class MiradorShareEmbed extends Component {
     return (
       <React.Fragment>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Select viewer size</FormLabel>
+          <FormLabel component="legend" className={classes.legend}>Select viewer size</FormLabel>
           <RadioGroup
             aria-label="Select viewer size"
             className={classes.radioGroup}
@@ -115,7 +123,7 @@ class MiradorShareEmbed extends Component {
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">then copy &amp; paste code</FormLabel>
+          <FormLabel component="legend" className={classes.legend}>then copy &amp; paste code</FormLabel>
           <TextField
             multiline
             rows={4}
@@ -135,6 +143,7 @@ MiradorShareEmbed.propTypes = {
   classes: PropTypes.shape({
     formControl: PropTypes.string,
     formControlLabel: PropTypes.string,
+    legend: PropTypes.string,
     radioGroup: PropTypes.string,
     selectedFormControlLabel: PropTypes.string,
   }),
@@ -163,6 +172,10 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
     },
+  },
+  legend: {
+    paddingBottom: theme.spacing.unit,
+    paddingTop: theme.spacing.unit,
   },
   radioGroup: {
     display: 'inline',

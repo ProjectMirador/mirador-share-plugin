@@ -13,7 +13,7 @@ function createWrapper(props) {
 
       {...props}
     />,
-  );
+  ).dive();
 }
 
 describe('Dialog', () => {
