@@ -6,9 +6,11 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
+import InputLabel from '@material-ui/core/InputLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
@@ -43,13 +45,29 @@ class MiradorShareEmbed extends Component {
     super(props);
 
     this.state = {
+      customSize: { width: 1024, height: 768 },
       selectedSize: 'small',
     };
   }
 
   handleSizeSelect(size) {
+    if (Object.keys(MiradorShareEmbed.sizes()).includes(size)) {
+      this.setState({
+        selectedSize: size,
+      });
+      return;
+    }
+
     this.setState({
-      selectedSize: size,
+      selectedSize: 'custom',
+    });
+  }
+
+  handleCustomSizeUpdate(value, type) {
+    const { customSize } = this.state;
+
+    this.setState({
+      customSize: { ...customSize, [type]: value },
     });
   }
 
@@ -72,7 +90,7 @@ class MiradorShareEmbed extends Component {
         <FormControlLabel
           className={[
             classes.formControlLabel,
-            (selectedSize === sizeKey ? classes.selectedFormControlLabel : ''),
+            (selectedSize === sizeKey ? classes.selectedSize : ''),
           ].join(' ')
           }
           control={(
@@ -90,6 +108,47 @@ class MiradorShareEmbed extends Component {
     });
   }
 
+  customEmbedOption() {
+    const { classes, windowId } = this.props;
+    const { selectedSize } = this.state;
+
+    return (
+      <Button
+        classes={{ label: classes.buttonLabel }}
+        className={[classes.customControl, (selectedSize === 'custom' && classes.selectedSize)].join(' ')}
+        onClick={() => { this.handleSizeSelect('custom'); }}
+      >
+        <Typography variant="body1">Custom</Typography>
+        <div className={classes.customInputContainer}>
+          <InputLabel className={classes.customLabel} htmlFor={`${windowId}-embed-width-input`}>Width</InputLabel>
+          {' '}
+          <TextField
+            className={classes.customInput}
+            defaultValue="1024"
+            disabled={selectedSize !== 'custom'}
+            id={`${windowId}-embed-width-input`}
+            onChange={(e) => { this.handleCustomSizeUpdate(e.target.value, 'width'); }}
+          />
+          {' '}
+          px
+        </div>
+        <div className={classes.customInputContainer}>
+          <InputLabel className={classes.customLabel} htmlFor={`${windowId}-embed-height-input`}>Height</InputLabel>
+          {' '}
+          <TextField
+            className={classes.customInput}
+            defaultValue="768"
+            disabled={selectedSize !== 'custom'}
+            id={`${windowId}-embed-height-input`}
+            onChange={(e) => { this.handleCustomSizeUpdate(e.target.value, 'height'); }}
+          />
+          {' '}
+          px
+        </div>
+      </Button>
+    );
+  }
+
   embedUrl() {
     const { embedUrlReplacePattern, manifestId } = this.props;
 
@@ -97,8 +156,14 @@ class MiradorShareEmbed extends Component {
   }
 
   embedCode() {
-    const { selectedSize } = this.state;
-    const size = MiradorShareEmbed.sizes()[selectedSize];
+    const { customSize, selectedSize } = this.state;
+    let size;
+
+    if (selectedSize === 'custom') {
+      size = { viewerWidth: customSize.width, viewerHeight: customSize.height };
+    } else {
+      size = MiradorShareEmbed.sizes()[selectedSize];
+    }
 
     return `<iframe src="${this.embedUrl()}" width="${size.viewerWidth}" height="${size.viewerHeight}" allowfullscreen frameborder="0" />`;
   }
@@ -108,6 +173,7 @@ class MiradorShareEmbed extends Component {
   */
   render() {
     const { classes } = this.props;
+    const { selectedSize } = this.state;
 
     return (
       <React.Fragment>
@@ -117,9 +183,11 @@ class MiradorShareEmbed extends Component {
             aria-label="Select viewer size"
             className={classes.radioGroup}
             name="viwerSize"
+            value={selectedSize}
             onChange={(e) => { this.handleSizeSelect(e.target.value); }}
           >
             {this.formControlLabelsForSizes()}
+            {this.customEmbedOption()}
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
@@ -141,11 +209,16 @@ class MiradorShareEmbed extends Component {
 
 MiradorShareEmbed.propTypes = {
   classes: PropTypes.shape({
+    buttonLabel: PropTypes.string,
+    customControl: PropTypes.string,
+    customInput: PropTypes.string,
+    customInputContainer: PropTypes.string,
+    customLabel: PropTypes.string,
     formControl: PropTypes.string,
     formControlLabel: PropTypes.string,
     legend: PropTypes.string,
     radioGroup: PropTypes.string,
-    selectedFormControlLabel: PropTypes.string,
+    selectedSize: PropTypes.string,
   }),
   embedUrlReplacePattern: PropTypes.arrayOf(
     PropTypes.oneOfType([
@@ -154,6 +227,7 @@ MiradorShareEmbed.propTypes = {
     ]),
   ).isRequired,
   manifestId: PropTypes.string,
+  windowId: PropTypes.string.isRequired,
 };
 
 MiradorShareEmbed.defaultProps = {
@@ -162,11 +236,35 @@ MiradorShareEmbed.defaultProps = {
 };
 
 const styles = theme => ({
+  buttonLabel: {
+    display: 'inline',
+    textTransform: 'none',
+  },
+  customControl: {
+    alignItems: 'center',
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: 0,
+    display: 'inline-flex',
+    flexDirection: 'column',
+    flexGrow: 5,
+    height: '117px',
+    verticalAlign: 'middle',
+  },
+  customLabel: {
+    position: 'relative',
+  },
+  customInput: {
+    width: '45px',
+  },
+  customInputContainer: {
+    textAlign: 'right',
+  },
   formControl: {
     width: '100%',
   },
   formControlLabel: {
     border: `1px solid ${theme.palette.grey[500]}`,
+    flexGrow: 1,
     height: '115px',
     margin: '0',
     '&:hover': {
@@ -178,9 +276,9 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit,
   },
   radioGroup: {
-    display: 'inline',
+    flexDirection: 'row',
   },
-  selectedFormControlLabel: {
+  selectedSize: {
     backgroundColor: theme.palette.action.selected,
   },
 });
