@@ -1,4 +1,4 @@
-import mirador from 'mirador';
+import Mirador from 'mirador/dist/es/src/index';
 import miradorSharePlugin from '../../src';
 import miradorShareDialogPlugin from '../../src/MiradorShareDialog';
 
@@ -26,7 +26,7 @@ const config = {
   },
 };
 
-mirador.viewer(config, [
+Mirador.viewer(config, [
   miradorShareDialogPlugin,
   miradorSharePlugin,
 ]);
