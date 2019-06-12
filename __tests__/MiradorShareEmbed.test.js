@@ -8,8 +8,6 @@ function createWrapper(props) {
     <MiradorShareEmbed
       embedUrlReplacePattern={[]}
       manifestId="https://example.com/abc123/iiif/manifest"
-      windowId="wid123"
-
       {...props}
     />,
   ).dive();
@@ -49,13 +47,13 @@ describe('MiradorShareEmbed', () => {
   it('renders the embed code in a text field', () => {
     wrapper = createWrapper();
 
-    expect(wrapper.find('TextField[multiline]').props().value).toMatch(/^<iframe .*/);
+    expect(wrapper.find('TextField').props().value).toMatch(/^<iframe .*/);
   });
 
   it('has a copy button that uses the CopyToClipboard library', () => {
     wrapper = createWrapper();
 
-    expect(wrapper.find('WithStyles(Button)[children="Copy"]').length).toEqual(1);
+    expect(wrapper.find('WithStyles(Button)').props().children).toEqual('Copy');
     expect(wrapper.find('CopyToClipboard').props().text).toMatch(/^<iframe .*/);
   });
 
@@ -66,7 +64,7 @@ describe('MiradorShareEmbed', () => {
     ];
     wrapper = createWrapper({ embedUrlReplacePattern });
 
-    expect(wrapper.find('TextField[multiline]').props().value).toEqual(
+    expect(wrapper.find('TextField').props().value).toEqual(
       '<iframe src="https://embed.example.com/embed?url=https://example.com/abc123" width="560" height="420" allowfullscreen frameborder="0" />',
     );
   });
@@ -75,9 +73,9 @@ describe('MiradorShareEmbed', () => {
     wrapper = createWrapper();
 
     expect(wrapper.state().selectedSize).toEqual('small');
-    expect(wrapper.find('TextField[multiline]').props().value).toMatch(/width="560" height="420"/);
+    expect(wrapper.find('TextField').props().value).toMatch(/width="560" height="420"/);
     wrapper.setState({ selectedSize: 'large' });
-    expect(wrapper.find('TextField[multiline]').props().value).toMatch(/width="800" height="600"/);
+    expect(wrapper.find('TextField').props().value).toMatch(/width="800" height="600"/);
   });
 
   it('switching the selected radio updates state', () => {
@@ -86,47 +84,5 @@ describe('MiradorShareEmbed', () => {
     expect(wrapper.state().selectedSize).toEqual('small');
     wrapper.find('RadioGroup').simulate('change', { target: { value: 'large' } });
     expect(wrapper.state().selectedSize).toEqual('large');
-  });
-
-  describe('Custom Size Option', () => {
-    it('renders a custom size button', () => {
-      wrapper = createWrapper();
-
-      expect(wrapper.find('RadioGroup WithStyles(Button) WithStyles(Typography)').props().children).toEqual('Custom');
-      expect(wrapper.find('RadioGroup WithStyles(Button) TextField[defaultValue="1024"]').length).toEqual(1);
-      expect(wrapper.find('RadioGroup WithStyles(Button) TextField[defaultValue="768"]').length).toEqual(1);
-    });
-
-    it('sets the size to custom when the Button is clicked', () => {
-      wrapper = createWrapper();
-
-      expect(wrapper.state().selectedSize).toEqual('small');
-      wrapper.find('RadioGroup WithStyles(Button)').simulate('click');
-      expect(wrapper.state().selectedSize).toEqual('custom');
-    });
-
-    it('has disabled the text fields unless the Custom option was selected', () => {
-      wrapper = createWrapper();
-
-      expect(wrapper.find('RadioGroup WithStyles(Button) TextField[defaultValue="1024"]').props().disabled).toBe(true);
-      expect(wrapper.find('RadioGroup WithStyles(Button) TextField[defaultValue="768"]').props().disabled).toBe(true);
-      expect(wrapper.setState({ selectedSize: 'custom' }));
-    });
-
-    it('properly updates the embed code w/ the custom sizes when custom is selected', () => {
-      wrapper = createWrapper();
-
-      expect(wrapper.find('TextField[multiline]').props().value).toMatch(/width="560" height="420"/);
-      wrapper.find('RadioGroup WithStyles(Button)').simulate('click');
-      expect(wrapper.find('TextField[multiline]').props().value).toMatch(/width="1024" height="768"/);
-    });
-
-    it('updates the customSize state when the text fields are updated', () => {
-      wrapper = createWrapper();
-
-      wrapper.find('RadioGroup WithStyles(Button)').simulate('click');
-      wrapper.find('RadioGroup WithStyles(Button) TextField[defaultValue="1024"]').simulate('change', { target: { value: '900' } });
-      expect(wrapper.find('TextField[multiline]').props().value).toMatch(/width="900" height="768"/);
-    });
   });
 });
