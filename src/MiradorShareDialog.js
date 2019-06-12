@@ -110,6 +110,7 @@ export class MiradorShareDialog extends Component {
       embedUrlReplacePattern,
       manifestId,
       open,
+      windowId,
     } = this.props;
     const { shareLinkText } = this.state;
 
@@ -149,6 +150,7 @@ export class MiradorShareDialog extends Component {
               <MiradorShareEmbed
                 embedUrlReplacePattern={embedUrlReplacePattern}
                 manifestId={manifestId}
+                windowId={windowId}
               />
               <Divider />
             </React.Fragment>
@@ -197,6 +199,7 @@ MiradorShareDialog.propTypes = {
   ),
   manifestId: PropTypes.string,
   open: PropTypes.bool,
+  windowId: PropTypes.string.isRequired,
 };
 
 MiradorShareDialog.defaultProps = {

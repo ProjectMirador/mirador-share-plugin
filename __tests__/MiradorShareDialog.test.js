@@ -10,6 +10,7 @@ function createWrapper(props) {
       displayShareLink
       manifestId="http://example.com/abc/iiif/manifest"
       open
+      windowId="wid123"
 
       {...props}
     />,
