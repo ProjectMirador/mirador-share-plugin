@@ -127,19 +127,19 @@ export class MiradorShareDialog extends Component {
           {displayShareLink && (
             <React.Fragment>
               <Typography className={classes.h3} variant="h3">Share link</Typography>
-              <TextField
-                defaultValue={shareLinkText}
-                className={classes.shareLinkTextField}
-                margin="dense"
-                fullWidth
-                variant="filled"
-                onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
-                inputProps={{ 'aria-label': 'Share link URL', className: classes.shareLinkInput }}
-              />
-              {' '}
-              <CopyToClipboard text={shareLinkText}>
-                <Button variant="outlined" color="primary">Copy</Button>
-              </CopyToClipboard>
+              <div className={classes.inputContainer}>
+                <TextField
+                  defaultValue={shareLinkText}
+                  fullWidth
+                  variant="filled"
+                  onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
+                  inputProps={{ 'aria-label': 'Share link URL', className: classes.shareLinkInput }}
+                />
+                {' '}
+                <CopyToClipboard text={shareLinkText}>
+                  <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
+                </CopyToClipboard>
+              </div>
               <Divider />
             </React.Fragment>
           )}
@@ -174,12 +174,13 @@ export class MiradorShareDialog extends Component {
 
 MiradorShareDialog.propTypes = {
   classes: PropTypes.shape({
+    copyButton: PropTypes.string,
     h2: PropTypes.string,
     h3: PropTypes.string,
     iiifIcon: PropTypes.string,
     iiifLink: PropTypes.string,
+    inputContainer: PropTypes.string,
     shareLinkInput: PropTypes.string,
-    shareLinkTextField: PropTypes.string,
   }).isRequired,
   closeShareDialog: PropTypes.func.isRequired,
   displayEmbedOption: PropTypes.bool,
@@ -211,7 +212,10 @@ MiradorShareDialog.defaultProps = {
   open: false,
 };
 
-const styles = () => ({
+const styles = theme => ({
+  copyButton: {
+    marginLeft: theme.spacing.unit,
+  },
   h2: {
     paddingBottom: 0,
   },
@@ -224,12 +228,14 @@ const styles = () => ({
   iiifIcon: {
     verticalAlign: 'text-bottom',
   },
+  inputContainer: {
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: theme.spacing.unit,
+  },
   shareLinkInput: {
     paddingTop: '12px',
-  },
-  shareLinkTextField: {
-    paddingRight: 0,
-    width: '80%',
   },
 });
 
