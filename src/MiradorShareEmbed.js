@@ -124,15 +124,18 @@ class MiradorShareEmbed extends Component {
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend" className={classes.legend}>then copy &amp; paste code</FormLabel>
-          <TextField
-            multiline
-            rows={4}
-            value={this.embedCode()}
-            variant="filled"
-          />
-          <CopyToClipboard text={this.embedCode()}>
-            <Button variant="outlined" color="primary">Copy</Button>
-          </CopyToClipboard>
+          <div className={classes.inputContainer}>
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              value={this.embedCode()}
+              variant="filled"
+            />
+            <CopyToClipboard text={this.embedCode()}>
+              <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
+            </CopyToClipboard>
+          </div>
         </FormControl>
       </React.Fragment>
     );
@@ -141,9 +144,11 @@ class MiradorShareEmbed extends Component {
 
 MiradorShareEmbed.propTypes = {
   classes: PropTypes.shape({
+    copyButton: PropTypes.string,
     formControl: PropTypes.string,
     formControlLabel: PropTypes.string,
     legend: PropTypes.string,
+    inputContainer: PropTypes.string,
     radioGroup: PropTypes.string,
     selectedFormControlLabel: PropTypes.string,
   }),
@@ -162,6 +167,9 @@ MiradorShareEmbed.defaultProps = {
 };
 
 const styles = theme => ({
+  copyButton: {
+    marginLeft: theme.spacing.unit,
+  },
   formControl: {
     width: '100%',
   },
@@ -176,6 +184,12 @@ const styles = theme => ({
   legend: {
     paddingBottom: theme.spacing.unit,
     paddingTop: theme.spacing.unit,
+  },
+  inputContainer: {
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: theme.spacing.unit,
   },
   radioGroup: {
     display: 'inline',
