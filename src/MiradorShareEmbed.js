@@ -174,6 +174,7 @@ const styles = theme => ({
   formControlLabel: {
     border: `1px solid ${theme.palette.grey[500]}`,
     height: '125px',
+    flexGrow: 1,
     margin: '0',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
@@ -184,7 +185,8 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit,
   },
   radioGroup: {
-    display: 'inline',
+    display: 'flex',
+    flexDirection: 'row',
   },
   selectedFormControlLabel: {
     backgroundColor: theme.palette.action.selected,
