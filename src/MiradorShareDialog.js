@@ -118,7 +118,7 @@ export class MiradorShareDialog extends Component {
         onClose={closeShareDialog}
         open={open}
       >
-        <DialogTitle disableTypography>
+        <DialogTitle disableTypography className={classes.h2}>
           <Typography variant="h2">
             Share
           </Typography>
@@ -126,7 +126,7 @@ export class MiradorShareDialog extends Component {
         <DialogContent>
           {displayShareLink && (
             <React.Fragment>
-              <Typography variant="h3">Share link</Typography>
+              <Typography className={classes.h3} variant="h3">Share link</Typography>
               <TextField
                 defaultValue={shareLinkText}
                 className={classes.shareLinkTextField}
@@ -145,7 +145,7 @@ export class MiradorShareDialog extends Component {
           )}
           {displayEmbedOption && (
             <React.Fragment>
-              <Typography variant="h3">Embed</Typography>
+              <Typography className={classes.h3} variant="h3">Embed</Typography>
               <MiradorShareEmbed
                 embedUrlReplacePattern={embedUrlReplacePattern}
                 manifestId={manifestId}
@@ -153,7 +153,7 @@ export class MiradorShareDialog extends Component {
               <Divider />
             </React.Fragment>
           )}
-          <Typography variant="h3">Alternate viewer</Typography>
+          <Typography className={classes.h3} variant="h3">Alternate viewer</Typography>
           <Typography variant="body1">
             <Link href={this.dragAndDropUrl()} className={classes.iiifLink}>
               <IiiifIcon className={classes.iiifIcon} />
@@ -174,6 +174,8 @@ export class MiradorShareDialog extends Component {
 
 MiradorShareDialog.propTypes = {
   classes: PropTypes.shape({
+    h2: PropTypes.string,
+    h3: PropTypes.string,
     iiifIcon: PropTypes.string,
     iiifLink: PropTypes.string,
     shareLinkInput: PropTypes.string,
@@ -210,6 +212,12 @@ MiradorShareDialog.defaultProps = {
 };
 
 const styles = () => ({
+  h2: {
+    paddingBottom: 0,
+  },
+  h3: {
+    marginTop: '20px',
+  },
   iiifLink: {
     marginRight: '10px',
   },
