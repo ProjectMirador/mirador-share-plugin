@@ -36,6 +36,12 @@ class MiradorShareEmbed extends Component {
         viewerWidth: 800,
         viewerHeight: 600,
       },
+      extraLarge: {
+        iconWidth: 100,
+        iconHeight: 75,
+        viewerWidth: 1024,
+        viewerHeight: 768,
+      },
     };
   }
 
@@ -175,7 +181,8 @@ const styles = theme => ({
   },
   formControlLabel: {
     border: `1px solid ${theme.palette.grey[500]}`,
-    height: '115px',
+    height: '125px',
+    flexGrow: 1,
     margin: '0',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
@@ -192,7 +199,8 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit,
   },
   radioGroup: {
-    display: 'inline',
+    display: 'flex',
+    flexDirection: 'row',
   },
   selectedFormControlLabel: {
     backgroundColor: theme.palette.action.selected,

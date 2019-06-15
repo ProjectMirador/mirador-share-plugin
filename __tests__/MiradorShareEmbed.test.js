@@ -32,7 +32,7 @@ describe('MiradorShareEmbed', () => {
   it('renders a radio group w/ a form control for each of the size options', () => {
     wrapper = createWrapper();
 
-    expect(wrapper.find('RadioGroup WithStyles(WithFormControlContext(FormControlLabel))').length).toBe(3);
+    expect(wrapper.find('RadioGroup WithStyles(WithFormControlContext(FormControlLabel))').length).toBe(4);
     expect(
       wrapper.find('RadioGroup WithStyles(WithFormControlContext(FormControlLabel))').at(0).props().label,
     ).toEqual('560x420');
@@ -42,6 +42,9 @@ describe('MiradorShareEmbed', () => {
     expect(
       wrapper.find('RadioGroup WithStyles(WithFormControlContext(FormControlLabel))').at(2).props().label,
     ).toEqual('800x600');
+    expect(
+      wrapper.find('RadioGroup WithStyles(WithFormControlContext(FormControlLabel))').at(3).props().label,
+    ).toEqual('1024x768');
   });
 
   it('renders the embed code in a text field', () => {
