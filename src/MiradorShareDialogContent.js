@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import MiradorShareEmbed from './MiradorShareEmbed';
 import IiiifIcon from './IiifIcon';
@@ -82,64 +83,67 @@ class MiradorShareDialogContent extends Component {
       embedUrlReplacePattern,
       manifestId,
       open,
+      theme,
     } = this.props;
     const { shareLinkText } = this.state;
 
     return (
-      <Dialog
-        onClose={closeShareDialog}
-        open={open}
-      >
-        <DialogTitle disableTypography className={classes.h2}>
-          <Typography variant="h2">
-            Share
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          {displayShareLink && (
-            <React.Fragment>
-              <Typography className={classes.h3} variant="h3">Share link</Typography>
-              <div className={classes.inputContainer}>
-                <TextField
-                  defaultValue={shareLinkText}
-                  fullWidth
-                  variant="filled"
-                  onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
-                  inputProps={{ 'aria-label': 'Share link URL', className: classes.shareLinkInput }}
+      <MuiThemeProvider theme={createMuiTheme(theme)}>
+        <Dialog
+          onClose={closeShareDialog}
+          open={open}
+        >
+          <DialogTitle disableTypography className={classes.h2}>
+            <Typography variant="h2">
+              Share
+            </Typography>
+          </DialogTitle>
+          <DialogContent>
+            {displayShareLink && (
+              <React.Fragment>
+                <Typography className={classes.h3} variant="h3">Share link</Typography>
+                <div className={classes.inputContainer}>
+                  <TextField
+                    defaultValue={shareLinkText}
+                    fullWidth
+                    variant="filled"
+                    onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
+                    inputProps={{ 'aria-label': 'Share link URL', className: classes.shareLinkInput }}
+                  />
+                  {' '}
+                  <CopyToClipboard text={shareLinkText}>
+                    <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
+                  </CopyToClipboard>
+                </div>
+                <Divider />
+              </React.Fragment>
+            )}
+            {displayEmbedOption && (
+              <React.Fragment>
+                <Typography className={classes.h3} variant="h3">Embed</Typography>
+                <MiradorShareEmbed
+                  embedUrlReplacePattern={embedUrlReplacePattern}
+                  manifestId={manifestId}
                 />
-                {' '}
-                <CopyToClipboard text={shareLinkText}>
-                  <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
-                </CopyToClipboard>
-              </div>
-              <Divider />
-            </React.Fragment>
-          )}
-          {displayEmbedOption && (
-            <React.Fragment>
-              <Typography className={classes.h3} variant="h3">Embed</Typography>
-              <MiradorShareEmbed
-                embedUrlReplacePattern={embedUrlReplacePattern}
-                manifestId={manifestId}
-              />
-              <Divider />
-            </React.Fragment>
-          )}
-          <Typography className={classes.h3} variant="h3">Alternate viewer</Typography>
-          <Typography variant="body1">
-            <Link href={this.dragAndDropUrl()} className={classes.iiifLink}>
-              <IiiifIcon className={classes.iiifIcon} />
-            </Link>
-            Drag & drop this icon to any IIIF viewer.
-            {this.whatIsThisLink()}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeShareDialog} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+                <Divider />
+              </React.Fragment>
+            )}
+            <Typography className={classes.h3} variant="h3">Alternate viewer</Typography>
+            <Typography variant="body1">
+              <Link href={this.dragAndDropUrl()} className={classes.iiifLink}>
+                <IiiifIcon className={classes.iiifIcon} />
+              </Link>
+              Drag & drop this icon to any IIIF viewer.
+              {this.whatIsThisLink()}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeShareDialog} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </MuiThemeProvider>
     );
   }
 }
@@ -172,6 +176,7 @@ MiradorShareDialogContent.propTypes = {
   ),
   manifestId: PropTypes.string,
   open: PropTypes.bool,
+  theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 MiradorShareDialogContent.defaultProps = {

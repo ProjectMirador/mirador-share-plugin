@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+import { getTheme } from 'mirador/dist/es/src/state/selectors/config';
 import MiradorShareDialogContent from './MiradorShareDialogContent';
 
 const mapDispatchToProps = (dispatch, { windowId }) => ({
@@ -19,6 +20,7 @@ const mapStateToProps = (state, { windowId }) => {
       && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
     dragAndDropInfoLink: miradorSharePluginConfig.dragAndDropInfoLink,
     manifestId: (getManifestoInstance(state, { windowId }) || {}).id,
+    theme: getTheme(state),
     open: (state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share'),
   };
 };
