@@ -242,6 +242,7 @@ const styles = theme => ({
 export default {
   target: 'Window',
   mode: 'add',
+  name: 'MiradorShareDialog',
   component: withStyles(styles)(MiradorShareDialog),
   mapDispatchToProps,
   mapStateToProps,

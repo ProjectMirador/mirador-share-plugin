@@ -1,5 +1,5 @@
 import Mirador from 'mirador/dist/es/src/index';
-import miradorSharePlugin from '../../src';
+import miradorSharePlugin from '../../src/miradorSharePlugin';
 import miradorShareDialogPlugin from '../../src/MiradorShareDialog';
 
 const config = {
