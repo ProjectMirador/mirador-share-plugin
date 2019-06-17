@@ -64,6 +64,7 @@ MiradorShare.propTypes = {
 export default {
   target: 'WindowTopMenu',
   mode: 'add',
+  name: 'MiradorSharePlugin',
   component: MiradorShare,
   mapDispatchToProps,
   mapStateToProps,

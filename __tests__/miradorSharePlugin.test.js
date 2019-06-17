@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import miradorSharePlugin from '../src';
+import miradorSharePlugin from '../src/miradorSharePlugin';
 
 function createWrapper(props) {
   return shallow(
