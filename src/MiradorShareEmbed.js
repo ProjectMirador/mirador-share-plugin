@@ -174,7 +174,7 @@ MiradorShareEmbed.defaultProps = {
 
 const styles = theme => ({
   copyButton: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(),
   },
   formControl: {
     width: '100%',
@@ -189,14 +189,14 @@ const styles = theme => ({
     },
   },
   legend: {
-    paddingBottom: theme.spacing.unit,
-    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing(),
+    paddingTop: theme.spacing(),
   },
   inputContainer: {
     alignItems: 'flex-end',
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(),
   },
   radioGroup: {
     display: 'flex',
