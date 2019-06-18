@@ -191,7 +191,7 @@ MiradorShareDialogContent.defaultProps = {
 
 const styles = theme => ({
   copyButton: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(),
   },
   h2: {
     paddingBottom: 0,
@@ -209,7 +209,7 @@ const styles = theme => ({
     alignItems: 'flex-end',
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(),
   },
   shareLinkInput: {
     paddingTop: '12px',
