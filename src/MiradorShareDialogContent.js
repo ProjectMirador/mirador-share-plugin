@@ -176,7 +176,7 @@ MiradorShareDialogContent.propTypes = {
   ),
   manifestId: PropTypes.string,
   open: PropTypes.bool,
-  theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  theme: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 MiradorShareDialogContent.defaultProps = {
@@ -187,6 +187,7 @@ MiradorShareDialogContent.defaultProps = {
   manifestId: '',
   manifestIdReplacePattern: [],
   open: false,
+  theme: {},
 };
 
 const styles = theme => ({

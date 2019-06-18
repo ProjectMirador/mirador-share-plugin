@@ -20,7 +20,7 @@ describe('miradorSharePlugin', () => {
   describe('renders a component', () => {
     it('renders a thing', () => {
       const wrapper = createWrapper();
-      expect(wrapper.find('WithStyles(ListItemText)').props().children).toEqual('Share');
+      expect(wrapper.find('WithStyles(ForwardRef(ListItemText))').props().children).toEqual('Share');
     });
   });
 
@@ -29,7 +29,7 @@ describe('miradorSharePlugin', () => {
       const handleClose = jest.fn();
       const openShareDialog = jest.fn();
       const wrapper = createWrapper({ handleClose, openShareDialog });
-      wrapper.find('WithStyles(MenuItem)').simulate('click');
+      wrapper.find('WithStyles(ForwardRef(MenuItem))').simulate('click');
       expect(handleClose).toHaveBeenCalled();
       expect(openShareDialog).toHaveBeenCalled();
     });
