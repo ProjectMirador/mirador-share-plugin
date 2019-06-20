@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import ShareIcon from '@material-ui/icons/ShareSharp';
@@ -47,8 +48,10 @@ class MiradorShare extends Component {
   render() {
     return (
       <MenuItem onClick={() => this.openDialogAndClose()}>
-        <ShareIcon />
-        <ListItemText inset primaryTypographyProps={{ variant: 'body1' }}>
+        <ListItemIcon>
+          <ShareIcon />
+        </ListItemIcon>
+        <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
           Share
         </ListItemText>
       </MenuItem>
