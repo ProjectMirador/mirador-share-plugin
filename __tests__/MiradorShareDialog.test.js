@@ -18,11 +18,11 @@ function createWrapper(props) {
 
 describe('Dialog', () => {
   let wrapper;
-  it('renders a dialog that is open/closed based on the passed in prop', () => {
+  it('renders a dialog based on the passed in open prop', () => {
     wrapper = createWrapper();
     expect(wrapper.find('WithStyles(ForwardRef(Dialog))').props().open).toBe(true);
     wrapper = createWrapper({ open: false });
-    expect(wrapper.find('WithStyles(ForwardRef(Dialog))').props().open).toBe(false);
+    expect(wrapper.find('WithStyles(ForwardRef(Dialog))').length).toBe(0);
   });
 
   it('renders the section headings in an h3', () => {

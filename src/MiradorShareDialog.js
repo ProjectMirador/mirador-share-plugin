@@ -113,6 +113,8 @@ export class MiradorShareDialog extends Component {
     } = this.props;
     const { shareLinkText } = this.state;
 
+    if (!open) return (<React.Fragment />);
+
     return (
       <Dialog
         onClose={closeShareDialog}
