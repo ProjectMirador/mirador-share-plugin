@@ -65,7 +65,7 @@ MiradorShare.propTypes = {
 };
 
 export default {
-  target: 'WindowTopMenu',
+  target: 'WindowTopBarPluginMenu',
   mode: 'add',
   name: 'MiradorSharePlugin',
   component: MiradorShare,
