@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+import { getContainerId } from 'mirador/dist/es/src/state/selectors/config';
 import MiradorShareEmbed from './MiradorShareEmbed';
 import IiiifIcon from './IiifIcon';
 
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
 const mapStateToProps = (state, { windowId }) => {
   const miradorSharePluginConfig = state.config.miradorSharePlugin || {};
   return {
+    containerId: getContainerId(state),
     displayEmbedOption: miradorSharePluginConfig.embedOption
       && miradorSharePluginConfig.embedOption.enabled,
     displayShareLink: miradorSharePluginConfig.shareLink
@@ -105,6 +107,7 @@ export class MiradorShareDialog extends Component {
     const {
       classes,
       closeShareDialog,
+      containerId,
       displayEmbedOption,
       displayShareLink,
       embedUrlReplacePattern,
@@ -115,6 +118,7 @@ export class MiradorShareDialog extends Component {
 
     return (
       <Dialog
+        container={document.querySelector(`#${containerId} .mirador-viewer`)}
         onClose={closeShareDialog}
         open={open}
       >
@@ -183,6 +187,7 @@ MiradorShareDialog.propTypes = {
     shareLinkInput: PropTypes.string,
   }).isRequired,
   closeShareDialog: PropTypes.func.isRequired,
+  containerId: PropTypes.string.isRequired,
   displayEmbedOption: PropTypes.bool,
   displayShareLink: PropTypes.bool,
   dragAndDropInfoLink: PropTypes.string,

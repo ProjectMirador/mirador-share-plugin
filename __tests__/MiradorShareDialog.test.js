@@ -6,6 +6,7 @@ function createWrapper(props) {
   return shallow(
     <miradorShareDialog.component
       closeShareDialog={() => {}}
+      containerId="container-123"
       displayEmbedOption
       displayShareLink
       manifestId="http://example.com/abc/iiif/manifest"
