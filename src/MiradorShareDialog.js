@@ -4,7 +4,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
@@ -13,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
 import { getContainerId } from 'mirador/dist/es/src/state/selectors/config';
+import ScrollIndicatedDialogContent from 'mirador/dist/es/src/containers/ScrollIndicatedDialogContent';
 import MiradorShareEmbed from './MiradorShareEmbed';
 import IiiifIcon from './IiifIcon';
 
@@ -129,7 +129,7 @@ export class MiradorShareDialog extends Component {
             Share
           </Typography>
         </DialogTitle>
-        <DialogContent>
+        <ScrollIndicatedDialogContent>
           {displayShareLink && (
             <React.Fragment>
               <Typography className={classes.h3} variant="h3">Share link</Typography>
@@ -167,7 +167,7 @@ export class MiradorShareDialog extends Component {
             Drag & drop this icon to any IIIF viewer.
             {this.whatIsThisLink()}
           </Typography>
-        </DialogContent>
+        </ScrollIndicatedDialogContent>
         <DialogActions>
           <Button onClick={closeShareDialog} color="primary">
             Close
