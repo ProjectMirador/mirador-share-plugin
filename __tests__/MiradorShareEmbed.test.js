@@ -20,30 +20,30 @@ describe('MiradorShareEmbed', () => {
     wrapper = createWrapper();
 
     expect(wrapper.find('WithStyles(ForwardRef(FormControl))[component="fieldset"]').length).toBe(2);
-    expect(wrapper.find('WithStyles(WithFormControlContext(ForwardRef(FormLabel)))[component="legend"]').length).toBe(2);
+    expect(wrapper.find('WithStyles(ForwardRef(FormLabel))[component="legend"]').length).toBe(2);
     expect(wrapper.find(
-      'WithStyles(WithFormControlContext(ForwardRef(FormLabel)))',
+      'WithStyles(ForwardRef(FormLabel))',
     ).at(0).props().children).toEqual('Select viewer size');
     expect(wrapper.find(
-      'WithStyles(WithFormControlContext(ForwardRef(FormLabel)))',
+      'WithStyles(ForwardRef(FormLabel))',
     ).at(1).props().children).toEqual('then copy & paste code');
   });
 
   it('renders a radio group w/ a form control for each of the size options', () => {
     wrapper = createWrapper();
 
-    expect(wrapper.find('ForwardRef(RadioGroup) WithStyles(WithFormControlContext(ForwardRef(FormControlLabel)))').length).toBe(4);
+    expect(wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').length).toBe(4);
     expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(WithFormControlContext(ForwardRef(FormControlLabel)))').at(0).props().label,
+      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(0).props().label,
     ).toEqual('560x420');
     expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(WithFormControlContext(ForwardRef(FormControlLabel)))').at(1).props().label,
+      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(1).props().label,
     ).toEqual('640x480');
     expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(WithFormControlContext(ForwardRef(FormControlLabel)))').at(2).props().label,
+      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(2).props().label,
     ).toEqual('800x600');
     expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(WithFormControlContext(ForwardRef(FormControlLabel)))').at(3).props().label,
+      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(3).props().label,
     ).toEqual('1024x768');
   });
 
