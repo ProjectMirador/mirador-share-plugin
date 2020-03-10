@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
 
 const mapStateToProps = (state, { windowId }) => {
   const miradorSharePluginConfig = state.config.miradorSharePlugin || {};
+
   return {
     containerId: getContainerId(state),
     displayEmbedOption: miradorSharePluginConfig.embedOption
@@ -30,6 +31,8 @@ const mapStateToProps = (state, { windowId }) => {
       && miradorSharePluginConfig.shareLink.enabled,
     embedUrlReplacePattern: miradorSharePluginConfig.embedOption
       && miradorSharePluginConfig.embedOption.embedUrlReplacePattern,
+    embedIframeTitle: miradorSharePluginConfig.embedOption
+      && miradorSharePluginConfig.embedOption.embedIframeTitle,
     manifestIdReplacePattern: miradorSharePluginConfig.shareLink
       && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
     dragAndDropInfoLink: miradorSharePluginConfig.dragAndDropInfoLink,
@@ -110,6 +113,7 @@ export class MiradorShareDialog extends Component {
       containerId,
       displayEmbedOption,
       displayShareLink,
+      embedIframeTitle,
       embedUrlReplacePattern,
       manifestId,
       open,
@@ -153,6 +157,7 @@ export class MiradorShareDialog extends Component {
             <React.Fragment>
               <Typography className={classes.h3} variant="h3">Embed</Typography>
               <MiradorShareEmbed
+                embedIframeTitle={embedIframeTitle}
                 embedUrlReplacePattern={embedUrlReplacePattern}
                 manifestId={manifestId}
               />
@@ -193,6 +198,7 @@ MiradorShareDialog.propTypes = {
   displayEmbedOption: PropTypes.bool,
   displayShareLink: PropTypes.bool,
   dragAndDropInfoLink: PropTypes.string,
+  embedIframeTitle: PropTypes.string,
   embedUrlReplacePattern: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,
@@ -213,6 +219,7 @@ MiradorShareDialog.defaultProps = {
   displayEmbedOption: false,
   displayShareLink: false,
   dragAndDropInfoLink: null,
+  embedIframeTitle: 'Image viewer',
   embedUrlReplacePattern: [],
   manifestId: '',
   manifestIdReplacePattern: [],
