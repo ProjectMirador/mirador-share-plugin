@@ -103,11 +103,11 @@ class MiradorShareEmbed extends Component {
   }
 
   embedCode() {
-    const { embedIframeTitle } = this.props;
+    const { embedIframeAttributes, embedIframeTitle } = this.props;
     const { selectedSize } = this.state;
     const size = MiradorShareEmbed.sizes()[selectedSize];
 
-    return `<iframe src="${this.embedUrl()}" title="${embedIframeTitle}" width="${size.viewerWidth}" height="${size.viewerHeight}" allowfullscreen frameborder="0" />`;
+    return `<iframe src="${this.embedUrl()}" title="${embedIframeTitle}" width="${size.viewerWidth}" height="${size.viewerHeight}" ${embedIframeAttributes} />`;
   }
 
   /**
@@ -159,6 +159,7 @@ MiradorShareEmbed.propTypes = {
     radioGroup: PropTypes.string,
     selectedFormControlLabel: PropTypes.string,
   }),
+  embedIframeAttributes: PropTypes.string.isRequired,
   embedIframeTitle: PropTypes.string.isRequired,
   embedUrlReplacePattern: PropTypes.arrayOf(
     PropTypes.oneOfType([

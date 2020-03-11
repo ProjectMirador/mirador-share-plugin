@@ -6,6 +6,7 @@ import MiradorShareEmbed from '../src/MiradorShareEmbed';
 function createWrapper(props) {
   return shallow(
     <MiradorShareEmbed
+      embedIframeAttributes='allowfullscreen frameborder="0"'
       embedIframeTitle="Title Prop"
       embedUrlReplacePattern={[]}
       manifestId="https://example.com/abc123/iiif/manifest"
