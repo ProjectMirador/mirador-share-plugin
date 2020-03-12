@@ -80,6 +80,17 @@ describe('MiradorShareEmbed', () => {
     expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/title="A configured title"/);
   });
 
+  it('adds the height/width to the Embed URL using the given param', () => {
+    wrapper = createWrapper({ syncIframeDimensions: { height: { param: 'maxheight' } } });
+    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/iiif\/manifest&maxheight=420/);
+
+    wrapper = createWrapper({ syncIframeDimensions: { width: { param: 'maxwidth' } } });
+    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/iiif\/manifest&maxwidth=560/);
+
+    wrapper = createWrapper({ syncIframeDimensions: { height: { param: 'maxheight' }, width: { param: 'maxwidth' } } });
+    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/iiif\/manifest&maxwidth=560&maxheight=420/);
+  });
+
   it('the embed code gets its height and width from state', () => {
     wrapper = createWrapper();
 

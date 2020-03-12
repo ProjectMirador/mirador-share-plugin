@@ -96,10 +96,32 @@ class MiradorShareEmbed extends Component {
     });
   }
 
+  additionalEmbedParams() {
+    const { syncIframeDimensions } = this.props;
+    const { selectedSize } = this.state;
+    const size = MiradorShareEmbed.sizes()[selectedSize];
+
+    if (!(syncIframeDimensions.height || syncIframeDimensions.width)) {
+      return '';
+    }
+
+    const params = [];
+
+    if (syncIframeDimensions.width) {
+      params.push(`${syncIframeDimensions.width.param}=${size.viewerWidth}`);
+    }
+
+    if (syncIframeDimensions.height) {
+      params.push(`${syncIframeDimensions.height.param}=${size.viewerHeight}`);
+    }
+
+    return `&${params.join('&')}`;
+  }
+
   embedUrl() {
     const { embedUrlReplacePattern, manifestId } = this.props;
 
-    return manifestId.replace(embedUrlReplacePattern[0], embedUrlReplacePattern[1]);
+    return `${manifestId.replace(embedUrlReplacePattern[0], embedUrlReplacePattern[1])}${this.additionalEmbedParams()}`;
   }
 
   embedCode() {
@@ -168,11 +190,16 @@ MiradorShareEmbed.propTypes = {
     ]),
   ).isRequired,
   manifestId: PropTypes.string,
+  syncIframeDimensions: PropTypes.shape({
+    height: PropTypes.shape({ param: PropTypes.string }),
+    width: PropTypes.shape({ param: PropTypes.string }),
+  }),
 };
 
 MiradorShareEmbed.defaultProps = {
   classes: {},
   manifestId: null,
+  syncIframeDimensions: {},
 };
 
 const styles = theme => ({

@@ -15,6 +15,9 @@ const config = {
         /.*\.edu\/(\w+)\/iiif\/manifest/,
         'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
       ],
+      syncIframeDimensions: {
+        height: { param: 'maxheight' },
+      },
     },
     shareLink: {
       enabled: true,

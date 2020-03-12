@@ -22,24 +22,22 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
 
 const mapStateToProps = (state, { windowId }) => {
   const miradorSharePluginConfig = state.config.miradorSharePlugin || {};
+  const embedOption = miradorSharePluginConfig.embedOption || {};
 
   return {
     containerId: getContainerId(state),
-    displayEmbedOption: miradorSharePluginConfig.embedOption
-      && miradorSharePluginConfig.embedOption.enabled,
+    displayEmbedOption: embedOption.enabled,
     displayShareLink: miradorSharePluginConfig.shareLink
       && miradorSharePluginConfig.shareLink.enabled,
-    embedUrlReplacePattern: miradorSharePluginConfig.embedOption
-      && miradorSharePluginConfig.embedOption.embedUrlReplacePattern,
-    embedIframeAttributes: miradorSharePluginConfig.embedOption
-      && miradorSharePluginConfig.embedOption.embedIframeAttributes,
-    embedIframeTitle: miradorSharePluginConfig.embedOption
-      && miradorSharePluginConfig.embedOption.embedIframeTitle,
+    embedUrlReplacePattern: embedOption.embedUrlReplacePattern,
+    embedIframeAttributes: embedOption.embedIframeAttributes,
+    embedIframeTitle: embedOption.embedIframeTitle,
     manifestIdReplacePattern: miradorSharePluginConfig.shareLink
       && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
     dragAndDropInfoLink: miradorSharePluginConfig.dragAndDropInfoLink,
     manifestId: (getManifestoInstance(state, { windowId }) || {}).id,
     open: (state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share'),
+    syncIframeDimensions: embedOption.syncIframeDimensions,
   };
 };
 
@@ -120,6 +118,7 @@ export class MiradorShareDialog extends Component {
       embedUrlReplacePattern,
       manifestId,
       open,
+      syncIframeDimensions,
     } = this.props;
     const { shareLinkText } = this.state;
 
@@ -163,6 +162,7 @@ export class MiradorShareDialog extends Component {
                 embedIframeAttributes={embedIframeAttributes}
                 embedIframeTitle={embedIframeTitle}
                 embedUrlReplacePattern={embedUrlReplacePattern}
+                syncIframeDimensions={syncIframeDimensions}
                 manifestId={manifestId}
               />
               <Divider />
@@ -218,6 +218,10 @@ MiradorShareDialog.propTypes = {
   ),
   manifestId: PropTypes.string,
   open: PropTypes.bool,
+  syncIframeDimensions: PropTypes.shape({
+    height: PropTypes.shape({ param: PropTypes.string }),
+    width: PropTypes.shape({ param: PropTypes.string }),
+  }),
 };
 
 MiradorShareDialog.defaultProps = {
@@ -230,6 +234,7 @@ MiradorShareDialog.defaultProps = {
   manifestId: '',
   manifestIdReplacePattern: [],
   open: false,
+  syncIframeDimensions: {},
 };
 
 const styles = theme => ({
