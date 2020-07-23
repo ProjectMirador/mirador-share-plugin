@@ -4,11 +4,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
@@ -51,17 +50,17 @@ class MiradorShareEmbed extends Component {
     this.state = {
       selectedSize: 'small',
     };
+    this.handleSizeSelect = this.handleSizeSelect.bind(this);
   }
 
-  handleSizeSelect(size) {
+  handleSizeSelect(e, value) {
     this.setState({
-      selectedSize: size,
+      selectedSize: value,
     });
   }
 
   formControlLabelsForSizes() {
     const { classes } = this.props;
-    const { selectedSize } = this.state;
     const sizes = MiradorShareEmbed.sizes();
     const iconColor = createMuiTheme().palette.grey[500];
     const icon = (width, height) => (
@@ -75,23 +74,16 @@ class MiradorShareEmbed extends Component {
     return Object.keys(sizes).map((sizeKey) => {
       const size = sizes[sizeKey];
       return (
-        <FormControlLabel
-          className={[
-            classes.formControlLabel,
-            (selectedSize === sizeKey ? classes.selectedFormControlLabel : ''),
-          ].join(' ')
-          }
-          control={(
-            <Radio
-              checkedIcon={icon(size.iconWidth, size.iconHeight)}
-              icon={icon(size.iconWidth, size.iconHeight)}
-            />
-          )}
+        <ToggleButton
           key={sizeKey}
           label={`${size.viewerWidth}x${size.viewerHeight}`}
-          labelPlacement="top"
           value={sizeKey}
-        />
+          classes={{ label: classes.toggleButtonLabel }}
+          className={classes.toggleButton}
+        >
+          {`${size.viewerWidth}x${size.viewerHeight}`}
+          {icon(size.iconWidth, size.iconHeight)}
+        </ToggleButton>
       );
     });
   }
@@ -137,19 +129,20 @@ class MiradorShareEmbed extends Component {
   */
   render() {
     const { classes } = this.props;
+    const { selectedSize } = this.state;
 
     return (
       <React.Fragment>
         <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend" className={classes.legend}>Select viewer size</FormLabel>
-          <RadioGroup
-            aria-label="Select viewer size"
-            className={classes.radioGroup}
-            name="viwerSize"
-            onChange={(e) => { this.handleSizeSelect(e.target.value); }}
+          <ToggleButtonGroup
+            exclusive
+            value={selectedSize}
+            onChange={this.handleSizeSelect}
+            className={classes.toggleButtonGroup}
           >
             {this.formControlLabelsForSizes()}
-          </RadioGroup>
+          </ToggleButtonGroup>
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend" className={classes.legend}>then copy &amp; paste code</FormLabel>
@@ -175,11 +168,11 @@ MiradorShareEmbed.propTypes = {
   classes: PropTypes.shape({
     copyButton: PropTypes.string,
     formControl: PropTypes.string,
-    formControlLabel: PropTypes.string,
     legend: PropTypes.string,
     inputContainer: PropTypes.string,
-    radioGroup: PropTypes.string,
-    selectedFormControlLabel: PropTypes.string,
+    toggleButton: PropTypes.string,
+    toggleButtonGroup: PropTypes.string,
+    toggleButtonLabel: PropTypes.string,
   }),
   embedIframeAttributes: PropTypes.string.isRequired,
   embedIframeTitle: PropTypes.string.isRequired,
@@ -209,15 +202,6 @@ const styles = theme => ({
   formControl: {
     width: '100%',
   },
-  formControlLabel: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    height: '125px',
-    flexGrow: 1,
-    margin: '0',
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
   legend: {
     paddingBottom: theme.spacing(),
     paddingTop: theme.spacing(),
@@ -228,12 +212,15 @@ const styles = theme => ({
     flexDirection: 'row',
     marginBottom: theme.spacing(),
   },
-  radioGroup: {
+  toggleButton: {
+    flexGrow: 1,
+  },
+  toggleButtonGroup: {
     display: 'flex',
     flexDirection: 'row',
   },
-  selectedFormControlLabel: {
-    backgroundColor: theme.palette.action.selected,
+  toggleButtonLabel: {
+    flexDirection: 'column',
   },
 });
 
