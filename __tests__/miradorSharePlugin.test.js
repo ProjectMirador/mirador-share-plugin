@@ -7,7 +7,6 @@ function createWrapper(props) {
     <miradorSharePlugin.component
       handleClose={() => {}}
       openShareDialog={() => {}}
-
       {...props}
     />,
   );
