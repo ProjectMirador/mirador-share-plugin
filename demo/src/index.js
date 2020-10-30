@@ -1,6 +1,5 @@
 import Mirador from 'mirador/dist/es/src/index';
-import miradorSharePlugin from '../../src/miradorSharePlugin';
-import miradorShareDialogPlugin from '../../src/MiradorShareDialog';
+import miradorSharePlugins from '../../src';
 
 const config = {
   id: 'demo',
@@ -30,6 +29,5 @@ const config = {
 };
 
 Mirador.viewer(config, [
-  miradorShareDialogPlugin,
-  miradorSharePlugin,
+  ...miradorSharePlugins,
 ]);
