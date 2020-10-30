@@ -70,7 +70,7 @@ describe('MiradorShareEmbed', () => {
     wrapper = createWrapper({ embedUrlReplacePattern });
 
     expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toEqual(
-      '<iframe src="https://embed.example.com/embed?url=https://example.com/abc123" title="Title Prop" width="560" height="420" allowfullscreen frameborder="0" />',
+      '<iframe src="https://embed.example.com/embed?url=https://example.com/abc123" title="Title Prop" width="560" height="420" allowfullscreen frameborder="0"></iframe>',
     );
   });
 

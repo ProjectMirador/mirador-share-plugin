@@ -129,7 +129,7 @@ class MiradorShareEmbed extends Component {
     const { selectedSize } = this.state;
     const size = MiradorShareEmbed.sizes()[selectedSize];
 
-    return `<iframe src="${this.embedUrl()}" title="${embedIframeTitle}" width="${size.viewerWidth}" height="${size.viewerHeight}" ${embedIframeAttributes} />`;
+    return `<iframe src="${this.embedUrl()}" title="${embedIframeTitle}" width="${size.viewerWidth}" height="${size.viewerHeight}" ${embedIframeAttributes}></iframe>`;
   }
 
   /**
