@@ -161,7 +161,7 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
+              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code">Copy</Button>
             </CopyToClipboard>
           </div>
         </FormControl>

@@ -149,7 +149,7 @@ export class MiradorShareDialog extends Component {
                 />
                 {' '}
                 <CopyToClipboard text={shareLinkText}>
-                  <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
+                  <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy link">Copy</Button>
                 </CopyToClipboard>
               </div>
               <Divider />
