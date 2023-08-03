@@ -18,17 +18,18 @@ function createWrapper(props) {
 describe('MiradorShareEmbed', () => {
   let wrapper;
 
-  it('renders fieldsets w/ legends for each section of the embed component', () => {
+  it('renders fieldsets w/ legends or labels for each section of the embed component', () => {
     wrapper = createWrapper();
 
     expect(wrapper.find('WithStyles(ForwardRef(FormControl))[component="fieldset"]').length).toBe(2);
-    expect(wrapper.find('WithStyles(ForwardRef(FormLabel))[component="legend"]').length).toBe(2);
+    expect(wrapper.find('WithStyles(ForwardRef(FormLabel))').length).toBe(2);
+    expect(wrapper.find('WithStyles(ForwardRef(FormLabel))[component="legend"]').length).toBe(1);
     expect(wrapper.find(
       'WithStyles(ForwardRef(FormLabel))',
     ).at(0).props().children).toEqual('Select viewer size');
     expect(wrapper.find(
       'WithStyles(ForwardRef(FormLabel))',
-    ).at(1).props().children).toEqual('then copy & paste code');
+    ).at(1).props().children).toEqual('Copy & paste code');
   });
 
   it('renders a radio group w/ a form control for each of the size options', () => {
