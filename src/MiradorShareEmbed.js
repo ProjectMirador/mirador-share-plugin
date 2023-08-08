@@ -151,9 +151,10 @@ class MiradorShareEmbed extends Component {
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend" className={classes.legend}>then copy &amp; paste code</FormLabel>
+          <FormLabel className={classes.label} for="copyCode">Copy &amp; paste code</FormLabel>
           <div className={classes.inputContainer}>
             <TextField
+              id="copyCode"
               fullWidth
               multiline
               rows={4}
@@ -161,7 +162,7 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button className={classes.copyButton} variant="outlined" color="primary">Copy</Button>
+              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code">Copy</Button>
             </CopyToClipboard>
           </div>
         </FormControl>
@@ -176,6 +177,7 @@ MiradorShareEmbed.propTypes = {
     formControl: PropTypes.string,
     formControlLabel: PropTypes.string,
     legend: PropTypes.string,
+    label: PropTypes.string,
     inputContainer: PropTypes.string,
     radioGroup: PropTypes.string,
     selectedFormControlLabel: PropTypes.string,
@@ -218,6 +220,10 @@ const styles = theme => ({
     },
   },
   legend: {
+    paddingBottom: theme.spacing(),
+    paddingTop: theme.spacing(),
+  },
+  label: {
     paddingBottom: theme.spacing(),
     paddingTop: theme.spacing(),
   },
