@@ -95,22 +95,13 @@ describe('Dialog', () => {
     });
 
     it('renders the link with IIIF Drag & Drop Compliant URL (passing the manifest in a param)', () => {
-      expect(wrapper.find('WithStyles(ForwardRef(Typography))[variant="body1"] WithStyles(ForwardRef(Link))').props().href).toEqual(
-        'http://example.com/abc/iiif/manifest?manifest=http://example.com/abc/iiif/manifest',
-      );
+      const link = wrapper.find('WithStyles(ForwardRef(Typography))[variant="body1"] WithStyles(ForwardRef(Link))').at(0);
+      expect(link.props().href).toEqual('http://example.com/abc/iiif/manifest?manifest=http://example.com/abc/iiif/manifest');
     });
 
     describe('when an info link is configured/passed in as a prop', () => {
-      it('renders Drag and Drop link with the passed URL as the base (where users will go if they click)', () => {
-        wrapper = createWrapper({ dragAndDropInfoLink: 'http://iiif.io/' });
-
-        expect(wrapper.find('WithStyles(ForwardRef(Typography))[variant="body1"] WithStyles(ForwardRef(Link))').at(0).props().href).toEqual(
-          'http://iiif.io/?manifest=http://example.com/abc/iiif/manifest',
-        );
-      });
-
       it('renders a "What is IIIF" link', () => {
-        wrapper = createWrapper({ dragAndDropInfoLink: 'http://iiif.io/' });
+        wrapper = createWrapper({ iiifInfoLink: 'http://iiif.io/' });
         const link = wrapper.find('WithStyles(ForwardRef(Typography))[variant="body1"] WithStyles(ForwardRef(Link))').at(1);
         expect(link.props().children).toEqual('What is IIIF?');
         expect(link.props().href).toEqual('http://iiif.io/');

@@ -7,7 +7,7 @@ const config = {
     loadedManifest: 'https://purl.stanford.edu/sn904cj3429/iiif/manifest',
   }],
   miradorSharePlugin: {
-    dragAndDropInfoLink: 'https://iiif.io',
+    iiifInfoLink: 'https://iiif.io',
     embedOption: {
       enabled: true,
       embedUrlReplacePattern: [

@@ -34,7 +34,7 @@ const mapStateToProps = (state, { windowId }) => {
     embedIframeTitle: embedOption.embedIframeTitle,
     manifestIdReplacePattern: miradorSharePluginConfig.shareLink
       && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
-    dragAndDropInfoLink: miradorSharePluginConfig.dragAndDropInfoLink,
+    iiifInfoLink: miradorSharePluginConfig.iiifInfoLink,
     manifestId: (getManifestoInstance(state, { windowId }) || {}).id,
     open: (state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share'),
     syncIframeDimensions: embedOption.syncIframeDimensions,
@@ -63,28 +63,22 @@ export class MiradorShareDialog extends Component {
   }
 
   dragAndDropUrl() {
-    const { dragAndDropInfoLink, manifestId } = this.props;
-    let baseUrl;
-
-    baseUrl = manifestId;
-
-    if (dragAndDropInfoLink) {
-      baseUrl = dragAndDropInfoLink;
-    }
+    const { manifestId } = this.props;
+    const baseUrl = manifestId;
 
     return `${baseUrl}?manifest=${manifestId}`;
   }
 
   whatIsThisLink() {
-    const { dragAndDropInfoLink } = this.props;
+    const { iiifInfoLink } = this.props;
 
-    if (!dragAndDropInfoLink) return null;
+    if (!iiifInfoLink) return null;
 
     return (
       <React.Fragment>
         {' '}
         [
-        <Link href={dragAndDropInfoLink}>What is IIIF?</Link>
+        <Link href={iiifInfoLink}>What is IIIF?</Link>
         ]
       </React.Fragment>
     );
@@ -149,7 +143,7 @@ export class MiradorShareDialog extends Component {
                 />
                 {' '}
                 <CopyToClipboard text={shareLinkText}>
-                  <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy link">Copy</Button>
+                  <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy link to clipboard">Copy</Button>
                 </CopyToClipboard>
               </div>
               <Divider />
@@ -201,7 +195,7 @@ MiradorShareDialog.propTypes = {
   containerId: PropTypes.string.isRequired,
   displayEmbedOption: PropTypes.bool,
   displayShareLink: PropTypes.bool,
-  dragAndDropInfoLink: PropTypes.string,
+  iiifInfoLink: PropTypes.string,
   embedIframeAttributes: PropTypes.string,
   embedIframeTitle: PropTypes.string,
   embedUrlReplacePattern: PropTypes.arrayOf(
@@ -227,7 +221,7 @@ MiradorShareDialog.propTypes = {
 MiradorShareDialog.defaultProps = {
   displayEmbedOption: false,
   displayShareLink: false,
-  dragAndDropInfoLink: null,
+  iiifInfoLink: 'https://iiif.io',
   embedIframeAttributes: 'allowfullscreen frameborder="0"',
   embedIframeTitle: 'Image viewer',
   embedUrlReplacePattern: [],
@@ -252,6 +246,7 @@ const styles = theme => ({
   },
   iiifIcon: {
     verticalAlign: 'text-bottom',
+    cursor: 'move',
   },
   inputContainer: {
     alignItems: 'flex-end',

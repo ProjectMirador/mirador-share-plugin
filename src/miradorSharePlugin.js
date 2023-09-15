@@ -32,8 +32,8 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
 });
 
 const mapStateToProps = (state, { windowId }) => ({
-  dragAndDropInfoLink: state.config.miradorSharePlugin
-    && state.config.miradorSharePlugin.dragAndDropInfoLink,
+  iiifInfoLink: state.config.miradorSharePlugin
+    && state.config.miradorSharePlugin.iiifInfoLink,
   manifestId: getManifestoInstance(state, { windowId }).id,
 });
 

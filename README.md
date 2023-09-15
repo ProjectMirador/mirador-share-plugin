@@ -31,7 +31,7 @@ Configurations for this plugin are injected when Mirador is initialized under th
 
 | Config Key | Type | Description |
 | --- | --- | --- |
-| `dragAndDropInfoLink` | string/url | Provides a `What is IIIF` link under the Alternate Viewers / Drag & Drop that points to the configured URL. This will also be the base of the Drag & Drop link so that if a user clicks instead of drags, they will go the informational page (as opposed to the manifest which is the default behavior) |
+| `iiifInfoLink` | string/url | Provides a `What is IIIF` link under the Alternate viewer section that points to the configured URL |
 | `embedOption` | object | The configuration objects for the Embed section. You can use this if you're able to easily modify the manifest ID to a URL that can be used to embed the resource in an `<iframe>` (most likely in embedded mode where you're only displaying your own content) |
 | `embedOption.enabled` | boolean | Configure whether to render the Embed section in the Share Dialog. |
 | `embedOption.embedIframeAttributes` | string | A string that contains HTML attributes to be applied to the `<iframe>` embed code. (Default: `allowfullscreen frameborder="0"`) |
