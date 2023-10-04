@@ -9,6 +9,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
 /**
@@ -139,6 +140,13 @@ class MiradorShareEmbed extends Component {
 
     return (
       <React.Fragment>
+        <SnackbarProvider
+          maxSnack={1}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        />
         <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend" className={classes.legend}>Select viewer size</FormLabel>
           <RadioGroup
@@ -162,7 +170,7 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code to clipboard">Copy</Button>
+              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code to clipboard" onClick={() => enqueueSnackbar(('Code copied to clipboard!'), { variant: 'success' })}>Copy</Button>
             </CopyToClipboard>
           </div>
         </FormControl>

@@ -20,7 +20,9 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "notistack": "^3.0.1"
+  },
   "peerDependencies": {
     "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",
