@@ -171,11 +171,19 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code to clipboard" onClick={() => enqueueSnackbar((
-                <Typography variant="body1">
-                  Code copied to clipboard!
-                </Typography>
-              ), { variant: 'success' })}>Copy</Button>
+              <Button
+                className={classes.copyButton}
+                variant="outlined"
+                color="primary"
+                aria-label="Copy code to clipboard"
+                onClick={() => enqueueSnackbar((
+                  <Typography variant="body1">
+                    Code copied to clipboard!
+                  </Typography>
+                ), { variant: 'success' })}
+              >
+                Copy
+              </Button>
             </CopyToClipboard>
           </div>
         </FormControl>

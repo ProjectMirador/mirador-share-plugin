@@ -150,11 +150,19 @@ export class MiradorShareDialog extends Component {
                 />
                 {' '}
                 <CopyToClipboard text={shareLinkText}>
-                  <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy link to clipboard" onClick={() => enqueueSnackbar((
-                    <Typography variant="body1">
-                      Link copied to clipboard!
-                    </Typography>
-                  ), { variant: 'success' })}>Copy</Button>
+                  <Button
+                    className={classes.copyButton}
+                    variant="outlined"
+                    color="primary"
+                    aria-label="Copy link to clipboard"
+                    onClick={() => enqueueSnackbar((
+                      <Typography variant="body1">
+                        Link copied to clipboard!
+                      </Typography>
+                    ), { variant: 'success' })}
+                  >
+                    Copy
+                  </Button>
                 </CopyToClipboard>
               </div>
               <Divider />
@@ -191,11 +199,19 @@ export class MiradorShareDialog extends Component {
                 Copy & paste the resource&apos;s manifest into any IIIF viewer.
               </Typography>
               <CopyToClipboard text={this.dragAndDropUrl()}>
-                <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy manifest to clipboard" onClick={() => enqueueSnackbar((
-                  <Typography variant="body1">
-                    Manifest copied to clipboard!
-                  </Typography>
-                ), { variant: 'success' })}>Copy</Button>
+                <Button
+                  className={classes.copyButton}
+                  variant="outlined"
+                  color="primary"
+                  aria-label="Copy manifest to clipboard"
+                  onClick={() => enqueueSnackbar((
+                    <Typography variant="body1">
+                      Manifest copied to clipboard!
+                    </Typography>
+                  ), { variant: 'success' })}
+                >
+                  Copy
+                </Button>
               </CopyToClipboard>
             </Grid>
           </Grid>
