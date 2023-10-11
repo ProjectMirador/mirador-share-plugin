@@ -8,9 +8,9 @@
 - [Live demo](https://mirador-share-plugin.netlify.com/)
 - [Sample configuration](https://github.com/ProjectMirador/mirador-share-plugin/blob/master/demo/src/index.js)
 
-![share-button-in-menu](./docs/images/share-button-in-menu.png)
+![share-button-in-menu](https://github.com/ProjectMirador/mirador-share-plugin/blob/master/docs/images/share-button-in-menu.png)
 
-![sharing options window - share link, iframe, and drag and drop](./docs/images/share-modal-window.png)
+![sharing options window - share link, iframe, and drag and drop](https://github.com/ProjectMirador/mirador-share-plugin/blob/master/docs/images/share-modal-window.png)
 
 ## Installation
 
