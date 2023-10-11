@@ -8,6 +8,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import EmbedSizeIcon from './EmbedSizeIcon';
@@ -170,7 +171,11 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code to clipboard" onClick={() => enqueueSnackbar(('Code copied to clipboard!'), { variant: 'success' })}>Copy</Button>
+              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code to clipboard" onClick={() => enqueueSnackbar((
+                <Typography variant="body1">
+                  Code copied to clipboard!
+                </Typography>
+              ), { variant: 'success' })}>Copy</Button>
             </CopyToClipboard>
           </div>
         </FormControl>
