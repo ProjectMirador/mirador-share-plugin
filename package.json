@@ -1,6 +1,6 @@
 {
   "name": "mirador-share-plugin",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "mirador-share-plugin React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,7 +20,9 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "notistack": "^3.0.1"
+  },
   "peerDependencies": {
     "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",

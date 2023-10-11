@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { createTheme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -8,7 +8,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
 /**
@@ -62,7 +64,7 @@ class MiradorShareEmbed extends Component {
     const { classes } = this.props;
     const { selectedSize } = this.state;
     const sizes = MiradorShareEmbed.sizes();
-    const iconColor = createMuiTheme().palette.grey[500];
+    const iconColor = createTheme().palette.grey[500];
     const icon = (width, height) => (
       <EmbedSizeIcon
         fillColor={iconColor}
@@ -139,6 +141,13 @@ class MiradorShareEmbed extends Component {
 
     return (
       <React.Fragment>
+        <SnackbarProvider
+          maxSnack={1}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        />
         <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend" className={classes.legend}>Select viewer size</FormLabel>
           <RadioGroup
@@ -162,7 +171,19 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button className={classes.copyButton} variant="outlined" color="primary" aria-label="Copy code">Copy</Button>
+              <Button
+                className={classes.copyButton}
+                variant="outlined"
+                color="primary"
+                aria-label="Copy code to clipboard"
+                onClick={() => enqueueSnackbar((
+                  <Typography variant="body1">
+                    Code copied to clipboard!
+                  </Typography>
+                ), { variant: 'success' })}
+              >
+                Copy
+              </Button>
             </CopyToClipboard>
           </div>
         </FormControl>
