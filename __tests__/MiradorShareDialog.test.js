@@ -37,7 +37,7 @@ describe('Dialog', () => {
   });
 
   it('has a close button that calls closeShareDialog on click', () => {
-    const closeShareDialog = jest.fn();
+    const closeShareDialog = vi.fn();
     createWrapper({ closeShareDialog });
     screen.getByRole('button', { name: 'Close' }).click();
     expect(closeShareDialog).toHaveBeenCalled();

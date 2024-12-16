@@ -25,8 +25,8 @@ describe('miradorSharePlugin', () => {
 
   describe('MenuItem', () => {
     it('calls the openShareDialog and handleClose props when clicked', () => {
-      const handleClose = jest.fn();
-      const openShareDialog = jest.fn();
+      const handleClose = vi.fn();
+      const openShareDialog = vi.fn();
       createWrapper({ handleClose, openShareDialog });
       screen.getByText('Share').click();
       expect(handleClose).toHaveBeenCalled();
