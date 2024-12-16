@@ -55,6 +55,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^6.2.0",
+    "glob": "^10.3.0",
     "happy-dom": "^15.11.7",
     "mirador": "^4.0.0-alpha.5",
     "prop-types": "^15.7.2",
