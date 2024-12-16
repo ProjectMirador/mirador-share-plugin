@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <title>Mirador</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+</head>
+
+<body>
+  <div id="mirador" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+
+  <script type="module">
+    import Mirador from 'mirador';
+    import miradorSharePlugins from '../../src';
+
+    const config = {
+      id: 'mirador',
+      windows: [{
+        loadedManifest: 'https://purl.stanford.edu/sn904cj3429/iiif/manifest',
+      }],
+      miradorSharePlugin: {
+        iiifInfoLink: 'https://iiif.io',
+        embedOption: {
+          enabled: true,
+          embedUrlReplacePattern: [
+            /.*\.edu\/(\w+)\/iiif\/manifest/,
+            'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
+          ],
+          syncIframeDimensions: {
+            height: { param: 'maxheight' },
+          },
+        },
+        shareLink: {
+          enabled: true,
+          manifestIdReplacePattern: [
+            /\/iiif\/manifest/,
+            '',
+          ],
+        },
+      },
+    };
+
+    Mirador.viewer(config, [
+      ...miradorSharePlugins,
+    ]);
+  </script>
+</body>
+
+</html>
