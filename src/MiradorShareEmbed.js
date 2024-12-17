@@ -1,17 +1,64 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createTheme, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { createTheme, styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import EmbedSizeIcon from './EmbedSizeIcon';
+
+const StyledCopyButton = styled(Button)(({ theme }) => ({
+  marginLeft: theme.spacing(),
+}));
+
+const StyledFormControl = styled(FormControl)({
+  width: '100%',
+});
+
+const StyledFormControlLabel = styled(FormControlLabel)(({ isSelectedSize, theme }) => {
+  const formControlLabel = {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    height: '125px',
+    flexGrow: 1,
+    margin: '0',
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  };
+  return isSelectedSize ? {
+    ...formControlLabel,
+    backgroundColor: theme.palette.action.selected,
+  } : formControlLabel
+
+});
+
+const StyledLegend = styled(FormLabel)(({ theme }) => ({
+  paddingBottom: theme.spacing(),
+  paddingTop: theme.spacing(),
+}));
+
+const StyledFormLabel = styled(FormLabel)(({ theme }) => ({
+  paddingBottom: theme.spacing(),
+  paddingTop: theme.spacing(),
+}));
+
+const StyledInputContainer = styled('div')(({ theme }) => ({
+  alignItems: 'flex-end',
+  display: 'flex',
+  flexDirection: 'row',
+  marginBottom: theme.spacing(),
+}));
+
+const StyledRadioGroup = styled(RadioGroup)({
+  display: 'flex',
+  flexDirection: 'row',
+})
 
 /**
  * MiradorShareEmbed ~
@@ -61,7 +108,6 @@ class MiradorShareEmbed extends Component {
   }
 
   formControlLabelsForSizes() {
-    const { classes } = this.props;
     const { selectedSize } = this.state;
     const sizes = MiradorShareEmbed.sizes();
     const iconColor = createTheme().palette.grey[500];
@@ -76,12 +122,8 @@ class MiradorShareEmbed extends Component {
     return Object.keys(sizes).map((sizeKey) => {
       const size = sizes[sizeKey];
       return (
-        <FormControlLabel
-          className={[
-            classes.formControlLabel,
-            (selectedSize === sizeKey ? classes.selectedFormControlLabel : ''),
-          ].join(' ')
-          }
+        <StyledFormControlLabel
+          isSelectedSize={selectedSize === sizeKey}
           control={(
             <Radio
               checkedIcon={icon(size.iconWidth, size.iconHeight)}
@@ -137,8 +179,6 @@ class MiradorShareEmbed extends Component {
    * Returns the rendered component
   */
   render() {
-    const { classes } = this.props;
-
     return (
       <React.Fragment>
         <SnackbarProvider
@@ -148,20 +188,19 @@ class MiradorShareEmbed extends Component {
             horizontal: 'center',
           }}
         />
-        <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend" className={classes.legend}>Select viewer size</FormLabel>
-          <RadioGroup
+        <StyledFormControl component="fieldset">
+          <StyledLegend component="legend">Select viewer size</StyledLegend>
+          <StyledRadioGroup
             aria-label="Select viewer size"
-            className={classes.radioGroup}
             name="viwerSize"
             onChange={(e) => { this.handleSizeSelect(e.target.value); }}
           >
             {this.formControlLabelsForSizes()}
-          </RadioGroup>
-        </FormControl>
-        <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel className={classes.label} for="copyCode">Copy &amp; paste code</FormLabel>
-          <div className={classes.inputContainer}>
+          </StyledRadioGroup>
+        </StyledFormControl>
+        <StyledFormControl component="fieldset">
+          <StyledFormLabel for="copyCode">Copy &amp; paste code</StyledFormLabel>
+          <StyledInputContainer>
             <TextField
               id="copyCode"
               fullWidth
@@ -171,8 +210,7 @@ class MiradorShareEmbed extends Component {
               variant="filled"
             />
             <CopyToClipboard text={this.embedCode()}>
-              <Button
-                className={classes.copyButton}
+              <StyledCopyButton
                 variant="outlined"
                 color="primary"
                 aria-label="Copy code to clipboard"
@@ -183,26 +221,16 @@ class MiradorShareEmbed extends Component {
                 ), { variant: 'success' })}
               >
                 Copy
-              </Button>
+              </StyledCopyButton>
             </CopyToClipboard>
-          </div>
-        </FormControl>
+          </StyledInputContainer>
+        </StyledFormControl>
       </React.Fragment>
     );
   }
 }
 
 MiradorShareEmbed.propTypes = {
-  classes: PropTypes.shape({
-    copyButton: PropTypes.string,
-    formControl: PropTypes.string,
-    formControlLabel: PropTypes.string,
-    legend: PropTypes.string,
-    label: PropTypes.string,
-    inputContainer: PropTypes.string,
-    radioGroup: PropTypes.string,
-    selectedFormControlLabel: PropTypes.string,
-  }),
   embedIframeAttributes: PropTypes.string.isRequired,
   embedIframeTitle: PropTypes.string.isRequired,
   embedUrlReplacePattern: PropTypes.arrayOf(
@@ -219,48 +247,8 @@ MiradorShareEmbed.propTypes = {
 };
 
 MiradorShareEmbed.defaultProps = {
-  classes: {},
   manifestId: null,
   syncIframeDimensions: {},
 };
 
-const styles = theme => ({
-  copyButton: {
-    marginLeft: theme.spacing(),
-  },
-  formControl: {
-    width: '100%',
-  },
-  formControlLabel: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    height: '125px',
-    flexGrow: 1,
-    margin: '0',
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-  legend: {
-    paddingBottom: theme.spacing(),
-    paddingTop: theme.spacing(),
-  },
-  label: {
-    paddingBottom: theme.spacing(),
-    paddingTop: theme.spacing(),
-  },
-  inputContainer: {
-    alignItems: 'flex-end',
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: theme.spacing(),
-  },
-  radioGroup: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  selectedFormControlLabel: {
-    backgroundColor: theme.palette.action.selected,
-  },
-});
-
-export default withStyles(styles)(MiradorShareEmbed);
+export default MiradorShareEmbed;
