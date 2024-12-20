@@ -6,7 +6,7 @@
 `mirador-share-plugin` is a [Mirador 3](https://github.com/ProjectMirador/mirador) plugin that adds the several options for sharing a resource to the window options menu. Options include specifying embedded `<iframe>` options and a preferred share link.
 
 - [Live demo](https://mirador-share-plugin.netlify.com/)
-- [Sample configuration](https://github.com/ProjectMirador/mirador-share-plugin/blob/master/demo/src/index.js)
+- [Sample configuration](https://github.com/ProjectMirador/mirador-share-plugin/blob/main/demo/src/index.js)
 
 ![share-button-in-menu](https://github.com/ProjectMirador/mirador-share-plugin/assets/40801910/d87cd4c2-346c-4785-9b3d-6318803e9f06)
 
@@ -14,7 +14,7 @@
 
 ## Installation
 
-`mirador-share-plugin` requires an instance of Mirador 3. See the [Mirador wiki](https://github.com/ProjectMirador/mirador/wiki) for examples of embedding Mirador within an application and additional information about plugins. See the [live demo's index.js](https://github.com/ProjectMirador/mirador-share-plugin/blob/master/demo/src/index.js) for an example of importing and configuring `mirador-share-plugin`.
+`mirador-share-plugin` requires an instance of Mirador 3. See the [Mirador wiki](https://github.com/ProjectMirador/mirador/wiki) for examples of embedding Mirador within an application and additional information about plugins. See the [live demo's index.js](https://github.com/ProjectMirador/mirador-share-plugin/blob/main/demo/src/index.js) for an example of importing and configuring `mirador-share-plugin`.
 
 ## Configuration
 
@@ -45,7 +45,7 @@ Configurations for this plugin are injected when Mirador is initialized under th
 ## Contribute
 Mirador's development, design, and maintenance is driven by community needs and ongoing feedback and discussion. Join us at our regularly scheduled community calls, on [IIIF slack #mirador](http://bit.ly/iiif-slack), or the [mirador-tech](https://groups.google.com/forum/#!forum/mirador-tech) and [iiif-discuss](https://groups.google.com/forum/#!forum/iiif-discuss) mailing lists. To suggest features, report bugs, and clarify usage, please submit a GitHub issue.
 
-[build-badge]: https://img.shields.io/travis/projectmirador/mirador-share-plugin/master.png?style=flat-square
+[build-badge]: https://img.shields.io/travis/projectmirador/mirador-share-plugin/main.png?style=flat-square
 [build]: https://travis-ci.org/projectmirador/mirador-share-plugin
 
 [npm-badge]: https://img.shields.io/npm/v/mirador-share-plugin.png?style=flat-square
