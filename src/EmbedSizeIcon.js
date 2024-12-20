@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * EmbedSizeIcon ~
 */
-export default function EmbedSizeIcon(props) {
-  const { fillColor, height, width } = props;
-
+export default function EmbedSizeIcon({ fillColor = '#e0e0e0', height, width }) {
   return (
     <svg width={width} height={height}>
       <rect
@@ -22,8 +20,4 @@ EmbedSizeIcon.propTypes = {
   fillColor: PropTypes.string,
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-};
-
-EmbedSizeIcon.defaultProps = {
-  fillColor: '#e0e0e0',
 };

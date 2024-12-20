@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import ShareIcon from '@material-ui/icons/ShareSharp';
-import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import ShareIcon from '@mui/icons-material/ShareSharp';
+import { getManifestoInstance } from 'mirador';
 
 const shareDialogReducer = (state = {}, action) => {
   if (action.type === 'OPEN_WINDOW_DIALOG') {
@@ -46,9 +46,9 @@ class MiradorShare extends Component {
   }
 
   render() {
-    const { openShareDialog, handleClose, ...menuProps } = this.props;
+    const { openShareDialog, handleClose } = this.props;
     return (
-      <MenuItem {...menuProps} onClick={() => this.openDialogAndClose()}>
+      <MenuItem onClick={() => this.openDialogAndClose()}>
         <ListItemIcon>
           <ShareIcon />
         </ListItemIcon>
