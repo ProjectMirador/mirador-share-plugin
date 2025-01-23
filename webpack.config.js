@@ -36,9 +36,9 @@ const baseConfig = (mode) => ({
     ],
   },
   output: {
-    filename: 'mirador-canvasnavigation.js',
+    filename: 'mirador-share.js',
     hashFunction: 'md5',
-    library: 'MiradorCanvasNavigation',
+    library: 'MiradorSharePlugin',
     libraryExport: 'default',
     libraryTarget: 'umd',
     path: path.join(__dirname, 'umd'),

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 /**
  * EmbedSizeIcon ~
-*/
+ */
 export default function EmbedSizeIcon(props) {
   const { fillColor, height, width } = props;
 

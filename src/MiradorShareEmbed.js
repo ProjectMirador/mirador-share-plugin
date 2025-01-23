@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createTheme } from '@mui/material/styles';
-import { styled } from '@mui/material/styles';
+import createTheme from '@mui/material/styles/createTheme';
+import styled from '@mui/material/styles/styled';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -14,17 +14,16 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
-
 const StyledCopyButton = styled(Button)(({ theme }) => ({
   marginLeft: theme.spacing(),
 }));
 
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
+const StyledFormControl = styled(FormControl)(() => ({
   width: '100%',
 }));
 
 const StyledFormControlLabel = styled(FormControlLabel, {
-  shouldForwardProp: (prop) => prop !== 'selected', 
+  shouldForwardProp: (prop) => prop !== 'selected',
 })(({ theme, selected }) => ({
   border: `1px solid ${theme.palette.grey[500]}`,
   height: '125px',
@@ -37,32 +36,31 @@ const StyledFormControlLabel = styled(FormControlLabel, {
   transition: 'background-color 0.3s ease',
 }));
 
-const StyledLegend= styled(FormLabel)(({ theme }) => ({
+const StyledLegend = styled(FormLabel)(({ theme }) => ({
   paddingBottom: theme.spacing(),
   paddingTop: theme.spacing(),
 }));
 
-const StyledLabel= styled(FormLabel)(({ theme }) => ({
+const StyledLabel = styled(FormLabel)(({ theme }) => ({
   paddingBottom: theme.spacing(),
   paddingTop: theme.spacing(),
 }));
 
-const StyledRadioGroup= styled(RadioGroup)(({ theme }) => ({
+const StyledRadioGroup = styled(RadioGroup)(() => ({
   display: 'flex',
   flexDirection: 'row',
 }));
 
-const StyledInputContainer= styled("div")(({ theme }) => ({
+const StyledInputContainer = styled('div')(({ theme }) => ({
   alignItems: 'flex-end',
   display: 'flex',
   flexDirection: 'row',
   marginBottom: theme.spacing(),
 }));
 
-
 /**
  * MiradorShareEmbed ~
-*/
+ */
 class MiradorShareEmbed extends Component {
   static sizes() {
     return {
@@ -112,24 +110,20 @@ class MiradorShareEmbed extends Component {
     const sizes = MiradorShareEmbed.sizes();
     const iconColor = createTheme().palette.grey[500];
     const icon = (width, height) => (
-      <EmbedSizeIcon
-        fillColor={iconColor}
-        width={width}
-        height={height}
-      />
+      <EmbedSizeIcon fillColor={iconColor} width={width} height={height} />
     );
 
     return Object.keys(sizes).map((sizeKey) => {
       const size = sizes[sizeKey];
       return (
         <StyledFormControlLabel
-          selected={selectedSize === sizeKey}  
-          control={(
+          selected={selectedSize === sizeKey}
+          control={
             <Radio
               checkedIcon={icon(size.iconWidth, size.iconHeight)}
               icon={icon(size.iconWidth, size.iconHeight)}
             />
-          )}
+          }
           key={sizeKey}
           label={`${size.viewerWidth}x${size.viewerHeight}`}
           labelPlacement="top"
@@ -177,7 +171,7 @@ class MiradorShareEmbed extends Component {
 
   /**
    * Returns the rendered component
-  */
+   */
   render() {
     return (
       <React.Fragment>
@@ -189,11 +183,13 @@ class MiradorShareEmbed extends Component {
           }}
         />
         <StyledFormControl component="fieldset">
-          <StyledLegend component="legend" >Select viewer size</StyledLegend>
+          <StyledLegend component="legend">Select viewer size</StyledLegend>
           <StyledRadioGroup
             aria-label="Select viewer size"
             name="viwerSize"
-            onChange={(e) => { this.handleSizeSelect(e.target.value); }}
+            onChange={(e) => {
+              this.handleSizeSelect(e.target.value);
+            }}
           >
             {this.formControlLabelsForSizes()}
           </StyledRadioGroup>
@@ -214,11 +210,12 @@ class MiradorShareEmbed extends Component {
                 variant="outlined"
                 color="primary"
                 aria-label="Copy code to clipboard"
-                onClick={() => enqueueSnackbar((
-                  <Typography variant="body1">
-                    Code copied to clipboard!
-                  </Typography>
-                ), { variant: 'success' })}
+                onClick={() =>
+                  enqueueSnackbar(
+                    <Typography variant="body1">Code copied to clipboard!</Typography>,
+                    { variant: 'success' },
+                  )
+                }
               >
                 Copy
               </StyledCopyButton>
@@ -234,10 +231,7 @@ MiradorShareEmbed.propTypes = {
   embedIframeAttributes: PropTypes.string.isRequired,
   embedIframeTitle: PropTypes.string.isRequired,
   embedUrlReplacePattern: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(RegExp),
-    ]),
+    PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)]),
   ).isRequired,
   manifestId: PropTypes.string,
   syncIframeDimensions: PropTypes.shape({

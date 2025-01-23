@@ -18,7 +18,6 @@ import ScrollIndicatedDialogContent from 'mirador/dist/es/src/containers/ScrollI
 import MiradorShareEmbed from './MiradorShareEmbed';
 import IiiifIcon from './IiifIcon';
 
-
 const mapDispatchToProps = (dispatch, { windowId }) => ({
   closeShareDialog: () => dispatch({ type: 'CLOSE_WINDOW_DIALOG', windowId }),
 });
@@ -30,16 +29,17 @@ const mapStateToProps = (state, { windowId }) => {
   return {
     containerId: getContainerId(state),
     displayEmbedOption: embedOption.enabled,
-    displayShareLink: miradorSharePluginConfig.shareLink
-      && miradorSharePluginConfig.shareLink.enabled,
+    displayShareLink:
+      miradorSharePluginConfig.shareLink && miradorSharePluginConfig.shareLink.enabled,
     embedUrlReplacePattern: embedOption.embedUrlReplacePattern,
     embedIframeAttributes: embedOption.embedIframeAttributes,
     embedIframeTitle: embedOption.embedIframeTitle,
-    manifestIdReplacePattern: miradorSharePluginConfig.shareLink
-      && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
+    manifestIdReplacePattern:
+      miradorSharePluginConfig.shareLink &&
+      miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
     iiifInfoLink: miradorSharePluginConfig.iiifInfoLink,
     manifestId: (getManifestoInstance(state, { windowId }) || {}).id,
-    open: (state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share'),
+    open: state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share',
     syncIframeDimensions: embedOption.syncIframeDimensions,
   };
 };
@@ -48,7 +48,7 @@ const StyledCopyButton = styled(Button)(({ theme }) => ({
   marginLeft: theme.spacing(),
 }));
 
-const StyledInputContainer = styled("div")(({ theme }) => ({
+const StyledInputContainer = styled('div')(({ theme }) => ({
   alignItems: 'flex-end',
   display: 'flex',
   flexDirection: 'row',
@@ -78,10 +78,9 @@ const StyledTypography = styled(Typography)(() => ({
   marginTop: '20px',
 }));
 
-
 /**
  * MiradorShareDialog ~
-*/
+ */
 export class MiradorShareDialog extends Component {
   constructor(props) {
     super(props);
@@ -135,7 +134,7 @@ export class MiradorShareDialog extends Component {
 
   /**
    * Returns the rendered component
-  */
+   */
   render() {
     const {
       classes,
@@ -152,18 +151,16 @@ export class MiradorShareDialog extends Component {
     } = this.props;
     const { shareLinkText } = this.state;
 
-    if (!open) return (<React.Fragment />);
+    if (!open) return <React.Fragment />;
 
     return (
-      (<Dialog
+      <Dialog
         container={document.querySelector(`#${containerId} .mirador-viewer`)}
         onClose={closeShareDialog}
         open={open}
       >
-        <DialogTitle sx={{  paddingBottom: 0 }}>
-          <Typography variant="h2">
-            Share
-          </Typography>
+        <DialogTitle sx={{ paddingBottom: 0 }}>
+          <Typography variant="h2">Share</Typography>
         </DialogTitle>
         <SnackbarProvider
           maxSnack={1}
@@ -181,20 +178,20 @@ export class MiradorShareDialog extends Component {
                   defaultValue={shareLinkText}
                   fullWidth
                   variant="filled"
-                  onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
+                  onChange={(e) => this.handleShareLinkChange(e && e.target && e.target.value)}
                   inputProps={{ 'aria-label': 'Share link URL' }}
-                />
-                {' '}
+                />{' '}
                 <CopyToClipboard text={shareLinkText}>
                   <StyledCopyButton
                     variant="outlined"
                     color="primary"
                     aria-label="Copy link to clipboard"
-                    onClick={() => enqueueSnackbar((
-                      <Typography variant="body1">
-                        Link copied to clipboard!
-                      </Typography>
-                    ), { variant: 'success' })}
+                    onClick={() =>
+                      enqueueSnackbar(
+                        <Typography variant="body1">Link copied to clipboard!</Typography>,
+                        { variant: 'success' },
+                      )
+                    }
                   >
                     Copy
                   </StyledCopyButton>
@@ -223,7 +220,7 @@ export class MiradorShareDialog extends Component {
                 Drag & drop IIIF icon to add this resource to any IIIF viewer.
               </Typography>
               <StyledLink href={this.dragAndDropUrl()}>
-                <StyledIiifIcon/>
+                <StyledIiifIcon />
               </StyledLink>
             </Grid>
             <Grid item xs={1}>
@@ -234,19 +231,19 @@ export class MiradorShareDialog extends Component {
                 Copy & paste the resource&apos;s manifest into any IIIF viewer.
               </Typography>
               <CopyToClipboard text={this.dragAndDropUrl()}>
-                <Button
-                  className={classes.copyButton}
+                <StyledCopyButton
                   variant="outlined"
                   color="primary"
                   aria-label="Copy manifest to clipboard"
-                  onClick={() => enqueueSnackbar((
-                    <Typography variant="body1">
-                      Manifest copied to clipboard!
-                    </Typography>
-                  ), { variant: 'success' })}
+                  onClick={() =>
+                    enqueueSnackbar(
+                      <Typography variant="body1">Manifest copied to clipboard!</Typography>,
+                      { variant: 'success' },
+                    )
+                  }
                 >
                   Copy
-                </Button>
+                </StyledCopyButton>
               </CopyToClipboard>
             </Grid>
           </StyledGrid>
@@ -257,7 +254,7 @@ export class MiradorShareDialog extends Component {
             Close
           </Button>
         </DialogActions>
-      </Dialog>)
+      </Dialog>
     );
   }
 }
@@ -271,16 +268,10 @@ MiradorShareDialog.propTypes = {
   embedIframeAttributes: PropTypes.string,
   embedIframeTitle: PropTypes.string,
   embedUrlReplacePattern: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(RegExp),
-    ]),
+    PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)]),
   ),
   manifestIdReplacePattern: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(RegExp),
-    ]),
+    PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)]),
   ),
   manifestId: PropTypes.string,
   open: PropTypes.bool,
