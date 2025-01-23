@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import ShareIcon from '@mui/icons-material/ShareSharp';
-import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+import { getManifestoInstance } from 'mirador';
 
 const shareDialogReducer = (state = {}, action) => {
   if (action.type === 'OPEN_WINDOW_DIALOG') {

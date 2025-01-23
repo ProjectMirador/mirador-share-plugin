@@ -12,9 +12,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
-import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
-import { getContainerId } from 'mirador/dist/es/src/state/selectors/config';
-import ScrollIndicatedDialogContent from 'mirador/dist/es/src/containers/ScrollIndicatedDialogContent';
+import { getManifestoInstance, getContainerId, ScrollIndicatedDialogContent } from 'mirador';
 import MiradorShareEmbed from './MiradorShareEmbed';
 import IiiifIcon from './IiifIcon';
 
