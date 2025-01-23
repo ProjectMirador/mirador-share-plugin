@@ -1,6 +1,6 @@
 {
   "name": "mirador-share-plugin",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.1",
   "description": "mirador-share-plugin React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,7 +20,6 @@
     "build:umd": "NODE_ENV=production webpack --mode=production",
     "build:es": "mkdir -p es && cp -r src/* es && NODE_ENV=production MODULE_FORMAT=es npx babel es -d es",
     "build:cjs": "mkdir -p lib && cp -r src/* lib && NODE_ENV=production MODULE_FORMAT=cjs npx babel lib -d lib",
-    "clean": "nwb clean-module && nwb clean-demo",
     "lint": "npx eslint ./",
     "prepublishOnly": "npm run build",
     "start": "NODE_ENV=development webpack serve --open",
@@ -38,7 +37,7 @@
   "peerDependencies": {
     "@mui/icons-material": "^5.x",
     "@mui/material": "^5.x",
-    "mirador": "^4.0.0-alpha.5",
+    "mirador": "4.0.0-alpha.1",
     "prop-types": "^15.7.2",
     "react": "18.x",
     "react-copy-to-clipboard": "^5.0.1",
@@ -70,7 +69,7 @@
     "jest": "^24.8.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.0",
-    "mirador": "^4.0.0-alpha.1",
+    "mirador": "4.0.0-alpha.1",
     "prop-types": "^15.7.2",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.0.1",
@@ -85,7 +84,6 @@
   "keywords": [
     "iiif",
     "mirador",
-    "mirador3",
     "mirador4",
     "mirador-plugin",
     "react-component"

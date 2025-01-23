@@ -82,7 +82,7 @@ module.exports = (env, options) => {
     devServer: {
       hot: true,
       port: 3000,
-      static: ['./demo/src/'],
+      static: path.join(__dirname, 'demo/src/'),
     },
     devtool: 'eval-source-map',
     mode: 'development',
