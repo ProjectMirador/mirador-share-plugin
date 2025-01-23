@@ -36,40 +36,36 @@ const mapStateToProps = (state, { windowId }) => ({
   manifestId: getManifestoInstance(state, { windowId }).id,
 });
 
-class MiradorShare extends Component {
-  openDialogAndClose() {
-    const { openShareDialog, handleClose } = this.props;
-
+const MiradorShare = ({ openShareDialog, handleClose, ...menuProps }) => {
+  const openDialogAndClose = () => {
     openShareDialog();
     handleClose();
-  }
+  };
 
-  render() {
-    const { openShareDialog, handleClose, ...menuProps } = this.props;
-    return (
-      <MenuItem {...menuProps} onClick={() => this.openDialogAndClose()}>
-        <ListItemIcon>
-          <ShareIcon />
-        </ListItemIcon>
-        <ListItemText primaryTypographyProps={{ variant: 'body1' }}>Share</ListItemText>
-      </MenuItem>
-    );
-  }
-}
+  return (
+    <MenuItem {...menuProps} onClick={openDialogAndClose}>
+      <ListItemIcon>
+        <ShareIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>Share</ListItemText>
+    </MenuItem>
+  );
+};
 
 MiradorShare.propTypes = {
-  openShareDialog: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
+  openShareDialog: PropTypes.func.isRequired,
 };
 
 export default {
-  target: 'WindowTopBarPluginMenu',
-  mode: 'add',
-  name: 'MiradorSharePlugin',
   component: MiradorShare,
   mapDispatchToProps,
   mapStateToProps,
+  mode: 'add',
+  name: 'MiradorSharePlugin',
   reducers: {
     windowDialogs: shareDialogReducer,
   },
+  target: 'WindowTopBarPluginMenu',
+
 };
