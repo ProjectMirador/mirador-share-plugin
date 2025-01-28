@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from './utils/test-utils';
 import miradorSharePlugin from '../src/miradorSharePlugin';
 
 function createWrapper(props) {
-  return shallow(
+  return render(
     <miradorSharePlugin.component
       handleClose={() => {}}
       openShareDialog={() => {}}
@@ -18,8 +18,8 @@ describe('miradorSharePlugin', () => {
   });
   describe('renders a component', () => {
     it('renders a thing', () => {
-      const wrapper = createWrapper();
-      expect(wrapper.find('WithStyles(ForwardRef(ListItemText))').props().children).toEqual('Share');
+      createWrapper();
+      expect(screen.getByText('Share')).toBeInTheDocument();
     });
   });
 
@@ -27,8 +27,8 @@ describe('miradorSharePlugin', () => {
     it('calls the openShareDialog and handleClose props when clicked', () => {
       const handleClose = jest.fn();
       const openShareDialog = jest.fn();
-      const wrapper = createWrapper({ handleClose, openShareDialog });
-      wrapper.find('WithStyles(ForwardRef(MenuItem))').simulate('click');
+      createWrapper({ handleClose, openShareDialog });
+      screen.getByText('Share').click();
       expect(handleClose).toHaveBeenCalled();
       expect(openShareDialog).toHaveBeenCalled();
     });

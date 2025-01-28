@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
-import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
-import { getContainerId } from 'mirador/dist/es/src/state/selectors/config';
-import ScrollIndicatedDialogContent from 'mirador/dist/es/src/containers/ScrollIndicatedDialogContent';
+import { getManifestoInstance, getContainerId, ScrollIndicatedDialogContent } from 'mirador';
 import MiradorShareEmbed from './MiradorShareEmbed';
-import IiiifIcon from './IiifIcon';
+import IiifIcon from './IiifIcon';
 
 const mapDispatchToProps = (dispatch, { windowId }) => ({
   closeShareDialog: () => dispatch({ type: 'CLOSE_WINDOW_DIALOG', windowId }),
@@ -64,6 +62,12 @@ export class MiradorShareDialog extends Component {
     }
   }
 
+  handleShareLinkChange(value) {
+    this.setState({
+      shareLinkText: value,
+    });
+  }
+
   dragAndDropUrl() {
     const { manifestId } = this.props;
     const baseUrl = manifestId;
@@ -77,10 +81,10 @@ export class MiradorShareDialog extends Component {
     if (!iiifInfoLink) return null;
 
     return (
-      <React.Fragment>
+      <>
         {' '}
         <Link href={iiifInfoLink}>What is IIIF?</Link>
-      </React.Fragment>
+      </>
     );
   }
 
@@ -91,18 +95,11 @@ export class MiradorShareDialog extends Component {
     return manifestId.replace(manifestIdReplacePattern[0], manifestIdReplacePattern[1]);
   }
 
-  handleShareLinkChange(value) {
-    this.setState({
-      shareLinkText: value,
-    });
-  }
-
   /**
    * Returns the rendered component
   */
   render() {
     const {
-      classes,
       closeShareDialog,
       containerId,
       displayEmbedOption,
@@ -116,7 +113,7 @@ export class MiradorShareDialog extends Component {
     } = this.props;
     const { shareLinkText } = this.state;
 
-    if (!open) return (<React.Fragment />);
+    if (!open) return null;
 
     return (
       <Dialog
@@ -124,10 +121,8 @@ export class MiradorShareDialog extends Component {
         onClose={closeShareDialog}
         open={open}
       >
-        <DialogTitle disableTypography className={classes.h2}>
-          <Typography variant="h2">
-            Share
-          </Typography>
+        <DialogTitle variant="h2" sx={{ paddingBottom: 0 }}>
+          Share
         </DialogTitle>
         <SnackbarProvider
           maxSnack={1}
@@ -138,39 +133,40 @@ export class MiradorShareDialog extends Component {
         />
         <ScrollIndicatedDialogContent>
           {displayShareLink && (
-            <React.Fragment>
-              <Typography className={classes.h3} variant="h3">Share link</Typography>
-              <div className={classes.inputContainer}>
+            <>
+              <Typography sx={{ marginTop: 2 }} variant="h3">Share link</Typography>
+              <Stack sx={{ marginBottom: 1 }} spacing={1} direction="row">
                 <TextField
                   defaultValue={shareLinkText}
                   fullWidth
                   variant="filled"
-                  onChange={e => this.handleShareLinkChange(e && e.target && e.target.value)}
-                  inputProps={{ 'aria-label': 'Share link URL', className: classes.shareLinkInput }}
+                  onChange={(e) => this.handleShareLinkChange(e && e.target && e.target.value)}
+                  inputProps={{ 'aria-label': 'Share link URL' }}
                 />
                 {' '}
                 <CopyToClipboard text={shareLinkText}>
                   <Button
-                    className={classes.copyButton}
                     variant="outlined"
                     color="primary"
                     aria-label="Copy link to clipboard"
-                    onClick={() => enqueueSnackbar((
-                      <Typography variant="body1">
-                        Link copied to clipboard!
-                      </Typography>
-                    ), { variant: 'success' })}
+                    onClick={() => enqueueSnackbar(
+                      (
+                        <Typography variant="body1">
+                          Link copied to clipboard!
+                        </Typography>
+                      ), { variant: 'success' },
+                    )}
                   >
                     Copy
                   </Button>
                 </CopyToClipboard>
-              </div>
-              <Divider />
-            </React.Fragment>
+              </Stack>
+              <Divider aria-hidden="true" />
+            </>
           )}
           {displayEmbedOption && (
-            <React.Fragment>
-              <Typography className={classes.h3} variant="h3">Embed</Typography>
+            <>
+              <Typography sx={{ marginTop: 2 }} variant="h3">Embed</Typography>
               <MiradorShareEmbed
                 embedIframeAttributes={embedIframeAttributes}
                 embedIframeTitle={embedIframeTitle}
@@ -178,37 +174,38 @@ export class MiradorShareDialog extends Component {
                 syncIframeDimensions={syncIframeDimensions}
                 manifestId={manifestId}
               />
-              <Divider />
-            </React.Fragment>
+              <Divider aria-hidden="true" />
+            </>
           )}
-          <Typography className={classes.h3} variant="h3">Add to another viewer</Typography>
-          <Grid container spacing={1} className={classes.grid}>
-            <Grid item xs>
-              <Typography variant="body1">
+          <Typography sx={{ marginTop: 2 }} variant="h3">Add to another viewer</Typography>
+          <Grid container spacing={1} sx={{ textAlign: 'center' }}>
+            <Grid container item xs spacing={2} sx={{ display: 'grid', gap: 1, margin: 0 }}>
+              <Typography align="center" variant="body1">
                 Drag & drop IIIF icon to add this resource to any IIIF viewer.
               </Typography>
-              <Link href={this.dragAndDropUrl()} className={classes.iiifLink}>
-                <IiiifIcon className={classes.iiifIcon} />
+              <Link href={this.dragAndDropUrl()} aria-label="Drag icon to any IIIF viewer.">
+                <IiifIcon sx={{ cursor: 'grab' }} />
               </Link>
             </Grid>
             <Grid item xs={1}>
               <Typography variant="body1">or</Typography>
             </Grid>
-            <Grid item xs>
-              <Typography variant="body1">
+            <Grid item xs justifyContent="center">
+              <Typography align="center" variant="body1">
                 Copy & paste the resource&apos;s manifest into any IIIF viewer.
               </Typography>
               <CopyToClipboard text={this.dragAndDropUrl()}>
                 <Button
-                  className={classes.copyButton}
                   variant="outlined"
                   color="primary"
                   aria-label="Copy manifest to clipboard"
-                  onClick={() => enqueueSnackbar((
-                    <Typography variant="body1">
-                      Manifest copied to clipboard!
-                    </Typography>
-                  ), { variant: 'success' })}
+                  onClick={() => enqueueSnackbar(
+                    (
+                      <Typography variant="body1">
+                        Manifest copied to clipboard!
+                      </Typography>
+                    ), { variant: 'success' },
+                  )}
                 >
                   Copy
                 </Button>
@@ -228,16 +225,6 @@ export class MiradorShareDialog extends Component {
 }
 
 MiradorShareDialog.propTypes = {
-  classes: PropTypes.shape({
-    copyButton: PropTypes.string,
-    h2: PropTypes.string,
-    h3: PropTypes.string,
-    iiifIcon: PropTypes.string,
-    iiifLink: PropTypes.string,
-    inputContainer: PropTypes.string,
-    shareLinkInput: PropTypes.string,
-    grid: PropTypes.string,
-  }).isRequired,
   closeShareDialog: PropTypes.func.isRequired,
   containerId: PropTypes.string.isRequired,
   displayEmbedOption: PropTypes.bool,
@@ -278,44 +265,11 @@ MiradorShareDialog.defaultProps = {
   syncIframeDimensions: {},
 };
 
-const styles = theme => ({
-  copyButton: {
-    marginLeft: theme.spacing(),
-  },
-  h2: {
-    paddingBottom: 0,
-  },
-  h3: {
-    marginTop: '20px',
-  },
-  iiifLink: {
-    marginRight: '10px',
-  },
-  iiifIcon: {
-    verticalAlign: 'text-bottom',
-    cursor: 'grab',
-    paddingTop: '12px',
-  },
-  inputContainer: {
-    alignItems: 'flex-end',
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: theme.spacing(),
-  },
-  shareLinkInput: {
-    paddingTop: '12px',
-  },
-  grid: {
-    textAlign: 'center',
-    paddingTop: '12px',
-  },
-});
-
 export default {
   target: 'Window',
   mode: 'add',
   name: 'MiradorShareDialog',
-  component: withStyles(styles)(MiradorShareDialog),
+  component: MiradorShareDialog,
   mapDispatchToProps,
   mapStateToProps,
 };

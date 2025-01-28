@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import ShareIcon from '@material-ui/icons/ShareSharp';
-import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import ShareIcon from '@mui/icons-material/ShareSharp';
+import { getManifestoInstance } from 'mirador';
 
-const shareDialogReducer = (state = {}, action) => {
+const shareDialogReducer = (state = {}, action = null) => {
   if (action.type === 'OPEN_WINDOW_DIALOG') {
     return {
       ...state,
@@ -37,27 +37,22 @@ const mapStateToProps = (state, { windowId }) => ({
   manifestId: getManifestoInstance(state, { windowId }).id,
 });
 
-class MiradorShare extends Component {
-  openDialogAndClose() {
-    const { openShareDialog, handleClose } = this.props;
-
+function MiradorShare({ openShareDialog, handleClose }) {
+  const openDialogAndClose = useCallback(() => {
     openShareDialog();
     handleClose();
-  }
+  }, [openShareDialog, handleClose]);
 
-  render() {
-    const { openShareDialog, handleClose, ...menuProps } = this.props;
-    return (
-      <MenuItem {...menuProps} onClick={() => this.openDialogAndClose()}>
-        <ListItemIcon>
-          <ShareIcon />
-        </ListItemIcon>
-        <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
-          Share
-        </ListItemText>
-      </MenuItem>
-    );
-  }
+  return (
+    <MenuItem onClick={openDialogAndClose}>
+      <ListItemIcon>
+        <ShareIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
+        Share
+      </ListItemText>
+    </MenuItem>
+  );
 }
 
 MiradorShare.propTypes = {
