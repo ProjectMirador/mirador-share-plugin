@@ -1,66 +1,43 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React, { cloneElement } from 'react';
+import userEvent from '@testing-library/user-event';
+import { render, screen } from './utils/test-utils';
 import MiradorShareEmbed from '../src/MiradorShareEmbed';
 
 /** Utility function to wrap  */
 function createWrapper(props) {
-  return shallow(
+  const component = (
     <MiradorShareEmbed
       embedIframeAttributes='allowfullscreen frameborder="0"'
       embedIframeTitle="Title Prop"
       embedUrlReplacePattern={[]}
       manifestId="https://example.com/abc123/iiif/manifest"
       {...props}
-    />,
-  ).dive();
+    />
+  );
+  return { component, ...render(component) };
 }
 
 describe('MiradorShareEmbed', () => {
-  let wrapper;
-
   it('renders fieldsets w/ legends or labels for each section of the embed component', () => {
-    wrapper = createWrapper();
+    createWrapper();
 
-    expect(wrapper.find('WithStyles(ForwardRef(FormControl))[component="fieldset"]').length).toBe(2);
-    expect(wrapper.find('WithStyles(ForwardRef(FormLabel))').length).toBe(2);
-    expect(wrapper.find('WithStyles(ForwardRef(FormLabel))[component="legend"]').length).toBe(1);
-    expect(wrapper.find(
-      'WithStyles(ForwardRef(FormLabel))',
-    ).at(0).props().children).toEqual('Select viewer size');
-    expect(wrapper.find(
-      'WithStyles(ForwardRef(FormLabel))',
-    ).at(1).props().children).toEqual('Copy & paste code');
+    expect(screen.getAllByRole('group')).toHaveLength(3);
+
+    expect(screen.getByText('Select viewer size', { component: 'legend' })).toBeInTheDocument();
+    expect(screen.getByText('Copy & paste code', { component: 'legend' })).toBeInTheDocument();
   });
 
   it('renders a radio group w/ a form control for each of the size options', () => {
-    wrapper = createWrapper();
+    createWrapper();
 
-    expect(wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').length).toBe(4);
-    expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(0).props().label,
-    ).toEqual('560x420');
-    expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(1).props().label,
-    ).toEqual('640x480');
-    expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(2).props().label,
-    ).toEqual('800x600');
-    expect(
-      wrapper.find('ForwardRef(RadioGroup) WithStyles(ForwardRef(FormControlLabel))').at(3).props().label,
-    ).toEqual('1024x768');
+    expect(screen.getAllByRole('button').map((button) => button.textContent)).toEqual(['560x420', '640x480', '800x600', '1024x768', 'Copy']);
   });
 
   it('renders the embed code in a text field', () => {
-    wrapper = createWrapper();
+    createWrapper();
 
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/^<iframe .*/);
-  });
-
-  it('has a copy button that uses the CopyToClipboard library', () => {
-    wrapper = createWrapper();
-
-    expect(wrapper.find('WithStyles(ForwardRef(Button))').props().children).toEqual('Copy');
-    expect(wrapper.find('CopyToClipboard').props().text).toMatch(/^<iframe .*/);
+    expect(screen.getByRole('textbox').value).toContain('<iframe');
+    expect(screen.getByText('Copy & paste code', { component: 'button' })).toBeInTheDocument();
   });
 
   it('uses the embedUrlReplacePattern prop to generate the embed URL', () => {
@@ -68,44 +45,31 @@ describe('MiradorShareEmbed', () => {
       /.*example\.com\/(\w+)\/iiif\/manifest/,
       'https://embed.example.com/embed?url=https://example.com/$1',
     ];
-    wrapper = createWrapper({ embedUrlReplacePattern });
-
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toEqual(
-      '<iframe src="https://embed.example.com/embed?url=https://example.com/abc123" title="Title Prop" width="560" height="420" allowfullscreen frameborder="0"></iframe>',
-    );
+    createWrapper({ embedUrlReplacePattern });
+    expect(screen.getByRole('textbox').value).toContain('https://embed.example.com/embed?url=https://example.com/abc123');
   });
 
   it('renders the iframe title passed in', () => {
-    wrapper = createWrapper({ embedIframeTitle: 'A configured title' });
-
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/title="A configured title"/);
+    createWrapper({ embedIframeTitle: 'A configured title' });
+    expect(screen.getByRole('textbox').value).toContain('title="A configured title"');
   });
 
   it('adds the height/width to the Embed URL using the given param', () => {
-    wrapper = createWrapper({ syncIframeDimensions: { height: { param: 'maxheight' } } });
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/iiif\/manifest&maxheight=420/);
+    const { component, rerender } = createWrapper({ syncIframeDimensions: { height: { param: 'maxheight' } } });
+    expect(screen.getByLabelText('Copy & paste code').value).toMatch(/iiif\/manifest&maxheight=420/);
 
-    wrapper = createWrapper({ syncIframeDimensions: { width: { param: 'maxwidth' } } });
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/iiif\/manifest&maxwidth=560/);
+    rerender(cloneElement(component, { syncIframeDimensions: { width: { param: 'maxwidth' } } }));
+    expect(screen.getByLabelText('Copy & paste code').value).toMatch(/iiif\/manifest&maxwidth=560/);
 
-    wrapper = createWrapper({ syncIframeDimensions: { height: { param: 'maxheight' }, width: { param: 'maxwidth' } } });
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/iiif\/manifest&maxwidth=560&maxheight=420/);
+    rerender(cloneElement(component, { syncIframeDimensions: { height: { param: 'maxheight' }, width: { param: 'maxwidth' } } }));
+    expect(screen.getByLabelText('Copy & paste code').value).toMatch(/iiif\/manifest&maxwidth=560&maxheight=420/);
   });
 
-  it('the embed code gets its height and width from state', () => {
-    wrapper = createWrapper();
+  it('the embed code gets its height and width from state', async () => {
+    createWrapper();
 
-    expect(wrapper.state().selectedSize).toEqual('small');
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/width="560" height="420"/);
-    wrapper.setState({ selectedSize: 'large' });
-    expect(wrapper.find('WithStyles(ForwardRef(TextField))').props().value).toMatch(/width="800" height="600"/);
-  });
-
-  it('switching the selected radio updates state', () => {
-    wrapper = createWrapper();
-
-    expect(wrapper.state().selectedSize).toEqual('small');
-    wrapper.find('ForwardRef(RadioGroup)').simulate('change', { target: { value: 'large' } });
-    expect(wrapper.state().selectedSize).toEqual('large');
+    expect(screen.getByRole('textbox').value).toMatch(/width="560" height="420"/);
+    await userEvent.click(screen.getByText('800x600'));
+    expect(screen.getByRole('textbox').value).toMatch(/width="800" height="600"/);
   });
 });

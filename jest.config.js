@@ -7,11 +7,15 @@ module.exports = {
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
-  setupFiles: [
+  setupFilesAfterEnv: [
     '<rootDir>/setupJest.js',
   ],
-  // Ignore Mirador code from jest transforms
+  testEnvironment: 'jsdom',
+  // Ignore Mirador/Manifesto/dnd libs code from jest transforms
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!mirador|manifesto.js)',
+    '<rootDir>/node_modules/(?!(mirador|manifesto.js|react-dnd|dnd-core|@react-dnd|dnd-multi-backend|rdndmb-html5-to-touch|mirador|react-mosaic-component2|lodash-es))',
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/__tests__/utils/test-utils.js',
   ],
 };
