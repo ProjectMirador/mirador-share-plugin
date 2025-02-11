@@ -8,7 +8,11 @@
     "dist"
   ],
   "exports": {
-    "./src": "./src/index.js"
+    "./src": "./src/index.js",
+    ".": {
+        "import": "./dist/mirador-share-plugin.es.js",
+        "require": "./dist/mirador-share-plugin.js"
+    }
   },
   "repository": {
     "type": "git",
