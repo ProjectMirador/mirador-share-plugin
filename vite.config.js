@@ -33,7 +33,6 @@ export default defineConfig({
       },
     } : {
       build: {
-        external: Object.keys(pkg.peerDependencies || {}),
         lib: {
           entry: './src/index.js',
           fileName: (format) => (format === 'umd' ? 'mirador-share-plugin.js' : 'mirador-share-plugin.es.js'),
@@ -41,7 +40,7 @@ export default defineConfig({
           name: 'MiradorSharePlugin',
         },
         rollupOptions: {
-          external: ['__tests__/*', '__mocks__/*'],
+          external: [...Object.keys(pkg.peerDependencies || {}), '__tests__/*', '__mocks__/*'],
           output: {
             assetFileNames: 'mirador-share-plugin.[ext]',
           },
