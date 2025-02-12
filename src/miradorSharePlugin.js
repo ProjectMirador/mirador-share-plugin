@@ -37,7 +37,7 @@ const mapStateToProps = (state, { windowId }) => ({
   manifestId: getManifestoInstance(state, { windowId }).id,
 });
 
-function MiradorShare({ openShareDialog, handleClose }) {
+function MiradorShare({ handleClose = () => {}, openShareDialog = () => {} }) {
   const openDialogAndClose = useCallback(() => {
     openShareDialog();
     handleClose();
