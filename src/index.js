@@ -1,12 +1,12 @@
 import miradorSharePlugin from './miradorSharePlugin';
-import miradorShareDialog from './MiradorShareDialog';
+import miradorShareDialogPlugin from './MiradorShareDialog';
 
 export {
   miradorSharePlugin,
-  miradorShareDialog,
+  miradorShareDialogPlugin,
 };
 
 export default [
   miradorSharePlugin,
-  miradorShareDialog,
+  miradorShareDialogPlugin,
 ];
