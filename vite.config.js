@@ -43,6 +43,10 @@ export default defineConfig({
           external: [...Object.keys(pkg.peerDependencies || {}), '__tests__/*', '__mocks__/*'],
           output: {
             assetFileNames: 'mirador-share-plugin.[ext]',
+            globals: {
+              react: 'React',
+              'react-dom': 'ReactDOM',
+            },
           },
         },
         sourcemap: true,
@@ -71,7 +75,6 @@ export default defineConfig({
         },
       ],
     },
-    include: ['@emotion/styled'],
   },
   plugins: [react()],
   resolve: {
