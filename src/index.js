@@ -1,3 +1,4 @@
+import '@mui/material/styles/styled';
 import miradorSharePlugin from './miradorSharePlugin';
 import miradorShareDialogPlugin from './MiradorShareDialog';
 
