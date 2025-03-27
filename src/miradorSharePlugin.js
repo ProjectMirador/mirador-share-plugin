@@ -56,8 +56,8 @@ function MiradorShare({ handleClose = () => {}, openShareDialog = () => {} }) {
 }
 
 MiradorShare.propTypes = {
-  openShareDialog: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  openShareDialog: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default {

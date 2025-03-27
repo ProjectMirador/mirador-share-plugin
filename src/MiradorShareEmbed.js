@@ -8,9 +8,33 @@ import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import copy from 'copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import EmbedSizeIcon from './EmbedSizeIcon';
+
+const CopyToClipboardButton = ({
+  children, onClick, text, ...props
+}) => {
+  const handleClick = (e) => {
+    copy(text);
+    onClick(e);
+  };
+
+  return (
+    <Button
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </Button>
+  );
+};
+
+CopyToClipboardButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 /**
  * MiradorShareEmbed ~
@@ -157,22 +181,21 @@ class MiradorShareEmbed extends Component {
                 value={this.embedCode()}
                 variant="filled"
               />
-              <CopyToClipboard text={this.embedCode()}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  aria-label="Copy code to clipboard"
-                  onClick={() => enqueueSnackbar(
-                    (
-                      <Typography variant="body1">
-                        Code copied to clipboard!
-                      </Typography>
-                    ), { variant: 'success' },
-                  )}
-                >
-                  Copy
-                </Button>
-              </CopyToClipboard>
+              <CopyToClipboardButton
+                text={this.embedCode()}
+                variant="outlined"
+                color="primary"
+                aria-label="Copy code to clipboard"
+                onClick={() => enqueueSnackbar(
+                  (
+                    <Typography variant="body1">
+                      Code copied to clipboard!
+                    </Typography>
+                  ), { variant: 'success' },
+                )}
+              >
+                Copy
+              </CopyToClipboardButton>
             </Stack>
           </FormControl>
         </Stack>

@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import copy from 'copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import { getManifestoInstance, getContainerId, ScrollIndicatedDialogContent } from 'mirador';
 import MiradorShareEmbed from './MiradorShareEmbed';
@@ -39,6 +39,30 @@ const mapStateToProps = (state, { windowId }) => {
     open: (state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share'),
     syncIframeDimensions: embedOption.syncIframeDimensions,
   };
+};
+
+const CopyToClipboardButton = ({
+  children, onClick, text, ...props
+}) => {
+  const handleClick = (e) => {
+    copy(text);
+    onClick(e);
+  };
+
+  return (
+    <Button
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </Button>
+  );
+};
+
+CopyToClipboardButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 /**
@@ -144,22 +168,21 @@ export class MiradorShareDialog extends Component {
                   inputProps={{ 'aria-label': 'Share link URL' }}
                 />
                 {' '}
-                <CopyToClipboard text={shareLinkText}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    aria-label="Copy link to clipboard"
-                    onClick={() => enqueueSnackbar(
-                      (
-                        <Typography variant="body1">
-                          Link copied to clipboard!
-                        </Typography>
-                      ), { variant: 'success' },
-                    )}
-                  >
-                    Copy
-                  </Button>
-                </CopyToClipboard>
+                <CopyToClipboardButton
+                  text={shareLinkText}
+                  variant="outlined"
+                  color="primary"
+                  aria-label="Copy link to clipboard"
+                  onClick={() => enqueueSnackbar(
+                    (
+                      <Typography variant="body1">
+                        Link copied to clipboard!
+                      </Typography>
+                    ), { variant: 'success' },
+                  )}
+                >
+                  Copy
+                </CopyToClipboardButton>
               </Stack>
               <Divider aria-hidden="true" />
             </>
@@ -194,22 +217,21 @@ export class MiradorShareDialog extends Component {
               <Typography align="center" variant="body1">
                 Copy & paste the resource&apos;s manifest into any IIIF viewer.
               </Typography>
-              <CopyToClipboard text={this.dragAndDropUrl()}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  aria-label="Copy manifest to clipboard"
-                  onClick={() => enqueueSnackbar(
-                    (
-                      <Typography variant="body1">
-                        Manifest copied to clipboard!
-                      </Typography>
-                    ), { variant: 'success' },
-                  )}
-                >
-                  Copy
-                </Button>
-              </CopyToClipboard>
+              <CopyToClipboardButton
+                text={this.dragAndDropUrl()}
+                variant="outlined"
+                color="primary"
+                aria-label="Copy manifest to clipboard"
+                onClick={() => enqueueSnackbar(
+                  (
+                    <Typography variant="body1">
+                      Manifest copied to clipboard!
+                    </Typography>
+                  ), { variant: 'success' },
+                )}
+              >
+                Copy
+              </CopyToClipboardButton>
             </Grid>
           </Grid>
           <Typography variant="body1">{this.whatIsThisLink()}</Typography>
