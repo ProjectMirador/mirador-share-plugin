@@ -202,7 +202,12 @@ export class MiradorShareDialog extends Component {
           )}
           <Typography sx={{ marginTop: 2 }} variant="h3">Add to another viewer</Typography>
           <Grid container spacing={1} sx={{ textAlign: 'center' }}>
-            <Grid container item xs spacing={2} sx={{ display: 'grid', gap: 1, margin: 0 }}>
+            <Grid
+              container
+              spacing={2}
+              sx={{ display: 'grid', gap: 1, margin: 0 }}
+              size="grow"
+            >
               <Typography align="center" variant="body1">
                 Drag & drop IIIF icon to add this resource to any IIIF viewer.
               </Typography>
@@ -210,10 +215,10 @@ export class MiradorShareDialog extends Component {
                 <IiifIcon sx={{ cursor: 'grab' }} />
               </Link>
             </Grid>
-            <Grid item xs={1}>
+            <Grid size={1}>
               <Typography variant="body1">or</Typography>
             </Grid>
-            <Grid item xs justifyContent="center">
+            <Grid justifyContent="center" size="grow">
               <Typography align="center" variant="body1">
                 Copy & paste the resource&apos;s manifest into any IIIF viewer.
               </Typography>
