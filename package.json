@@ -4,7 +4,7 @@
   "description": "mirador-share-plugin React component",
   "type": "module",
   "main": "./dist/mirador-share-plugin.js",
-  "module": "./dist/mirador-share-pugin.es.js",
+  "module": "./dist/mirador-share-plugin.es.js",
   "files": [
     "dist"
   ],
@@ -66,7 +66,7 @@
     "eslint-plugin-testing-library": "^6.2.0",
     "glob": "^10.3.0",
     "happy-dom": "^17.0.0",
-    "mirador": "^4.0.0-alpha.15",
+    "mirador": "^4.0.0-alpha.17",
     "prop-types": "^15.7.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
