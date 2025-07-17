@@ -35,8 +35,8 @@ export default defineConfig({
       build: {
         lib: {
           entry: './src/index.js',
-          fileName: (format) => (format === 'umd' ? 'mirador-share-plugin.js' : 'mirador-share-plugin.es.js'),
-          formats: ['es', 'umd'],
+          fileName: (format) => (format === 'es' ? 'mirador-share-plugin.es.js' : undefined),
+          formats: ['es'],
           name: 'MiradorSharePlugin',
         },
         rollupOptions: {
