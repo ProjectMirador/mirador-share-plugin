@@ -3,7 +3,6 @@
   "version": "1.0.0-alpha.4",
   "description": "mirador-share-plugin React component",
   "type": "module",
-  "main": "./dist/mirador-share-plugin.js",
   "module": "./dist/mirador-share-plugin.es.js",
   "files": [
     "dist"
@@ -11,8 +10,7 @@
   "exports": {
     "./src": "./src/index.js",
     ".": {
-        "import": "./dist/mirador-share-plugin.es.js",
-        "require": "./dist/mirador-share-plugin.js"
+      "import": "./dist/mirador-share-plugin.es.js"
     }
   },
   "repository": {
