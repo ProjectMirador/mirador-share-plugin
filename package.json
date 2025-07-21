@@ -3,16 +3,14 @@
   "version": "1.0.0-alpha.4",
   "description": "mirador-share-plugin React component",
   "type": "module",
-  "main": "./dist/mirador-share-plugin.js",
-  "module": "./dist/mirador-share-pugin.es.js",
+  "module": "./dist/mirador-share-plugin.es.js",
   "files": [
     "dist"
   ],
   "exports": {
     "./src": "./src/index.js",
     ".": {
-        "import": "./dist/mirador-share-plugin.es.js",
-        "require": "./dist/mirador-share-plugin.js"
+      "import": "./dist/mirador-share-plugin.es.js"
     }
   },
   "repository": {
@@ -34,10 +32,10 @@
   "peerDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^6.0.0",
-    "@mui/material": "^6.x",
-    "@mui/system": "^6.x",
-    "mirador": "^4.0.0-alpha.16",
+    "@mui/icons-material": "^7.0.0",
+    "@mui/material": "7.x",
+    "@mui/system": "7.x",
+    "mirador": "^4.0.0-alpha.17",
     "prop-types": "^15.7.2",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
@@ -46,9 +44,9 @@
   "devDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^6.0.0",
-    "@mui/material": "^6.x",
-    "@mui/system": "^6.x",
+    "@mui/icons-material": "^7.0.0",
+    "@mui/material": "7.x",
+    "@mui/system": "7.x",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^16.0.1",
@@ -66,7 +64,7 @@
     "eslint-plugin-testing-library": "^6.2.0",
     "glob": "^10.3.0",
     "happy-dom": "^17.0.0",
-    "mirador": "^4.0.0-alpha.15",
+    "mirador": "^4.0.0-alpha.17",
     "prop-types": "^15.7.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
