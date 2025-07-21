@@ -3,7 +3,7 @@
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 
-`mirador-share-plugin` is a [Mirador 3](https://github.com/ProjectMirador/mirador) plugin that adds the several options for sharing a resource to the window options menu. Options include specifying embedded `<iframe>` options and a preferred share link.
+`mirador-share-plugin` is a [Mirador 4](https://github.com/ProjectMirador/mirador) plugin that adds the several options for sharing a resource to the window options menu. Options include specifying embedded `<iframe>` options and a preferred share link.
 
 - [Live demo](https://mirador-share-plugin.netlify.com/)
 - [Sample configuration](https://github.com/ProjectMirador/mirador-share-plugin/blob/main/demo/src/index.js)
@@ -14,7 +14,7 @@
 
 ## Installation
 
-`mirador-share-plugin` requires an instance of Mirador 3. See the [Mirador wiki](https://github.com/ProjectMirador/mirador/wiki) for examples of embedding Mirador within an application and additional information about plugins. See the [live demo's index.js](https://github.com/ProjectMirador/mirador-share-plugin/blob/main/demo/src/index.js) for an example of importing and configuring `mirador-share-plugin`.
+`mirador-share-plugin` requires an instance of Mirador 4. See the [Mirador wiki](https://github.com/ProjectMirador/mirador/wiki) for examples of embedding Mirador within an application and additional information about plugins. See the [live demo's index.js](https://github.com/ProjectMirador/mirador-share-plugin/blob/main/demo/src/index.js) for an example of importing and configuring `mirador-share-plugin`.
 
 ## Configuration
 
