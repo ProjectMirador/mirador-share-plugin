@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import { cloneElement } from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from './utils/test-utils';
 import MiradorShareEmbed from '../src/MiradorShareEmbed';
