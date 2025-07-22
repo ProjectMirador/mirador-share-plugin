@@ -191,6 +191,7 @@ export function MiradorShareDialog({
             <Typography align="center" variant="body1">
               Copy & paste the resource&apos;s manifest into any IIIF viewer.
             </Typography>
+            {' '}
             <CopyToClipboardButton
               text={dragAndDropUrl()}
               variant="outlined"
