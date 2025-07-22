@@ -12,7 +12,12 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import copy from 'copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
-import { getManifestoInstance, getContainerId, ScrollIndicatedDialogContent } from 'mirador';
+import {
+  getManifestoInstance,
+  getContainerId,
+  ScrollIndicatedDialogContent,
+  useTranslation,
+} from 'mirador';
 import MiradorShareEmbed from './MiradorShareEmbed';
 import IiifIcon from './IiifIcon';
 
@@ -83,6 +88,7 @@ export function MiradorShareDialog({
   syncIframeDimensions = {},
 }) {
   const [shareLinkText, setShareLinkText] = useState('');
+  const { t } = useTranslation();
   useEffect(() => {
     if (manifestId) {
       const shareLink = manifestId.replace(manifestIdReplacePattern[0], manifestIdReplacePattern[1]);
@@ -103,7 +109,7 @@ export function MiradorShareDialog({
     return (
       <>
         {' '}
-        <Link href={iiifInfoLink}>What is IIIF?</Link>
+        <Link href={iiifInfoLink}>{t('mirador-share-plugin.whatIsIiif')}</Link>
       </>
     );
   }
@@ -115,7 +121,7 @@ export function MiradorShareDialog({
       open={open}
     >
       <DialogTitle variant="h2" sx={{ paddingBottom: 0 }}>
-        Share
+        {t('mirador-share-plugin.shareDialogTitle')}
       </DialogTitle>
       <SnackbarProvider
         maxSnack={1}
@@ -127,7 +133,7 @@ export function MiradorShareDialog({
       <ScrollIndicatedDialogContent>
         {displayShareLink && (
           <>
-            <Typography sx={{ marginTop: 2 }} variant="h3">Share link</Typography>
+            <Typography sx={{ marginTop: 2 }} variant="h3">{t('mirador-share-plugin.shareLink')}</Typography>
             <Stack sx={{ marginBottom: 1 }} spacing={1} direction="row">
               <TextField
                 value={shareLinkText}
@@ -135,23 +141,23 @@ export function MiradorShareDialog({
                 fullWidth
                 variant="filled"
                 onChange={(e) => setShareLinkText(e && e.target && e.target.value)}
-                inputProps={{ 'aria-label': 'Share link URL' }}
+                inputProps={{ 'aria-label': t('mirador-share-plugin.ariaShareLinkUrl') }}
               />
               {' '}
               <CopyToClipboardButton
                 text={shareLinkText}
                 variant="outlined"
                 color="primary"
-                aria-label="Copy link to clipboard"
+                aria-label={t('mirador-share-plugin.ariaCopyToClipboard')}
                 onClick={() => enqueueSnackbar(
                   (
                     <Typography variant="body1">
-                      Link copied to clipboard!
+                      {t('mirador-share-plugin.snackbarCopiedLinkToClipboard')}
                     </Typography>
                   ), { variant: 'success' },
                 )}
               >
-                Copy
+                {t('mirador-share-plugin.buttonCopy')}
               </CopyToClipboardButton>
             </Stack>
             <Divider aria-hidden="true" />
@@ -159,7 +165,7 @@ export function MiradorShareDialog({
         )}
         {displayEmbedOption && (
           <>
-            <Typography sx={{ marginTop: 2 }} variant="h3">Embed</Typography>
+            <Typography sx={{ marginTop: 2 }} variant="h3">{t('mirador-share-plugin.embed')}</Typography>
             <MiradorShareEmbed
               embedIframeAttributes={embedIframeAttributes}
               embedIframeTitle={embedIframeTitle}
@@ -170,7 +176,7 @@ export function MiradorShareDialog({
             <Divider aria-hidden="true" />
           </>
         )}
-        <Typography sx={{ marginTop: 2 }} variant="h3">Add to another viewer</Typography>
+        <Typography sx={{ marginTop: 2 }} variant="h3">{t('mirador-share-plugin.addToAnotherViewer')}</Typography>
         <Grid container spacing={1} sx={{ textAlign: 'center' }}>
           <Grid
             container
@@ -179,34 +185,34 @@ export function MiradorShareDialog({
             size="grow"
           >
             <Typography align="center" variant="body1">
-              Drag & drop IIIF icon to add this resource to any IIIF viewer.
+              {t('mirador-share-plugin.iconDragAndDrop')}
             </Typography>
-            <Link href={dragAndDropUrl()} aria-label="Drag icon to any IIIF viewer.">
+            <Link href={dragAndDropUrl()} aria-label={t('mirador-share-plugin.ariaDragIcon')}>
               <IiifIcon sx={{ cursor: 'grab' }} />
             </Link>
           </Grid>
           <Grid size={1}>
-            <Typography variant="body1">or</Typography>
+            <Typography variant="body1">{t('mirador-share-plugin.textOr')}</Typography>
           </Grid>
           <Grid justifyContent="center" size="grow">
             <Typography align="center" variant="body1">
-              Copy & paste the resource&apos;s manifest into any IIIF viewer.
+              {t('mirador-share-plugin.copyAndPasteManifest')}
             </Typography>
             {' '}
             <CopyToClipboardButton
               text={dragAndDropUrl()}
               variant="outlined"
               color="primary"
-              aria-label="Copy manifest to clipboard"
+              aria-label={t('mirador-share-plugin.ariaCopyManifest')}
               onClick={() => enqueueSnackbar(
                 (
                   <Typography variant="body1">
-                    Manifest copied to clipboard!
+                    {t('mirador-share-plugin.snackbarManifestCopied')}
                   </Typography>
                 ), { variant: 'success' },
               )}
             >
-              Copy
+              {t('mirador-share-plugin.buttonCopy')}
             </CopyToClipboardButton>
           </Grid>
         </Grid>
@@ -214,7 +220,7 @@ export function MiradorShareDialog({
       </ScrollIndicatedDialogContent>
       <DialogActions>
         <Button onClick={closeShareDialog} color="primary">
-          Close
+          {t('mirador-share-plugin.buttonClose')}
         </Button>
       </DialogActions>
     </Dialog>
