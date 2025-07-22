@@ -137,6 +137,7 @@ export function MiradorShareDialog({
                 onChange={(e) => setShareLinkText(e && e.target && e.target.value)}
                 inputProps={{ 'aria-label': 'Share link URL' }}
               />
+              {' '}
               <CopyToClipboardButton
                 text={shareLinkText}
                 variant="outlined"
