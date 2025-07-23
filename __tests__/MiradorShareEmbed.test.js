@@ -23,21 +23,21 @@ describe('MiradorShareEmbed', () => {
 
     expect(screen.getAllByRole('group')).toHaveLength(3);
 
-    expect(screen.getByText('Select viewer size', { component: 'legend' })).toBeInTheDocument();
-    expect(screen.getByText('Copy & paste code', { component: 'legend' })).toBeInTheDocument();
+    expect(screen.getByText('miradorSharePlugin.selectViewerSize', { component: 'legend' })).toBeInTheDocument();
+    expect(screen.getByText('miradorSharePlugin.copyAndPasteCode', { component: 'legend' })).toBeInTheDocument();
   });
 
   it('renders a radio group w/ a form control for each of the size options', () => {
     createWrapper();
 
-    expect(screen.getAllByRole('button').map((button) => button.textContent)).toEqual(['560x420', '640x480', '800x600', '1024x768', 'Copy']);
+    expect(screen.getAllByRole('button').map((button) => button.textContent)).toEqual(['560x420', '640x480', '800x600', '1024x768', 'miradorSharePlugin.buttonCopy']);
   });
 
   it('renders the embed code in a text field', () => {
     createWrapper();
 
     expect(screen.getByRole('textbox').value).toContain('<iframe');
-    expect(screen.getByText('Copy & paste code', { component: 'button' })).toBeInTheDocument();
+    expect(screen.getByText('miradorSharePlugin.copyAndPasteCode', { component: 'button' })).toBeInTheDocument();
   });
 
   it('uses the embedUrlReplacePattern prop to generate the embed URL', () => {
@@ -56,13 +56,13 @@ describe('MiradorShareEmbed', () => {
 
   it('adds the height/width to the Embed URL using the given param', () => {
     const { component, rerender } = createWrapper({ syncIframeDimensions: { height: { param: 'maxheight' } } });
-    expect(screen.getByLabelText('Copy & paste code').value).toMatch(/iiif\/manifest&maxheight=420/);
+    expect(screen.getByLabelText('miradorSharePlugin.copyAndPasteCode').value).toMatch(/iiif\/manifest&maxheight=420/);
 
     rerender(cloneElement(component, { syncIframeDimensions: { width: { param: 'maxwidth' } } }));
-    expect(screen.getByLabelText('Copy & paste code').value).toMatch(/iiif\/manifest&maxwidth=560/);
+    expect(screen.getByLabelText('miradorSharePlugin.copyAndPasteCode').value).toMatch(/iiif\/manifest&maxwidth=560/);
 
     rerender(cloneElement(component, { syncIframeDimensions: { height: { param: 'maxheight' }, width: { param: 'maxwidth' } } }));
-    expect(screen.getByLabelText('Copy & paste code').value).toMatch(/iiif\/manifest&maxwidth=560&maxheight=420/);
+    expect(screen.getByLabelText('miradorSharePlugin.copyAndPasteCode').value).toMatch(/iiif\/manifest&maxwidth=560&maxheight=420/);
   });
 
   it('the embed code gets its height and width from state', async () => {
