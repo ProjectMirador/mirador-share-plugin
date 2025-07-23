@@ -1,6 +1,6 @@
 const translations = {
   de: {
-    'mirador-share-plugin': {
+    miradorSharePlugin: {
       addToAnotherViewer: 'Zu einem anderen Betrachter hinzufügen',
       ariaCopyCodeToClipboard: 'Code in die Zischenablage kopieren',
       ariaCopyManifest: 'Manifest in die Zwischenablage kopieren',
@@ -26,7 +26,7 @@ const translations = {
     },
   },
   en: {
-    'mirador-share-plugin': {
+    miradorSharePlugin: {
       addToAnotherViewer: 'Add to another viewer',
       ariaCopyCodeToClipboard: 'Copy code to clipboard',
       ariaCopyManifest: 'Copy manifest to clipboard',
