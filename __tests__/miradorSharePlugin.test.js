@@ -18,7 +18,7 @@ describe('miradorSharePlugin', () => {
   describe('renders a component', () => {
     it('renders a thing', () => {
       createWrapper();
-      expect(screen.getByText('Share')).toBeInTheDocument();
+      expect(screen.getByText('miradorSharePlugin.menuItemShare')).toBeInTheDocument();
     });
   });
 
@@ -27,7 +27,7 @@ describe('miradorSharePlugin', () => {
       const handleClose = vi.fn();
       const openShareDialog = vi.fn();
       createWrapper({ handleClose, openShareDialog });
-      screen.getByText('Share').click();
+      screen.getByText('miradorSharePlugin.menuItemShare').click();
       expect(handleClose).toHaveBeenCalled();
       expect(openShareDialog).toHaveBeenCalled();
     });
