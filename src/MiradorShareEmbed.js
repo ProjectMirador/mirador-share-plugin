@@ -138,11 +138,11 @@ function MiradorShareEmbed({
       />
       <Stack sx={{ marginBottom: 1 }}>
         <FormControl component="fieldset">
-          <FormLabel component="legend">{t('mirador-share-plugin.selectViewerSize')}</FormLabel>
+          <FormLabel component="legend">{t('miradorSharePlugin.selectViewerSize')}</FormLabel>
           <ToggleButtonGroup
             exclusive
             value={selectedSize}
-            aria-label={t('mirador-share-plugin.ariaSelectViewerSize')}
+            aria-label={t('miradorSharePlugin.ariaSelectViewerSize')}
             name="viewerSize"
             onChange={(e, size) => size && setSelectedSize(size)}
           >
@@ -150,7 +150,7 @@ function MiradorShareEmbed({
           </ToggleButtonGroup>
         </FormControl>
         <FormControl component="fieldset">
-          <FormLabel htmlFor="copyCode">{t('mirador-share-plugin.copyAndPasteCode')}</FormLabel>
+          <FormLabel htmlFor="copyCode">{t('miradorSharePlugin.copyAndPasteCode')}</FormLabel>
           <Stack direction="row" alignItems="end" gap={1}>
             <TextField
               id="copyCode"
@@ -164,16 +164,16 @@ function MiradorShareEmbed({
               text={embedCode()}
               variant="outlined"
               color="primary"
-              aria-label={t('mirador-share-plugin.ariaCopyCodeToClipboard')}
+              aria-label={t('miradorSharePlugin.ariaCopyCodeToClipboard')}
               onClick={() => enqueueSnackbar(
                 (
                   <Typography variant="body1">
-                    {t('mirador-share-plugin.snackbarCopiedCodeToClipboard')}
+                    {t('miradorSharePlugin.snackbarCopiedCodeToClipboard')}
                   </Typography>
                 ), { variant: 'success' },
               )}
             >
-              {t('mirador-share-plugin.buttonCopy')}
+              {t('miradorSharePlugin.buttonCopy')}
             </CopyToClipboardButton>
           </Stack>
         </FormControl>

@@ -109,7 +109,7 @@ export function MiradorShareDialog({
     return (
       <>
         {' '}
-        <Link href={iiifInfoLink}>{t('mirador-share-plugin.whatIsIiif')}</Link>
+        <Link href={iiifInfoLink}>{t('miradorSharePlugin.whatIsIiif')}</Link>
       </>
     );
   }
@@ -121,7 +121,7 @@ export function MiradorShareDialog({
       open={open}
     >
       <DialogTitle variant="h2" sx={{ paddingBottom: 0 }}>
-        {t('mirador-share-plugin.shareDialogTitle')}
+        {t('miradorSharePlugin.shareDialogTitle')}
       </DialogTitle>
       <SnackbarProvider
         maxSnack={1}
@@ -133,7 +133,7 @@ export function MiradorShareDialog({
       <ScrollIndicatedDialogContent>
         {displayShareLink && (
           <>
-            <Typography sx={{ marginTop: 2 }} variant="h3">{t('mirador-share-plugin.shareLink')}</Typography>
+            <Typography sx={{ marginTop: 2 }} variant="h3">{t('miradorSharePlugin.shareLink')}</Typography>
             <Stack sx={{ marginBottom: 1 }} spacing={1} direction="row">
               <TextField
                 value={shareLinkText}
@@ -141,23 +141,23 @@ export function MiradorShareDialog({
                 fullWidth
                 variant="filled"
                 onChange={(e) => setShareLinkText(e && e.target && e.target.value)}
-                inputProps={{ 'aria-label': t('mirador-share-plugin.ariaShareLinkUrl') }}
+                inputProps={{ 'aria-label': t('miradorSharePlugin.ariaShareLinkUrl') }}
               />
               {' '}
               <CopyToClipboardButton
                 text={shareLinkText}
                 variant="outlined"
                 color="primary"
-                aria-label={t('mirador-share-plugin.ariaCopyToClipboard')}
+                aria-label={t('miradorSharePlugin.ariaCopyToClipboard')}
                 onClick={() => enqueueSnackbar(
                   (
                     <Typography variant="body1">
-                      {t('mirador-share-plugin.snackbarCopiedLinkToClipboard')}
+                      {t('miradorSharePlugin.snackbarCopiedLinkToClipboard')}
                     </Typography>
                   ), { variant: 'success' },
                 )}
               >
-                {t('mirador-share-plugin.buttonCopy')}
+                {t('miradorSharePlugin.buttonCopy')}
               </CopyToClipboardButton>
             </Stack>
             <Divider aria-hidden="true" />
@@ -165,7 +165,7 @@ export function MiradorShareDialog({
         )}
         {displayEmbedOption && (
           <>
-            <Typography sx={{ marginTop: 2 }} variant="h3">{t('mirador-share-plugin.embed')}</Typography>
+            <Typography sx={{ marginTop: 2 }} variant="h3">{t('miradorSharePlugin.embed')}</Typography>
             <MiradorShareEmbed
               embedIframeAttributes={embedIframeAttributes}
               embedIframeTitle={embedIframeTitle}
@@ -176,7 +176,7 @@ export function MiradorShareDialog({
             <Divider aria-hidden="true" />
           </>
         )}
-        <Typography sx={{ marginTop: 2 }} variant="h3">{t('mirador-share-plugin.addToAnotherViewer')}</Typography>
+        <Typography sx={{ marginTop: 2 }} variant="h3">{t('miradorSharePlugin.addToAnotherViewer')}</Typography>
         <Grid container spacing={1} sx={{ textAlign: 'center' }}>
           <Grid
             container
@@ -185,34 +185,34 @@ export function MiradorShareDialog({
             size="grow"
           >
             <Typography align="center" variant="body1">
-              {t('mirador-share-plugin.iconDragAndDrop')}
+              {t('miradorSharePlugin.iconDragAndDrop')}
             </Typography>
-            <Link href={dragAndDropUrl()} aria-label={t('mirador-share-plugin.ariaDragIcon')}>
+            <Link href={dragAndDropUrl()} aria-label={t('miradorSharePlugin.ariaDragIcon')}>
               <IiifIcon sx={{ cursor: 'grab' }} />
             </Link>
           </Grid>
           <Grid size={1}>
-            <Typography variant="body1">{t('mirador-share-plugin.textOr')}</Typography>
+            <Typography variant="body1">{t('miradorSharePlugin.textOr')}</Typography>
           </Grid>
           <Grid justifyContent="center" size="grow">
             <Typography align="center" variant="body1">
-              {t('mirador-share-plugin.copyAndPasteManifest')}
+              {t('miradorSharePlugin.copyAndPasteManifest')}
             </Typography>
             {' '}
             <CopyToClipboardButton
               text={dragAndDropUrl()}
               variant="outlined"
               color="primary"
-              aria-label={t('mirador-share-plugin.ariaCopyManifest')}
+              aria-label={t('miradorSharePlugin.ariaCopyManifest')}
               onClick={() => enqueueSnackbar(
                 (
                   <Typography variant="body1">
-                    {t('mirador-share-plugin.snackbarManifestCopied')}
+                    {t('miradorSharePlugin.snackbarManifestCopied')}
                   </Typography>
                 ), { variant: 'success' },
               )}
             >
-              {t('mirador-share-plugin.buttonCopy')}
+              {t('miradorSharePlugin.buttonCopy')}
             </CopyToClipboardButton>
           </Grid>
         </Grid>
@@ -220,7 +220,7 @@ export function MiradorShareDialog({
       </ScrollIndicatedDialogContent>
       <DialogActions>
         <Button onClick={closeShareDialog} color="primary">
-          {t('mirador-share-plugin.buttonClose')}
+          {t('miradorSharePlugin.buttonClose')}
         </Button>
       </DialogActions>
     </Dialog>
