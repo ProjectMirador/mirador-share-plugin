@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
@@ -36,57 +36,46 @@ CopyToClipboardButton.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
+const sizes = {
+  small: {
+    iconWidth: 70,
+    iconHeight: 52,
+    viewerWidth: 560,
+    viewerHeight: 420,
+  },
+  medium: {
+    iconWidth: 80,
+    iconHeight: 60,
+    viewerWidth: 640,
+    viewerHeight: 480,
+  },
+  large: {
+    iconWidth: 90,
+    iconHeight: 67,
+    viewerWidth: 800,
+    viewerHeight: 600,
+  },
+  extraLarge: {
+    iconWidth: 100,
+    iconHeight: 75,
+    viewerWidth: 1024,
+    viewerHeight: 768,
+  },
+};
+
 /**
  * MiradorShareEmbed ~
 */
-class MiradorShareEmbed extends Component {
-  static sizes() {
-    return {
-      small: {
-        iconWidth: 70,
-        iconHeight: 52,
-        viewerWidth: 560,
-        viewerHeight: 420,
-      },
-      medium: {
-        iconWidth: 80,
-        iconHeight: 60,
-        viewerWidth: 640,
-        viewerHeight: 480,
-      },
-      large: {
-        iconWidth: 90,
-        iconHeight: 67,
-        viewerWidth: 800,
-        viewerHeight: 600,
-      },
-      extraLarge: {
-        iconWidth: 100,
-        iconHeight: 75,
-        viewerWidth: 1024,
-        viewerHeight: 768,
-      },
-    };
-  }
+function MiradorShareEmbed({
+  embedIframeAttributes,
+  embedIframeTitle,
+  embedUrlReplacePattern,
+  manifestId = null,
+  syncIframeDimensions = {},
+}) {
+  const [selectedSize, setSelectedSize] = useState('small');
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedSize: 'small',
-    };
-    this.handleSizeSelect = this.handleSizeSelect.bind(this);
-  }
-
-  handleSizeSelect(e, size) {
-    this.setState({
-      selectedSize: size,
-    });
-  }
-
-  formControlLabelsForSizes() { // eslint-disable-line class-methods-use-this
-    const sizes = MiradorShareEmbed.sizes();
-
+  function formControlLabelsForSizes() {
     return Object.keys(sizes).map((sizeKey) => {
       const size = sizes[sizeKey];
       return (
@@ -106,10 +95,8 @@ class MiradorShareEmbed extends Component {
     });
   }
 
-  additionalEmbedParams() {
-    const { syncIframeDimensions } = this.props;
-    const { selectedSize } = this.state;
-    const size = MiradorShareEmbed.sizes()[selectedSize];
+  function additionalEmbedParams() {
+    const size = sizes[selectedSize];
 
     if (!(syncIframeDimensions.height || syncIframeDimensions.width)) {
       return '';
@@ -128,80 +115,69 @@ class MiradorShareEmbed extends Component {
     return `&${params.join('&')}`;
   }
 
-  embedUrl() {
-    const { embedUrlReplacePattern, manifestId } = this.props;
-
-    return `${manifestId.replace(embedUrlReplacePattern[0], embedUrlReplacePattern[1])}${this.additionalEmbedParams()}`;
+  function embedUrl() {
+    return `${manifestId.replace(embedUrlReplacePattern[0], embedUrlReplacePattern[1])}${additionalEmbedParams()}`;
   }
 
-  embedCode() {
-    const { embedIframeAttributes, embedIframeTitle } = this.props;
-    const { selectedSize } = this.state;
-    const size = MiradorShareEmbed.sizes()[selectedSize];
+  function embedCode() {
+    const size = sizes[selectedSize];
 
-    return `<iframe src="${this.embedUrl()}" title="${embedIframeTitle}" width="${size.viewerWidth}" height="${size.viewerHeight}" ${embedIframeAttributes}></iframe>`;
+    return `<iframe src="${embedUrl()}" title="${embedIframeTitle}" width="${size.viewerWidth}" height="${size.viewerHeight}" ${embedIframeAttributes}></iframe>`;
   }
 
-  /**
-   * Returns the rendered component
-  */
-  render() {
-    const { selectedSize } = this.state;
-
-    return (
-      <>
-        <SnackbarProvider
-          maxSnack={1}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-        />
-        <Stack sx={{ marginBottom: 1 }}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Select viewer size</FormLabel>
-            <ToggleButtonGroup
-              exclusive
-              value={selectedSize}
-              aria-label="Select viewer size"
-              name="viwerSize"
-              onChange={this.handleSizeSelect}
+  return (
+    <>
+      <SnackbarProvider
+        maxSnack={1}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      />
+      <Stack sx={{ marginBottom: 1 }}>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Select viewer size</FormLabel>
+          <ToggleButtonGroup
+            exclusive
+            value={selectedSize}
+            aria-label="Select viewer size"
+            name="viewerSize"
+            onChange={(e, size) => size && setSelectedSize(size)}
+          >
+            {formControlLabelsForSizes()}
+          </ToggleButtonGroup>
+        </FormControl>
+        <FormControl component="fieldset">
+          <FormLabel htmlFor="copyCode">Copy &amp; paste code</FormLabel>
+          <Stack direction="row" alignItems="end" gap={1}>
+            <TextField
+              id="copyCode"
+              fullWidth
+              multiline
+              rows={4}
+              value={embedCode()}
+              variant="filled"
+            />
+            <CopyToClipboardButton
+              text={embedCode()}
+              variant="outlined"
+              color="primary"
+              aria-label="Copy code to clipboard"
+              onClick={() => enqueueSnackbar(
+                (
+                  <Typography variant="body1">
+                    Code copied to clipboard!
+                  </Typography>
+                ), { variant: 'success' },
+              )}
             >
-              {this.formControlLabelsForSizes()}
-            </ToggleButtonGroup>
-          </FormControl>
-          <FormControl component="fieldset">
-            <FormLabel htmlFor="copyCode">Copy &amp; paste code</FormLabel>
-            <Stack direction="row" alignItems="end" gap={1}>
-              <TextField
-                id="copyCode"
-                fullWidth
-                multiline
-                rows={4}
-                value={this.embedCode()}
-                variant="filled"
-              />
-              <CopyToClipboardButton
-                text={this.embedCode()}
-                variant="outlined"
-                color="primary"
-                aria-label="Copy code to clipboard"
-                onClick={() => enqueueSnackbar(
-                  (
-                    <Typography variant="body1">
-                      Code copied to clipboard!
-                    </Typography>
-                  ), { variant: 'success' },
-                )}
-              >
-                Copy
-              </CopyToClipboardButton>
-            </Stack>
-          </FormControl>
-        </Stack>
-      </>
-    );
-  }
+              Copy
+            </CopyToClipboardButton>
+          </Stack>
+        </FormControl>
+      </Stack>
+    </>
+  );
 }
 
 MiradorShareEmbed.propTypes = {
@@ -218,11 +194,6 @@ MiradorShareEmbed.propTypes = {
     height: PropTypes.shape({ param: PropTypes.string }),
     width: PropTypes.shape({ param: PropTypes.string }),
   }),
-};
-
-MiradorShareEmbed.defaultProps = {
-  manifestId: null,
-  syncIframeDimensions: {},
 };
 
 export default MiradorShareEmbed;

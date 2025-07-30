@@ -54,8 +54,9 @@ describe('Dialog', () => {
       createWrapper();
 
       await userEvent.type(screen.getByLabelText('Share link URL', { selector: 'input' }), '?xyz');
-
-      expect(screen.getByLabelText('Share link URL', { selector: 'input' }).value).toEqual('http://example.com/abc/iiif/manifest?xyz');
+      screen.findByRole('textbox', { value: 'http://example.com/abc/iiif/manifest?xyz' }).then(() => {
+        expect(screen.getByLabelText('Share link URL', { selector: 'input' }).value).toEqual('http://example.com/abc/iiif/manifest?xyz');
+      });
     });
 
     it('does not render the section if the displayShareLink prop is falsey', () => {
