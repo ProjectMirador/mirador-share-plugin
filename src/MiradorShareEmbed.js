@@ -141,7 +141,7 @@ function MiradorShareEmbed({
             exclusive
             value={selectedSize}
             aria-label="Select viewer size"
-            name="viwerSize"
+            name="viewerSize"
             onChange={(e, size) => size && setSelectedSize(size)}
           >
             {formControlLabelsForSizes()}

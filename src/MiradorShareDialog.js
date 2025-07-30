@@ -88,7 +88,6 @@ export function MiradorShareDialog({
       const shareLink = manifestId.replace(manifestIdReplacePattern[0], manifestIdReplacePattern[1]);
       setShareLinkText(shareLink);
     }
-    return undefined;
   }, [manifestId, manifestIdReplacePattern, setShareLinkText]);
 
   if (!open) return null;
@@ -131,7 +130,7 @@ export function MiradorShareDialog({
             <Typography sx={{ marginTop: 2 }} variant="h3">Share link</Typography>
             <Stack sx={{ marginBottom: 1 }} spacing={1} direction="row">
               <TextField
-                defaultValue={shareLinkText}
+                value={shareLinkText}
                 fullWidth
                 variant="filled"
                 onChange={(e) => setShareLinkText(e && e.target && e.target.value)}
