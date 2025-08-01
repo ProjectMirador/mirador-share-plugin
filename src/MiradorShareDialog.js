@@ -16,6 +16,7 @@ import {
   getManifestoInstance,
   getContainerId,
   ScrollIndicatedDialogContent,
+  // import useTranslation from Mirador instead of react-i18next, see https://github.com/ProjectMirador/mirador/wiki/Creating-a-Mirador-4-Plugin#translations-i18n
   useTranslation,
 } from 'mirador';
 import MiradorShareEmbed from './MiradorShareEmbed';

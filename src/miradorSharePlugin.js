@@ -4,6 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import ShareIcon from '@mui/icons-material/ShareSharp';
+// import useTranslation from Mirador instead of react-i18next, see https://github.com/ProjectMirador/mirador/wiki/Creating-a-Mirador-4-Plugin#translations-i18n
 import { getManifestoInstance, useTranslation } from 'mirador';
 import translations from './translations';
 

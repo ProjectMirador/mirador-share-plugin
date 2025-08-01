@@ -10,6 +10,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import copy from 'copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+// import useTranslation from Mirador instead of react-i18next, see https://github.com/ProjectMirador/mirador/wiki/Creating-a-Mirador-4-Plugin#translations-i18n
 import { useTranslation } from 'mirador';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
