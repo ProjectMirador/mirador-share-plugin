@@ -30,15 +30,15 @@ describe('Dialog', () => {
   it('renders the section headings in an h3', () => {
     createWrapper();
 
-    expect(screen.getByText('Share link', { selector: 'h3' })).toBeInTheDocument();
-    expect(screen.getByText('Embed', { selector: 'h3' })).toBeInTheDocument();
-    expect(screen.getByText('Add to another viewer', { selector: 'h3' })).toBeInTheDocument();
+    expect(screen.getByText('miradorSharePlugin.shareLink', { selector: 'h3' })).toBeInTheDocument();
+    expect(screen.getByText('miradorSharePlugin.embed', { selector: 'h3' })).toBeInTheDocument();
+    expect(screen.getByText('miradorSharePlugin.addToAnotherViewer', { selector: 'h3' })).toBeInTheDocument();
   });
 
   it('has a close button that calls closeShareDialog on click', () => {
     const closeShareDialog = vi.fn();
     createWrapper({ closeShareDialog });
-    screen.getByRole('button', { name: 'Close' }).click();
+    screen.getByRole('button', { name: 'miradorSharePlugin.buttonClose' }).click();
     expect(closeShareDialog).toHaveBeenCalled();
   });
 
@@ -46,34 +46,34 @@ describe('Dialog', () => {
     it('renders the section w/ a TextField and a Copy Button', () => {
       createWrapper();
 
-      expect(screen.getByLabelText('Share link URL', { selector: 'input' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Copy link to clipboard' })).toBeInTheDocument();
+      expect(screen.getByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'miradorSharePlugin.ariaCopyToClipboard' })).toBeInTheDocument();
     });
 
     it('allows the user to change the embed URL', async () => {
       createWrapper();
 
-      await userEvent.type(screen.getByLabelText('Share link URL', { selector: 'input' }), '?xyz');
+      await userEvent.type(screen.getByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' }), '?xyz');
       screen.findByRole('textbox', { value: 'http://example.com/abc/iiif/manifest?xyz' }).then(() => {
-        expect(screen.getByLabelText('Share link URL', { selector: 'input' }).value).toEqual('http://example.com/abc/iiif/manifest?xyz');
+        expect(screen.getByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' }).value).toEqual('http://example.com/abc/iiif/manifest?xyz');
       });
     });
 
     it('does not render the section if the displayShareLink prop is falsey', () => {
       createWrapper({ displayShareLink: false });
-      expect(screen.queryByLabelText('Share link URL', { selector: 'input' })).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' })).not.toBeInTheDocument();
     });
   });
 
   describe('embed section', () => {
     it('is rendered when the displayEmbedOption is true', () => {
       createWrapper({ displayEmbedOption: false });
-      expect(screen.queryByText('Embed', { selector: 'h3' })).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Select viewer size')).not.toBeInTheDocument();
+      expect(screen.queryByText('miradorSharePlugin.embed', { selector: 'h3' })).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('miradorSharePlugin.selectViewerSize')).not.toBeInTheDocument();
 
       createWrapper({ displayEmbedOption: true });
-      expect(screen.getByText('Embed', { selector: 'h3' })).toBeInTheDocument();
-      expect(screen.getByLabelText('Select viewer size')).toBeInTheDocument();
+      expect(screen.getByText('miradorSharePlugin.embed', { selector: 'h3' })).toBeInTheDocument();
+      expect(screen.getByLabelText('miradorSharePlugin.ariaSelectViewerSize')).toBeInTheDocument();
     });
   });
 
@@ -81,21 +81,21 @@ describe('Dialog', () => {
     it('renders text', () => {
       createWrapper();
 
-      expect(screen.getByText(/Drag & drop/)).toBeInTheDocument();
-      expect(screen.getByText(/Copy & paste the resource/)).toBeInTheDocument();
+      expect(screen.getByText('miradorSharePlugin.iconDragAndDrop')).toBeInTheDocument();
+      expect(screen.getByText('miradorSharePlugin.copyAndPasteManifest')).toBeInTheDocument();
     });
 
     it('renders the link with IIIF Drag & Drop Compliant URL (passing the manifest in a param)', () => {
       createWrapper();
 
-      expect(screen.getByLabelText('Drag icon to any IIIF viewer.')).toHaveAttribute('href', 'http://example.com/abc/iiif/manifest?manifest=http://example.com/abc/iiif/manifest');
+      expect(screen.getByLabelText('miradorSharePlugin.ariaDragIcon')).toHaveAttribute('href', 'http://example.com/abc/iiif/manifest?manifest=http://example.com/abc/iiif/manifest');
     });
 
     describe('when an info link is configured/passed in as a prop', () => {
       it('renders a "What is IIIF" link', () => {
         createWrapper({ iiifInfoLink: 'http://iiif.io/' });
 
-        expect(screen.getByText('What is IIIF?')).toHaveAttribute('href', 'http://iiif.io/');
+        expect(screen.getByText('miradorSharePlugin.whatIsIiif')).toHaveAttribute('href', 'http://iiif.io/');
       });
     });
   });

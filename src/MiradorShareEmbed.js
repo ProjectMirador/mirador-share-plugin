@@ -10,6 +10,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import copy from 'copy-to-clipboard';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+// import useTranslation from Mirador instead of react-i18next, see https://github.com/ProjectMirador/mirador/wiki/Creating-a-Mirador-4-Plugin#translations-i18n
+import { useTranslation } from 'mirador';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
 const CopyToClipboardButton = ({
@@ -74,6 +76,7 @@ function MiradorShareEmbed({
   syncIframeDimensions = {},
 }) {
   const [selectedSize, setSelectedSize] = useState('small');
+  const { t } = useTranslation();
 
   function formControlLabelsForSizes() {
     return Object.keys(sizes).map((sizeKey) => {
@@ -136,11 +139,11 @@ function MiradorShareEmbed({
       />
       <Stack sx={{ marginBottom: 1 }}>
         <FormControl component="fieldset">
-          <FormLabel component="legend">Select viewer size</FormLabel>
+          <FormLabel component="legend">{t('miradorSharePlugin.selectViewerSize')}</FormLabel>
           <ToggleButtonGroup
             exclusive
             value={selectedSize}
-            aria-label="Select viewer size"
+            aria-label={t('miradorSharePlugin.ariaSelectViewerSize')}
             name="viewerSize"
             onChange={(e, size) => size && setSelectedSize(size)}
           >
@@ -148,7 +151,7 @@ function MiradorShareEmbed({
           </ToggleButtonGroup>
         </FormControl>
         <FormControl component="fieldset">
-          <FormLabel htmlFor="copyCode">Copy &amp; paste code</FormLabel>
+          <FormLabel htmlFor="copyCode">{t('miradorSharePlugin.copyAndPasteCode')}</FormLabel>
           <Stack direction="row" alignItems="end" gap={1}>
             <TextField
               id="copyCode"
@@ -162,16 +165,16 @@ function MiradorShareEmbed({
               text={embedCode()}
               variant="outlined"
               color="primary"
-              aria-label="Copy code to clipboard"
+              aria-label={t('miradorSharePlugin.ariaCopyCodeToClipboard')}
               onClick={() => enqueueSnackbar(
                 (
                   <Typography variant="body1">
-                    Code copied to clipboard!
+                    {t('miradorSharePlugin.snackbarCopiedCodeToClipboard')}
                   </Typography>
                 ), { variant: 'success' },
               )}
             >
-              Copy
+              {t('miradorSharePlugin.buttonCopy')}
             </CopyToClipboardButton>
           </Stack>
         </FormControl>

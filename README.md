@@ -45,6 +45,8 @@ Configurations for this plugin are injected when Mirador is initialized under th
 ## Contribute
 Mirador's development, design, and maintenance is driven by community needs and ongoing feedback and discussion. Join us at our regularly scheduled community calls, on [IIIF slack #mirador](http://bit.ly/iiif-slack), or the [mirador-tech](https://groups.google.com/forum/#!forum/mirador-tech) and [iiif-discuss](https://groups.google.com/forum/#!forum/iiif-discuss) mailing lists. To suggest features, report bugs, and clarify usage, please submit a GitHub issue.
 
+We are also welcoming additional translations as we would like to offer the plugin in more languages. Please feel free to open a pull request or to discuss another way to contribute translations on one of the abovementioned channels.
+
 [build-badge]: https://img.shields.io/travis/projectmirador/mirador-share-plugin/main.png?style=flat-square
 [build]: https://travis-ci.org/projectmirador/mirador-share-plugin
 

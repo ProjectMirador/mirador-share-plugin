@@ -4,7 +4,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import ShareIcon from '@mui/icons-material/ShareSharp';
-import { getManifestoInstance } from 'mirador';
+// import useTranslation from Mirador instead of react-i18next, see https://github.com/ProjectMirador/mirador/wiki/Creating-a-Mirador-4-Plugin#translations-i18n
+import { getManifestoInstance, useTranslation } from 'mirador';
+import translations from './translations';
 
 const shareDialogReducer = (state = {}, action = null) => {
   if (action.type === 'OPEN_WINDOW_DIALOG') {
@@ -38,6 +40,7 @@ const mapStateToProps = (state, { windowId }) => ({
 });
 
 function MiradorShare({ handleClose = () => {}, openShareDialog = () => {} }) {
+  const { t } = useTranslation();
   const openDialogAndClose = useCallback(() => {
     openShareDialog();
     handleClose();
@@ -49,7 +52,7 @@ function MiradorShare({ handleClose = () => {}, openShareDialog = () => {} }) {
         <ShareIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
-        Share
+        {t('miradorSharePlugin.menuItemShare')}
       </ListItemText>
     </MenuItem>
   );
@@ -65,6 +68,9 @@ export default {
   mode: 'add',
   name: 'MiradorSharePlugin',
   component: MiradorShare,
+  config: {
+    translations,
+  },
   mapDispatchToProps,
   mapStateToProps,
   reducers: {
