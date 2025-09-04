@@ -138,11 +138,16 @@ export function MiradorShareDialog({
             <Stack sx={{ marginBottom: 1 }} spacing={1} direction="row">
               <TextField
                 value={shareLinkText}
-                defaultValue={shareLinkText}
                 fullWidth
                 variant="filled"
                 onChange={(e) => setShareLinkText(e && e.target && e.target.value)}
-                inputProps={{ 'aria-label': t('miradorSharePlugin.ariaShareLinkUrl') }}
+                slotProps={{
+                  input: {
+                    inputProps: {
+                      'aria-label': t('miradorSharePlugin.ariaShareLinkUrl'),
+                    },
+                  },
+                }}
               />
               {' '}
               <CopyToClipboardButton
