@@ -37,7 +37,7 @@ const translations = {
       buttonClose: 'Close',
       buttonCopy: 'Copy',
       copyAndPasteCode: 'Copy & paste code',
-      copyAndPasteManifest: 'Copy & paste the resource\'s manifest into any IIIF viewer.',
+      copyAndPasteManifest: "Copy & paste the resource's manifest into any IIIF viewer.",
       iconDragAndDrop: 'Drag & drop IIIF icon to add this resource to any IIIF viewer',
       embed: 'Embed',
       menuItemShare: 'Share',
