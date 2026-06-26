@@ -14,19 +14,14 @@ import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import { useTranslation } from 'mirador';
 import EmbedSizeIcon from './EmbedSizeIcon';
 
-const CopyToClipboardButton = ({
-  children, onClick, text, ...props
-}) => {
+const CopyToClipboardButton = ({ children, onClick, text, ...props }) => {
   const handleClick = (e) => {
     copy(text);
     onClick(e);
   };
 
   return (
-    <Button
-      onClick={handleClick}
-      {...props}
-    >
+    <Button onClick={handleClick} {...props}>
       {children}
     </Button>
   );
@@ -67,7 +62,7 @@ const sizes = {
 
 /**
  * MiradorShareEmbed ~
-*/
+ */
 function MiradorShareEmbed({
   embedIframeAttributes,
   embedIframeTitle,
@@ -89,10 +84,7 @@ function MiradorShareEmbed({
           value={sizeKey}
         >
           {`${size.viewerWidth}x${size.viewerHeight}`}
-          <EmbedSizeIcon
-            width={size.iconWidth}
-            height={size.iconHeight}
-          />
+          <EmbedSizeIcon width={size.iconWidth} height={size.iconHeight} />
         </ToggleButton>
       );
     });
@@ -153,26 +145,18 @@ function MiradorShareEmbed({
         <FormControl component="fieldset">
           <FormLabel htmlFor="copyCode">{t('miradorSharePlugin.copyAndPasteCode')}</FormLabel>
           <Stack direction="row" alignItems="end" gap={1}>
-            <TextField
-              id="copyCode"
-              fullWidth
-              multiline
-              rows={4}
-              value={embedCode()}
-              variant="filled"
-            />
+            <TextField id="copyCode" fullWidth multiline rows={4} value={embedCode()} variant="filled" />
             <CopyToClipboardButton
               text={embedCode()}
               variant="outlined"
               color="primary"
               aria-label={t('miradorSharePlugin.ariaCopyCodeToClipboard')}
-              onClick={() => enqueueSnackbar(
-                (
-                  <Typography variant="body1">
-                    {t('miradorSharePlugin.snackbarCopiedCodeToClipboard')}
-                  </Typography>
-                ), { variant: 'success' },
-              )}
+              onClick={() =>
+                enqueueSnackbar(
+                  <Typography variant="body1">{t('miradorSharePlugin.snackbarCopiedCodeToClipboard')}</Typography>,
+                  { variant: 'success' },
+                )
+              }
             >
               {t('miradorSharePlugin.buttonCopy')}
             </CopyToClipboardButton>
@@ -186,12 +170,7 @@ function MiradorShareEmbed({
 MiradorShareEmbed.propTypes = {
   embedIframeAttributes: PropTypes.string.isRequired,
   embedIframeTitle: PropTypes.string.isRequired,
-  embedUrlReplacePattern: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(RegExp),
-    ]),
-  ).isRequired,
+  embedUrlReplacePattern: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)])).isRequired,
   manifestId: PropTypes.string,
   syncIframeDimensions: PropTypes.shape({
     height: PropTypes.shape({ param: PropTypes.string }),

@@ -55,7 +55,9 @@ describe('Dialog', () => {
 
       await userEvent.type(screen.getByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' }), '?xyz');
       screen.findByRole('textbox', { value: 'http://example.com/abc/iiif/manifest?xyz' }).then(() => {
-        expect(screen.getByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' }).value).toEqual('http://example.com/abc/iiif/manifest?xyz');
+        expect(screen.getByLabelText('miradorSharePlugin.ariaShareLinkUrl', { selector: 'input' }).value).toEqual(
+          'http://example.com/abc/iiif/manifest?xyz',
+        );
       });
     });
 
@@ -88,7 +90,10 @@ describe('Dialog', () => {
     it('renders the link with IIIF Drag & Drop Compliant URL (passing the manifest in a param)', () => {
       createWrapper();
 
-      expect(screen.getByLabelText('miradorSharePlugin.ariaDragIcon')).toHaveAttribute('href', 'http://example.com/abc/iiif/manifest?manifest=http://example.com/abc/iiif/manifest');
+      expect(screen.getByLabelText('miradorSharePlugin.ariaDragIcon')).toHaveAttribute(
+        'href',
+        'http://example.com/abc/iiif/manifest?manifest=http://example.com/abc/iiif/manifest',
+      );
     });
 
     describe('when an info link is configured/passed in as a prop', () => {

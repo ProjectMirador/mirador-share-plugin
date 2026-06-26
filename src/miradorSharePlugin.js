@@ -34,8 +34,7 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
 });
 
 const mapStateToProps = (state, { windowId }) => ({
-  iiifInfoLink: state.config.miradorSharePlugin
-    && state.config.miradorSharePlugin.iiifInfoLink,
+  iiifInfoLink: state.config.miradorSharePlugin && state.config.miradorSharePlugin.iiifInfoLink,
   manifestId: getManifestoInstance(state, { windowId }).id,
 });
 
@@ -51,9 +50,7 @@ function MiradorShare({ handleClose = () => {}, openShareDialog = () => {} }) {
       <ListItemIcon>
         <ShareIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
-        {t('miradorSharePlugin.menuItemShare')}
-      </ListItemText>
+      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>{t('miradorSharePlugin.menuItemShare')}</ListItemText>
     </MenuItem>
   );
 }

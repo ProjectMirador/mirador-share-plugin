@@ -33,33 +33,26 @@ const mapStateToProps = (state, { windowId }) => {
   return {
     containerId: getContainerId(state),
     displayEmbedOption: embedOption.enabled,
-    displayShareLink: miradorSharePluginConfig.shareLink
-      && miradorSharePluginConfig.shareLink.enabled,
+    displayShareLink: miradorSharePluginConfig.shareLink && miradorSharePluginConfig.shareLink.enabled,
     embedUrlReplacePattern: embedOption.embedUrlReplacePattern,
     embedIframeAttributes: embedOption.embedIframeAttributes,
     embedIframeTitle: embedOption.embedIframeTitle,
-    manifestIdReplacePattern: miradorSharePluginConfig.shareLink
-      && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
+    manifestIdReplacePattern: miradorSharePluginConfig.shareLink && miradorSharePluginConfig.shareLink.manifestIdReplacePattern,
     iiifInfoLink: miradorSharePluginConfig.iiifInfoLink,
     manifestId: (getManifestoInstance(state, { windowId }) || {}).id,
-    open: (state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share'),
+    open: state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'share',
     syncIframeDimensions: embedOption.syncIframeDimensions,
   };
 };
 
-const CopyToClipboardButton = ({
-  children, onClick, text, ...props
-}) => {
+const CopyToClipboardButton = ({ children, onClick, text, ...props }) => {
   const handleClick = (e) => {
     copy(text);
     onClick(e);
   };
 
   return (
-    <Button
-      onClick={handleClick}
-      {...props}
-    >
+    <Button onClick={handleClick} {...props}>
       {children}
     </Button>
   );
@@ -73,7 +66,7 @@ CopyToClipboardButton.propTypes = {
 
 /**
  * MiradorShareDialog ~
-*/
+ */
 export function MiradorShareDialog({
   closeShareDialog,
   containerId,
@@ -116,11 +109,7 @@ export function MiradorShareDialog({
   }
 
   return (
-    <Dialog
-      container={document.querySelector(`#${containerId} .mirador-viewer`)}
-      onClose={closeShareDialog}
-      open={open}
-    >
+    <Dialog container={document.querySelector(`#${containerId} .mirador-viewer`)} onClose={closeShareDialog} open={open}>
       <DialogTitle variant="h2" sx={{ paddingBottom: 0 }}>
         {t('miradorSharePlugin.shareDialogTitle')}
       </DialogTitle>
@@ -134,7 +123,9 @@ export function MiradorShareDialog({
       <ScrollIndicatedDialogContent>
         {displayShareLink && (
           <>
-            <Typography sx={{ marginTop: 2 }} variant="h3">{t('miradorSharePlugin.shareLink')}</Typography>
+            <Typography sx={{ marginTop: 2 }} variant="h3">
+              {t('miradorSharePlugin.shareLink')}
+            </Typography>
             <Stack sx={{ marginBottom: 1 }} spacing={1} direction="row">
               <TextField
                 value={shareLinkText}
@@ -148,20 +139,18 @@ export function MiradorShareDialog({
                     },
                   },
                 }}
-              />
-              {' '}
+              />{' '}
               <CopyToClipboardButton
                 text={shareLinkText}
                 variant="outlined"
                 color="primary"
                 aria-label={t('miradorSharePlugin.ariaCopyToClipboard')}
-                onClick={() => enqueueSnackbar(
-                  (
-                    <Typography variant="body1">
-                      {t('miradorSharePlugin.snackbarCopiedLinkToClipboard')}
-                    </Typography>
-                  ), { variant: 'success' },
-                )}
+                onClick={() =>
+                  enqueueSnackbar(
+                    <Typography variant="body1">{t('miradorSharePlugin.snackbarCopiedLinkToClipboard')}</Typography>,
+                    { variant: 'success' },
+                  )
+                }
               >
                 {t('miradorSharePlugin.buttonCopy')}
               </CopyToClipboardButton>
@@ -171,7 +160,9 @@ export function MiradorShareDialog({
         )}
         {displayEmbedOption && (
           <>
-            <Typography sx={{ marginTop: 2 }} variant="h3">{t('miradorSharePlugin.embed')}</Typography>
+            <Typography sx={{ marginTop: 2 }} variant="h3">
+              {t('miradorSharePlugin.embed')}
+            </Typography>
             <MiradorShareEmbed
               embedIframeAttributes={embedIframeAttributes}
               embedIframeTitle={embedIframeTitle}
@@ -182,14 +173,11 @@ export function MiradorShareDialog({
             <Divider aria-hidden="true" />
           </>
         )}
-        <Typography sx={{ marginTop: 2 }} variant="h3">{t('miradorSharePlugin.addToAnotherViewer')}</Typography>
+        <Typography sx={{ marginTop: 2 }} variant="h3">
+          {t('miradorSharePlugin.addToAnotherViewer')}
+        </Typography>
         <Grid container spacing={1} sx={{ textAlign: 'center' }}>
-          <Grid
-            container
-            spacing={2}
-            sx={{ display: 'grid', gap: 1, margin: 0 }}
-            size="grow"
-          >
+          <Grid container spacing={2} sx={{ display: 'grid', gap: 1, margin: 0 }} size="grow">
             <Typography align="center" variant="body1">
               {t('miradorSharePlugin.iconDragAndDrop')}
             </Typography>
@@ -203,20 +191,17 @@ export function MiradorShareDialog({
           <Grid justifyContent="center" size="grow">
             <Typography align="center" variant="body1">
               {t('miradorSharePlugin.copyAndPasteManifest')}
-            </Typography>
-            {' '}
+            </Typography>{' '}
             <CopyToClipboardButton
               text={dragAndDropUrl()}
               variant="outlined"
               color="primary"
               aria-label={t('miradorSharePlugin.ariaCopyManifest')}
-              onClick={() => enqueueSnackbar(
-                (
-                  <Typography variant="body1">
-                    {t('miradorSharePlugin.snackbarManifestCopied')}
-                  </Typography>
-                ), { variant: 'success' },
-              )}
+              onClick={() =>
+                enqueueSnackbar(<Typography variant="body1">{t('miradorSharePlugin.snackbarManifestCopied')}</Typography>, {
+                  variant: 'success',
+                })
+              }
             >
               {t('miradorSharePlugin.buttonCopy')}
             </CopyToClipboardButton>
@@ -241,18 +226,8 @@ MiradorShareDialog.propTypes = {
   iiifInfoLink: PropTypes.string,
   embedIframeAttributes: PropTypes.string,
   embedIframeTitle: PropTypes.string,
-  embedUrlReplacePattern: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(RegExp),
-    ]),
-  ),
-  manifestIdReplacePattern: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(RegExp),
-    ]),
-  ),
+  embedUrlReplacePattern: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)])),
+  manifestIdReplacePattern: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)])),
   manifestId: PropTypes.string,
   open: PropTypes.bool,
   syncIframeDimensions: PropTypes.shape({

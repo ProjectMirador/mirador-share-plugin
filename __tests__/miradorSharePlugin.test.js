@@ -2,13 +2,7 @@ import { render, screen } from './utils/test-utils';
 import miradorSharePlugin from '../src/miradorSharePlugin';
 
 function createWrapper(props) {
-  return render(
-    <miradorSharePlugin.component
-      handleClose={() => {}}
-      openShareDialog={() => {}}
-      {...props}
-    />,
-  );
+  return render(<miradorSharePlugin.component handleClose={() => {}} openShareDialog={() => {}} {...props} />);
 }
 
 describe('miradorSharePlugin', () => {

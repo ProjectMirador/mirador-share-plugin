@@ -30,7 +30,13 @@ describe('MiradorShareEmbed', () => {
   it('renders a radio group w/ a form control for each of the size options', () => {
     createWrapper();
 
-    expect(screen.getAllByRole('button').map((button) => button.textContent)).toEqual(['560x420', '640x480', '800x600', '1024x768', 'miradorSharePlugin.buttonCopy']);
+    expect(screen.getAllByRole('button').map((button) => button.textContent)).toEqual([
+      '560x420',
+      '640x480',
+      '800x600',
+      '1024x768',
+      'miradorSharePlugin.buttonCopy',
+    ]);
   });
 
   it('renders the embed code in a text field', () => {
@@ -62,7 +68,9 @@ describe('MiradorShareEmbed', () => {
     expect(screen.getByLabelText('miradorSharePlugin.copyAndPasteCode').value).toMatch(/iiif\/manifest&maxwidth=560/);
 
     rerender(cloneElement(component, { syncIframeDimensions: { height: { param: 'maxheight' }, width: { param: 'maxwidth' } } }));
-    expect(screen.getByLabelText('miradorSharePlugin.copyAndPasteCode').value).toMatch(/iiif\/manifest&maxwidth=560&maxheight=420/);
+    expect(screen.getByLabelText('miradorSharePlugin.copyAndPasteCode').value).toMatch(
+      /iiif\/manifest&maxwidth=560&maxheight=420/,
+    );
   });
 
   it('the embed code gets its height and width from state', async () => {
