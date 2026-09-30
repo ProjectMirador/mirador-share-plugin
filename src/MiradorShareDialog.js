@@ -188,7 +188,7 @@ export function MiradorShareDialog({
           <Grid size={1}>
             <Typography variant="body1">{t('miradorSharePlugin.textOr')}</Typography>
           </Grid>
-          <Grid justifyContent="center" size="grow">
+          <Grid sx={{ justifyContent: 'center' }} size="grow">
             <Typography align="center" variant="body1">
               {t('miradorSharePlugin.copyAndPasteManifest')}
             </Typography>{' '}
