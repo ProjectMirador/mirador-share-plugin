@@ -1,6 +1,6 @@
 {
   "name": "mirador-share-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "mirador-share-plugin React component",
   "type": "module",
   "module": "./dist/mirador-share-plugin.es.js",
