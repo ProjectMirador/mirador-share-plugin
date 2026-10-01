@@ -50,7 +50,7 @@ function MiradorShare({ handleClose = () => {}, openShareDialog = () => {} }) {
       <ListItemIcon>
         <ShareIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>{t('miradorSharePlugin.menuItemShare')}</ListItemText>
+      <ListItemText slotProps={{ primary: { variant: 'body1' } }}>{t('miradorSharePlugin.menuItemShare')}</ListItemText>
     </MenuItem>
   );
 }

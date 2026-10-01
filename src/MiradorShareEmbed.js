@@ -144,7 +144,7 @@ function MiradorShareEmbed({
         </FormControl>
         <FormControl component="fieldset">
           <FormLabel htmlFor="copyCode">{t('miradorSharePlugin.copyAndPasteCode')}</FormLabel>
-          <Stack direction="row" alignItems="end" gap={1}>
+          <Stack direction="row" sx={{ alignItems: 'end' }} spacing={1} useFlexGap>
             <TextField id="copyCode" fullWidth multiline rows={4} value={embedCode()} variant="filled" />
             <CopyToClipboardButton
               text={embedCode()}

@@ -1,8 +1,13 @@
 import { render, screen } from './utils/test-utils';
+import MenuList from '@mui/material/MenuList';
 import miradorSharePlugin from '../src/miradorSharePlugin';
 
 function createWrapper(props) {
-  return render(<miradorSharePlugin.component handleClose={() => {}} openShareDialog={() => {}} {...props} />);
+  return render(
+    <MenuList>
+      <miradorSharePlugin.component handleClose={() => {}} openShareDialog={() => {}} {...props} />
+    </MenuList>,
+  );
 }
 
 describe('miradorSharePlugin', () => {
